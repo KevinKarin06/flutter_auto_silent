@@ -1,0 +1,3 @@
+textTheme: GoogleFonts.latoTextTheme(
+          Theme.of(context).textTheme,
+        ),

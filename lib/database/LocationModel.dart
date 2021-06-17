@@ -1,0 +1,71 @@
+import 'package:autosilentflutter/Utils.dart';
+import 'package:flutter_photon/flutter_photon.dart';
+
+class LocationModel {
+  final double latitude, longitude;
+  String title, subtitle, uuid;
+  final int id;
+
+  LocationModel({
+    this.id,
+    this.latitude,
+    this.longitude,
+    this.title,
+    this.subtitle,
+    this.uuid,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'latitude': latitude,
+      'longitude': longitude,
+      'title': title,
+      'subtitle': subtitle,
+      'uuid': uuid,
+    };
+  }
+
+  factory LocationModel.fromJson(Map<String, dynamic> json) => LocationModel(
+        latitude: json['geometry']['coordinates'][0],
+        longitude: json['geometry']['coordinates'][1],
+        title: json['properties']['name'],
+        subtitle:
+            '${json['properties']['district'] ??= 'Unknown Road'}, ${json['properties']['state'] ??= 'Unknown State'}, ${json['properties']['country']}',
+      );
+  factory LocationModel.fromJson2(dynamic json) {
+    return LocationModel(
+        latitude: json['position']['lat'],
+        longitude: json['position']['lon'],
+        title: json['address']['municipality'] ??= 'Unknown Street',
+        subtitle:
+            '${json['address']['streetName'] ??= 'Unknown Road'}, ${json['address']['localName'] ??= 'Unknown State'}, ${json['address']['country']}',
+        uuid: Utils.generateuuid());
+  }
+  factory LocationModel.fromMap(Map map) {
+    return LocationModel(
+      id: map['id'],
+      latitude: map['latitude'],
+      longitude: map['longitude'],
+      subtitle: map['subtitle'],
+      title: map['title'],
+      uuid: map['uuid'],
+    );
+  }
+  factory LocationModel.fromPhoton(PhotonFeature photon) {
+    String street = photon.street;
+    street ??= 'Unknown Street';
+    String state = photon.state;
+    state ??= 'Unknown State';
+    String city = photon.city;
+    city ??= 'Unknown City';
+    String country = photon.country;
+    state ??= 'Unknown Country';
+    return LocationModel(
+        title: photon.name,
+        subtitle: '$street, $state, $city, $country',
+        latitude: photon.coordinates.latitude,
+        longitude: photon.coordinates.longitude,
+        uuid: Utils.generateuuid());
+  }
+}
