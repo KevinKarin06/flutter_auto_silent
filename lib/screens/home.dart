@@ -346,9 +346,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         : Container(
                             child: Center(
                               child: AnimatedTextKit(
+                                totalRepeatCount: 1,
                                 animatedTexts: [
                                   TypewriterAnimatedText(
-                                    'No Locations Yet Add Location to get Started',
+                                    'No Locations Added Yet',
+                                  ),
+                                  TypewriterAnimatedText(
+                                    'Add Locations to get Started',
                                   ),
                                 ],
                               ),

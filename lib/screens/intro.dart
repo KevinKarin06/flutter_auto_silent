@@ -46,7 +46,7 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
   }
 
   Future<void> _init() async {
-    return Future.delayed(Duration(seconds: 4), _checkDonNotDisturb);
+    return Future.delayed(Duration(seconds: 5), _checkDonNotDisturb);
   }
 
   Future<void> _checkDonNotDisturb() async {
@@ -136,7 +136,7 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
               Container(
                 child: Center(
                   child: TextLiquidFill(
-                    loadDuration: Duration(seconds: 3),
+                    loadDuration: Duration(seconds: 4),
                     text: 'Auto Silent',
                     waveColor: Colors.cyan,
                     boxBackgroundColor: ThemeData().scaffoldBackgroundColor,
@@ -161,6 +161,9 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: AnimatedTextKit(
+                  pause: Duration(milliseconds: 100),
+                  stopPauseOnTap: false,
+                  repeatForever: true,
                   animatedTexts: [
                     ColorizeAnimatedText(
                       'Powered By Dc Corp',
@@ -169,9 +172,6 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
                     ),
                   ],
                   isRepeatingAnimation: true,
-                  onTap: () {
-                    print("Tap Event");
-                  },
                 ),
               ),
             ],
