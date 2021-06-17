@@ -37,6 +37,7 @@ dependencies:
   uiblock: ^0.1.0
   uuid: 3.0.4
   device_info: ^2.0.2
+  animated_text_kit: ^4.2.1
   
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:autosilentflutter/screens/home.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,6 +16,17 @@ class Intro extends StatefulWidget {
 }
 
 class _IntroState extends State<Intro> with WidgetsBindingObserver {
+  static const colorizeColors = [
+    Colors.purple,
+    Colors.blue,
+    Colors.cyan,
+    Colors.red,
+  ];
+
+  static const colorizeTextStyle = TextStyle(
+    fontSize: 15.0,
+  );
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
@@ -31,6 +43,10 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
         print('Detached');
         break;
     }
+  }
+
+  Future<void> _init() async {
+    return Future.delayed(Duration(seconds: 4), _checkDonNotDisturb);
   }
 
   Future<void> _checkDonNotDisturb() async {
@@ -96,7 +112,7 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _checkDonNotDisturb());
+    WidgetsBinding.instance.addPostFrameCallback((_) => _init());
     super.initState();
   }
 
@@ -111,9 +127,54 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
     print('Intro Widget Rebuilt');
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: Center(
-            child: Text('My App'),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                child: Center(
+                  child: TextLiquidFill(
+                    loadDuration: Duration(seconds: 3),
+                    text: 'Auto Silent',
+                    waveColor: Colors.cyan,
+                    boxBackgroundColor: ThemeData().scaffoldBackgroundColor,
+                    textStyle: TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    boxHeight: 150.0,
+                    boxWidth: MediaQuery.of(context).size.width,
+                  ),
+                ),
+              ),
+              Container(
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Icon(
+                    Icons.ac_unit,
+                    size: 48.0,
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: AnimatedTextKit(
+                  animatedTexts: [
+                    ColorizeAnimatedText(
+                      'Powered By Dc Corp',
+                      textStyle: colorizeTextStyle,
+                      colors: colorizeColors,
+                    ),
+                  ],
+                  isRepeatingAnimation: true,
+                  onTap: () {
+                    print("Tap Event");
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),

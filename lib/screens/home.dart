@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/helpers/DbHelper.dart';
 import 'package:autosilentflutter/helpers/GeofenceHelper.dart';
@@ -343,13 +344,14 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                               );
                             })
                         : Container(
-                            child: Column(
-                              children: [
-                                Center(
-                                  child: Text(
-                                      'No Locations Yet Add Location to get Started'),
-                                ),
-                              ],
+                            child: Center(
+                              child: AnimatedTextKit(
+                                animatedTexts: [
+                                  TypewriterAnimatedText(
+                                    'No Locations Yet Add Location to get Started',
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                   )

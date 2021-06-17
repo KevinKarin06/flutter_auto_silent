@@ -131,8 +131,10 @@ class _AutoCompleteState extends State<AutoComplete> {
                                           Text(_suggestions[index].subtitle),
                                       leading: Icon(Icons.location_on_rounded),
                                     )
-                                  : Center(
-                                      child: Text('No Results Found'),
+                                  : Container(
+                                      child: Center(
+                                        child: Text('No Results Found'),
+                                      ),
                                     ),
                             );
                           })
