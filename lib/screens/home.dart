@@ -350,9 +350,11 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                                 animatedTexts: [
                                   TypewriterAnimatedText(
                                     'No Locations Added Yet',
+                                    textStyle: noLocation,
                                   ),
                                   TypewriterAnimatedText(
                                     'Add Locations to get Started',
+                                    textStyle: noLocation,
                                   ),
                                 ],
                               ),
