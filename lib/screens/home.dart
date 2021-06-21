@@ -212,16 +212,16 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                       print(_selected);
                     })
                 : Container(),
-            IconButton(
-              tooltip: 'switch theme',
-              icon: Icon(Icons.lightbulb_outline_rounded),
-              onPressed: () {
-                DialogContext().showSnackBar(
-                  snackBar: snackBar(error: false, msg: 'Test Mode'),
-                );
-                print('change from dark mode to clear mode');
-              },
-            ),
+            // IconButton(
+            //   tooltip: 'switch theme',
+            //   icon: Icon(Icons.lightbulb_outline_rounded),
+            //   onPressed: () {
+            //     DialogContext().showSnackBar(
+            //       snackBar: snackBar(error: false, msg: 'Test Mode'),
+            //     );
+            //     print('change from dark mode to clear mode');
+            //   },
+            // ),
           ],
           elevation: 0.0,
         ),
