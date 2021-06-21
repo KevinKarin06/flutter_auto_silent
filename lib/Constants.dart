@@ -4,4 +4,6 @@ class Constants {
   static const String DATABASE_NAME = 'geofeonce_database.db';
   static const String MAP_BOX_API =
       'pk.eyJ1Ijoia2V2aW5rYWluIiwiYSI6ImNrcHA3azJqejR2bzAzMW54M3BmaG5vZDYifQ.8J1jJ6cB1nBqCtOq01dB9w';
+  static const int ANDROID_10 = 29;
+  static const int ANDROID_NOUGAT = 24;
 }

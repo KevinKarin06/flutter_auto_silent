@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:autosilentflutter/Constants.dart';
 import 'package:autosilentflutter/Utils.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/helpers/GeocoderHelper.dart';
@@ -46,7 +47,7 @@ class LocationHelper {
 
       if (Platform.isAndroid) {
         AndroidDeviceInfo info = await DeviceInfoPlugin().androidInfo;
-        if (info.version.sdkInt >= 10) {
+        if (info.version.sdkInt >= Constants.ANDROID_10) {
           if (permission != LocationPermission.always) {
             DialogContext().showDialog(builder: (context) {
               return PermissionDialog(

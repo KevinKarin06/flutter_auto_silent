@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       builder: DialogContext().builder,
-      title: 'Flutter Demo',
+      title: 'Auto Silent',
       theme: ThemeData(
         primarySwatch: _isDark ? Colors.blue : Colors.cyan,
         textTheme: GoogleFonts.latoTextTheme(

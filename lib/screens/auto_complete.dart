@@ -150,10 +150,6 @@ class _AutoCompleteState extends State<AutoComplete> {
     );
   }
 
-  AnimatedList list() {
-    return AnimatedList(itemBuilder: (context, index, animation) {});
-  }
-
   @override
   void dispose() {
     print('AutoComplete is being Disposed');

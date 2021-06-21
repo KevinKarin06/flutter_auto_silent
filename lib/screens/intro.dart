@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:autosilentflutter/Constants.dart';
 import 'package:autosilentflutter/screens/home.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_dnd/flutter_dnd.dart';
 
 class Intro extends StatefulWidget {
@@ -52,7 +52,7 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
   Future<void> _checkDonNotDisturb() async {
     if (Platform.isAndroid) {
       AndroidDeviceInfo info = await DeviceInfoPlugin().androidInfo;
-      if (info.version.sdkInt >= 7) {
+      if (info.version.sdkInt >= Constants.ANDROID_NOUGAT) {
         if (!await FlutterDnd.isNotificationPolicyAccessGranted) {
           showDialog(
               barrierDismissible: false,
@@ -73,7 +73,11 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
                   actions: [
                     TextButton(
                       onPressed: () {
-                        SystemNavigator.pop(animated: true);
+                        // SystemNavigator.pop(animated: true);
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) {
+                          return MyHomePage();
+                        }));
                       },
                       child: Text(
                         'CANCEL',
