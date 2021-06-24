@@ -7,6 +7,7 @@ import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/flutter_dnd.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Intro extends StatefulWidget {
   const Intro({Key key}) : super(key: key);
@@ -27,6 +28,8 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
     fontSize: 15.0,
   );
 
+  bool _fistrLoad = true;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     switch (state) {
@@ -46,7 +49,25 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
   }
 
   Future<void> _init() async {
-    return Future.delayed(Duration(seconds: 5), _checkDonNotDisturb);
+    if (await _isFirstLoad()) {
+      return Future.delayed(Duration(seconds: 5), _checkDonNotDisturb);
+    } else {
+      return Future.delayed(Duration.zero, _checkDonNotDisturb);
+    }
+  }
+
+  Future<bool> _isFirstLoad() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    bool b = pref.getBool('first_load') ?? true;
+    setState(() {
+      _fistrLoad = b;
+    });
+    return b;
+  }
+
+  Future<void> _setFirstLoad() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setBool('first_load', false);
   }
 
   Future<void> _checkDonNotDisturb() async {
@@ -99,12 +120,14 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
                 );
               });
         } else {
+          await _setFirstLoad();
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
             return MyHomePage();
           }));
         }
       } else {
+        await _setFirstLoad();
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
           return MyHomePage();
@@ -116,6 +139,7 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
+
     WidgetsBinding.instance.addPostFrameCallback((_) => _init());
     super.initState();
   }
@@ -139,44 +163,61 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
             children: [
               Container(
                 child: Center(
-                  child: TextLiquidFill(
-                    loadDuration: Duration(seconds: 4),
-                    text: 'Auto Silent',
-                    waveColor: Colors.cyan,
-                    boxBackgroundColor: ThemeData().scaffoldBackgroundColor,
-                    textStyle: TextStyle(
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    boxHeight: 150.0,
-                    boxWidth: MediaQuery.of(context).size.width,
-                  ),
+                  child: _fistrLoad
+                      ? TextLiquidFill(
+                          loadDuration: Duration(seconds: 4),
+                          text: Constants.APP_NAME,
+                          waveColor: Colors.cyan,
+                          boxBackgroundColor:
+                              ThemeData().scaffoldBackgroundColor,
+                          textStyle: TextStyle(
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          boxHeight: 150.0,
+                          boxWidth: MediaQuery.of(context).size.width,
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            Constants.APP_NAME,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
                 ),
               ),
               Container(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Icon(
-                    Icons.ac_unit,
-                    size: 48.0,
+                  child: Text(
+                    'LOGO',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
-                child: AnimatedTextKit(
-                  pause: Duration(milliseconds: 100),
-                  stopPauseOnTap: false,
-                  repeatForever: true,
-                  animatedTexts: [
-                    ColorizeAnimatedText(
-                      'Powered By Dc Corp',
-                      textStyle: colorizeTextStyle,
-                      colors: colorizeColors,
-                    ),
-                  ],
-                  isRepeatingAnimation: true,
-                ),
+                child: _fistrLoad
+                    ? AnimatedTextKit(
+                        pause: Duration(milliseconds: 100),
+                        stopPauseOnTap: false,
+                        repeatForever: true,
+                        animatedTexts: [
+                          ColorizeAnimatedText(
+                            Constants.DC_CORP,
+                            textStyle: colorizeTextStyle,
+                            colors: colorizeColors,
+                          ),
+                        ],
+                        isRepeatingAnimation: true,
+                      )
+                    : Text(Constants.DC_CORP),
               ),
             ],
           ),
