@@ -34,7 +34,7 @@ public class MainActivity extends FlutterActivity {
                     OnFailureListener onFailureListener = new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, "onSuccess: Failure");
+                            Log.d(TAG, "onFailure: Failure");
                             result.error("-1","Failed",false);
                         }
                     };
@@ -64,7 +64,7 @@ public class MainActivity extends FlutterActivity {
                        .addOnSuccessListener(onSuccessListener)
                        .addOnFailureListener(onFailureListener);
                     } else if(call.method.equals("loaddb")){
-                        new DbHelper(MainActivity.this).getAll();
+                        new DbHelper(MainActivity.this).syncGeofences();
                     }else{
                         result.notImplemented();
                     }

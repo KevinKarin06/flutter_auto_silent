@@ -113,7 +113,7 @@ class _CustomFabState extends State<CustomFab> {
               child: Material(
                 // type: MaterialType.transparency,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(32),
+                  Radius.circular(6),
                 ),
                 color: Colors.cyan,
                 child: InkWell(
@@ -126,7 +126,7 @@ class _CustomFabState extends State<CustomFab> {
                   child: Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Icon(
-                      folded ? icon : Icons.close_rounded,
+                      icon,
                       color: iconColor,
                     ),
                   ),

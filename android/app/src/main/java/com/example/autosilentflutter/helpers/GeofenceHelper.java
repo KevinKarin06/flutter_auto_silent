@@ -25,11 +25,13 @@ public class GeofenceHelper {
     Context context;
     private PendingIntent goefencePendingIntent;
     private float GEOFENCE_RADIUS = 500;
+    private NotificationHelper notificationHelper;
 
     public GeofenceHelper(Context context) {
         this.context = context;
         geofencingClient = LocationServices.getGeofencingClient(context);
         permissionHelper = new PermissionHelper(context);
+        notificationHelper = new NotificationHelper(context);
 
     }
     public GeofencingClient getGeofencingClient() {
@@ -68,16 +70,18 @@ public class GeofenceHelper {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(context, "added successfully",
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "added successfully",
+//                                    Toast.LENGTH_SHORT).show();
+                            notificationHelper.showNotification("AddGeofence Event","Added Succeeded",null);
 
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(context, "failed to add geofence" + e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "failed to add geofence" + e.getMessage(),
+//                                    Toast.LENGTH_SHORT).show();
+                            notificationHelper.showNotification("AddGeofence Event","Add Geofence Failed",null);
                         }
                     });
         } else {

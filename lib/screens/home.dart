@@ -3,6 +3,7 @@ import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/helpers/DbHelper.dart';
 import 'package:autosilentflutter/helpers/GeofenceHelper.dart';
 import 'package:autosilentflutter/helpers/LocationHelper.dart';
+import 'package:autosilentflutter/screens/location_details.dart';
 import 'package:autosilentflutter/styles/styles.dart';
 import 'package:autosilentflutter/widgets/ConfirmDialog.dart';
 import 'package:autosilentflutter/widgets/CustomFab.dart';
@@ -226,7 +227,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           elevation: 0.0,
         ),
         floatingActionButton: CustomFab(
-          Icons.add_location_alt_rounded,
+          Icons.add,
           getCurrent: () {
             _addCurrentLocation();
           },
@@ -258,14 +259,19 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                                     }
                                     print('multi select mode enabled');
                                   } else {
-                                    Widget dialog = DetailDialog(
-                                      model: _locations[index],
-                                      onUpdate: _updateLocations,
-                                    );
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => dialog,
-                                    );
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (ctx) => LocationDetails(
+                                                model: _locations[index])));
+                                    // Widget dialog = DetailDialog(
+                                    //   model: _locations[index],
+                                    //   onUpdate: _updateLocations,
+                                    // );
+                                    // showDialog(
+                                    //   context: context,
+                                    //   builder: (context) => dialog,
+                                    // );
                                   }
                                 },
                                 onLongPress: () {
@@ -277,69 +283,24 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                                 },
                                 selected: _selected.contains(_locations[index]),
                                 selectedTileColor: Colors.grey[300],
-                                title: Text(_locations[index].title),
-                                subtitle: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border(
-                                      bottom: BorderSide(
-                                        color: Colors.grey[300],
-                                      ),
-                                    ),
-                                  ),
-                                  padding: EdgeInsets.only(
-                                    top: 8.0,
-                                    bottom: 4.0,
-                                    right: 8.0,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        _locations[index].subtitle,
-                                      ),
-                                      SizedBox(
-                                        height: 5.0,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            'Latitude : ' +
-                                                _locations[index]
-                                                    .latitude
-                                                    .toString(),
-                                          ),
-                                          SizedBox(
-                                            height: 5.0,
-                                          ),
-                                          Text(
-                                            'Longitude : ' +
-                                                _locations[index]
-                                                    .longitude
-                                                    .toString(),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                title: Text(
+                                  _locations[index].title.toUpperCase(),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                leading: Align(
-                                  alignment: Alignment.bottomLeft,
-                                  widthFactor: 0,
-                                  child: Icon(
-                                    !_selected.contains(_locations[index])
-                                        ? Icons.location_on_rounded
-                                        : Icons.check_circle_rounded,
-                                    size: 28.0,
-                                  ),
+                                subtitle: Text(
+                                  _locations[index].subtitle,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                minVerticalPadding: 8.0,
+                                trailing: Icon(Icons.arrow_forward_ios_rounded),
+                                leading: Icon(
+                                  !_selected.contains(_locations[index])
+                                      ? Icons.location_on_rounded
+                                      : Icons.check_circle_rounded,
+                                  size: 28.0,
                                 ),
                               );
                             })

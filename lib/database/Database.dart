@@ -17,7 +17,7 @@ class LocationDatabase {
       onCreate: (db, version) {
         return db.execute('''CREATE TABLE ${Constants.TABLE_NAME}
             (id INTEGER PRIMARY KEY, latitude INTEGER, 
-            longitude INTEGER, title TEXT, subtitle TEXT NOT NULL, uuid TEXT)''');
+            longitude INTEGER, title TEXT, subtitle TEXT NOT NULL, uuid TEXT,radius INT)''');
       },
       version: 1,
     );

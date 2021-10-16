@@ -87,7 +87,7 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
                     children: [
                       Center(
                         child: Text(
-                            ' You need to grant access to don not disturb Permission for the app to work properly'),
+                            'You need to grant access to don not disturb Permission for the app to work properly'),
                       ),
                     ],
                   ),

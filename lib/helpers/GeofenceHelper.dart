@@ -43,4 +43,14 @@ class GeofenceHelper {
       return Future.error('Ooops Something went wrong please try again');
     }
   }
+
+  Future<void> test() async {
+    try {
+      var result = await _platform.invokeMethod('loaddb');
+      print(result);
+    } on PlatformException catch (exception) {
+      print(exception);
+      return Future.error('Ooops Something went wrong please try again');
+    }
+  }
 }
