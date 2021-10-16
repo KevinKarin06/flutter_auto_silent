@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dnd/flutter_dnd.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class Intro extends StatefulWidget {
   const Intro({Key key}) : super(key: key);
@@ -193,7 +194,7 @@ class _IntroState extends State<Intro> with WidgetsBindingObserver {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'LOGO',
+                    'hello'.tr(),
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

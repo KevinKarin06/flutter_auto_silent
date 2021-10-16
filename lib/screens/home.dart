@@ -259,11 +259,13 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                                     }
                                     print('multi select mode enabled');
                                   } else {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (ctx) => LocationDetails(
-                                                model: _locations[index])));
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (ctx) => LocationDetails(
+                                    //         model: _locations[index]),
+                                    //   ),
+                                    // );
                                     // Widget dialog = DetailDialog(
                                     //   model: _locations[index],
                                     //   onUpdate: _updateLocations,

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 class InputField extends StatefulWidget {
   final bool enabled;
-  final TextEditingController controller;
   final String label, text;
   final int maxLines;
+  final Function validator;
   const InputField(
       {Key key,
-      @required this.controller,
       this.enabled = false,
       this.label,
       this.text,
-      this.maxLines})
+      this.maxLines,
+      this.validator})
       : super(key: key);
 
   @override
@@ -28,10 +28,9 @@ class _InputFieldState extends State<InputField> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 8.0),
-      child: TextField(
+      child: TextFormField(
         enabled: widget.enabled,
         maxLines: widget.maxLines,
-        controller: widget.controller,
         decoration: InputDecoration(
           hintText: widget.text,
           floatingLabelBehavior: FloatingLabelBehavior.always,
