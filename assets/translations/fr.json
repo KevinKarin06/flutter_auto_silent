@@ -1,3 +1,12 @@
 {
-  "hello": "salut"
+  "app_name": "Silence Automatique",
+  "hello": "salut",
+  "delete": "Suprimer",
+  "save": "Sauvegarder",
+  "cancel": "Annuler",
+  "once": "Une Fois",
+  "always": "Toujours",
+  "search": "Rechercher.....",
+  "settings": "Parametres",
+  "select_all": "Tout Selectioner"
 }

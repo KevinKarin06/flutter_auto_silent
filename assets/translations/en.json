@@ -1,3 +1,18 @@
 {
-  "hello": "hello"
+  "app_name": "Auto Silent",
+  "no_location": "No Locations Yet",
+  "cancel": "Cancel",
+  "save": "Save",
+  "ok": "Ok",
+  "delete": "Delete",
+  "delete_all": "Delete All",
+  "select_all": "Select All",
+  "curent_location": "Use My Current Location",
+  "search_location": "Search Location Online",
+  "search": "Search",
+  "settings": "Settings",
+  "no_internet": "No Internet Connection",
+  "location": "Location",
+  "once": "Once",
+  "always": "Always"
 }

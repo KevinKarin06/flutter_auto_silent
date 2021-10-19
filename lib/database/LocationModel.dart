@@ -1,3 +1,4 @@
+import 'package:autosilentflutter/Constants.dart';
 import 'package:autosilentflutter/Utils.dart';
 import 'package:flutter_photon/flutter_photon.dart';
 
@@ -5,8 +6,12 @@ class LocationModel {
   final double latitude, longitude;
   String title, subtitle, uuid;
   final int id;
+  final int radius;
+  final bool justOnce;
 
   LocationModel({
+    this.justOnce = false,
+    this.radius = Constants.GEOFENCE_RADIUS,
     this.id,
     this.latitude,
     this.longitude,
@@ -50,6 +55,17 @@ class LocationModel {
       subtitle: map['subtitle'],
       title: map['title'],
       uuid: map['uuid'],
+    );
+  }
+  factory LocationModel.clone(LocationModel model) {
+    return LocationModel(
+      title: model.title,
+      subtitle: model.subtitle,
+      latitude: model.latitude,
+      longitude: model.longitude,
+      uuid: model.uuid,
+      justOnce: model.justOnce,
+      radius: model.radius,
     );
   }
   factory LocationModel.fromPhoton(PhotonFeature photon) {
