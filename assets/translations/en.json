@@ -14,5 +14,7 @@
   "no_internet": "No Internet Connection",
   "location": "Location",
   "once": "Once",
-  "always": "Always"
+  "always": "Always",
+  "search_in_app": "Search in App",
+  "about": "About"
 }

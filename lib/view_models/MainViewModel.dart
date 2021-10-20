@@ -2,15 +2,20 @@ import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/helpers/DbHelper.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:get_it/get_it.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:stacked/stacked.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class MainViewModel extends FutureViewModel {
   final DbHelper _dbHelper = GetIt.I<DbHelper>();
   final GeofenceService _geofenceService = GetIt.I<GeofenceService>();
+  final FloatingSearchBarController floatingSearchBarController =
+      FloatingSearchBarController();
   bool multiSelect = false;
   List<LocationModel> selected = List.empty(growable: true);
   List<LocationModel> locations = List.empty(growable: true);
   List<LocationModel> filteredLocations = List.empty(growable: true);
+  List<String> _menuItems = ['settings'.tr(), 'about'.tr()];
   @override
   Future<List<LocationModel>> futureToRun() async {
     locations = await _dbHelper.getLocations();
@@ -23,6 +28,14 @@ class MainViewModel extends FutureViewModel {
   }
 
   List<LocationModel> getSelected() => selected;
+
+  FloatingSearchBarController getController() => floatingSearchBarController;
+
+  List<String> getMenuItems() => _menuItems;
+
+  void openSearchBar() {
+    this.floatingSearchBarController.open();
+  }
 
   void _checkMultiSelect() {
     if (selected.isEmpty) {
@@ -104,4 +117,6 @@ class MainViewModel extends FutureViewModel {
   }
 
   void addLocation() {}
+
+  void handleMenuItemClick(String item) {}
 }
