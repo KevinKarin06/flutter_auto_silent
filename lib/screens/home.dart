@@ -105,8 +105,6 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     print('Widget Rebuild Trigerred');
-    final isPortrait =
-        MediaQuery.of(context).orientation == Orientation.portrait;
     return ViewModelBuilder<MainViewModel>.reactive(
       viewModelBuilder: () => MainViewModel(),
       builder: (BuildContext context, MainViewModel vModel, Widget child) =>
@@ -118,11 +116,7 @@ class _MyHomePageState extends State<MyHomePage>
           );
         },
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar: PreferredSize(
-            preferredSize: Size(0, kToolbarHeight),
-            child: CustomAppBar(),
-          ),
+          appBar: CustomAppBar(),
           floatingActionButton: MaterialButton(
             height: 56.0,
             minWidth: 56.0,
@@ -142,154 +136,69 @@ class _MyHomePageState extends State<MyHomePage>
           body: SafeArea(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Center(
-                    child: !vModel.isBusy
-                        ? Container(
-                            child: vModel.data.isNotEmpty
-                                ? ListView.builder(
-                                    itemCount: vModel.data.length,
-                                    itemBuilder: (context, index) {
-                                      return ListTile(
-                                        onTap: () {
-                                          vModel.handleItemTap(
-                                              vModel.data[index]);
-                                        },
-                                        onLongPress: () {
-                                          vModel.handleOnLongPress(
-                                              vModel.data[index]);
-                                        },
-                                        selected: vModel
-                                            .isSelected(vModel.data[index]),
-                                        selectedTileColor: Colors.grey[300],
-                                        title: Text(
-                                          vModel.data[index].title
-                                              .toUpperCase(),
-                                          style: TextStyle(
-                                              // fontWeight: FontWeight.bold,
-                                              ),
-                                        ),
-                                        subtitle: Text(
-                                          vModel.data[index].subtitle,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        minVerticalPadding: 8.0,
-                                        trailing: Icon(
-                                            Icons.arrow_forward_ios_rounded),
-                                        leading: Align(
-                                          alignment: Alignment.centerLeft,
-                                          widthFactor: 0,
-                                          child: Icon(
-                                            !vModel.selected.contains(
-                                                    vModel.data[index])
-                                                ? Icons.place_rounded
-                                                : Icons.check_circle_rounded,
-                                            size: 28.0,
-                                          ),
-                                        ),
-                                      );
-                                    })
-                                : Container(
-                                    child: Center(
-                                      child: AnimatedTextKit(
-                                        totalRepeatCount: 1,
-                                        animatedTexts: [
-                                          TypewriterAnimatedText(
-                                            'No Locations Added Yet',
-                                          ),
-                                          TypewriterAnimatedText(
-                                            'Add Locations to get Started',
-                                          ),
-                                        ],
+              child: Center(
+                child: !vModel.isBusy && vModel.dataReady
+                    ? Container(
+                        child: vModel.data.isNotEmpty
+                            ? ListView.builder(
+                                itemCount: vModel.data.length,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    onTap: () {
+                                      vModel.handleItemTap(vModel.data[index]);
+                                    },
+                                    onLongPress: () {
+                                      vModel.handleOnLongPress(
+                                          vModel.data[index]);
+                                    },
+                                    selected:
+                                        vModel.isSelected(vModel.data[index]),
+                                    selectedTileColor: Colors.grey[300],
+                                    title: Text(
+                                      vModel.data[index].title.toUpperCase(),
+                                    ),
+                                    subtitle: Text(
+                                      vModel.data[index].subtitle,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    minVerticalPadding: 8.0,
+                                    trailing:
+                                        Icon(Icons.arrow_forward_ios_rounded),
+                                    leading: Align(
+                                      alignment: Alignment.centerLeft,
+                                      widthFactor: 0,
+                                      child: Icon(
+                                        !vModel.selected
+                                                .contains(vModel.data[index])
+                                            ? Icons.place_rounded
+                                            : Icons.check_circle_rounded,
+                                        size: 28.0,
                                       ),
                                     ),
+                                  );
+                                })
+                            : Container(
+                                child: Center(
+                                  child: AnimatedTextKit(
+                                    totalRepeatCount: 1,
+                                    animatedTexts: [
+                                      TypewriterAnimatedText(
+                                        'No Locations Added Yet',
+                                      ),
+                                      TypewriterAnimatedText(
+                                        'Add Locations to get Started',
+                                      ),
+                                    ],
                                   ),
-                          )
-                        : Container(
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
-                  ),
-                  // vModel.multiSelect
-                  //     ? FloatingSearchBar(
-                  //         elevation: 10.0,
-                  //         // padding: EdgeInsets.symmetric(horizontal: 8.0),
-
-                  //         hint: 'search'.tr(),
-                  //         leadingActions: [
-                  //           FloatingSearchBarAction(
-                  //             showIfOpened: false,
-                  //             child: CircularButton(
-                  //               icon: const Icon(Icons.place_rounded),
-                  //               onPressed: () {},
-                  //             ),
-                  //           ),
-                  //         ],
-                  //         scrollPadding:
-                  //             const EdgeInsets.only(top: 16, bottom: 56),
-                  //         transitionDuration: const Duration(milliseconds: 800),
-                  //         transitionCurve: Curves.easeInOut,
-                  //         physics: const BouncingScrollPhysics(),
-                  //         axisAlignment: isPortrait ? 0.0 : -1.0,
-                  //         openAxisAlignment: 0.0,
-                  //         width: isPortrait ? 600 : 500,
-                  //         debounceDelay: const Duration(milliseconds: 500),
-                  //         onQueryChanged: (query) {
-                  //           vModel.filterLocation(query);
-                  //           print(vModel.filteredLocations.length);
-                  //         },
-                  //         // Specify a custom transition to be used for
-                  //         // animating between opened and closed stated.
-                  //         transition: CircularFloatingSearchBarTransition(),
-                  //         actions: [
-                  //           FloatingSearchBarAction(
-                  //             showIfOpened: false,
-                  //             child: CircularButton(
-                  //               tooltip: 'settings'.tr(),
-                  //               icon: const Icon(Icons.settings),
-                  //               onPressed: () {
-                  //                 Navigator.push(
-                  //                   context,
-                  //                   MaterialPageRoute(
-                  //                       builder: (context) => SettingsScreen()),
-                  //                 );
-                  //               },
-                  //             ),
-                  //           ),
-                  //           FloatingSearchBarAction.searchToClear(
-                  //             showIfClosed: false,
-                  //           ),
-                  //         ],
-                  //         builder: (context, transition) {
-                  //           return ClipRRect(
-                  //             borderRadius: BorderRadius.circular(8),
-                  //             child: Material(
-                  //               color: Colors.white,
-                  //               elevation: 4.0,
-                  //               child: Container(
-                  //                 height:
-                  //                     MediaQuery.of(context).size.height * 0.8,
-                  //                 child: ListView.builder(
-                  //                     itemCount:
-                  //                         vModel.filteredLocations.length,
-                  //                     itemBuilder:
-                  //                         (BuildContext context, int index) {
-                  //                       return ListTile(
-                  //                           title: Text(vModel
-                  //                               .filteredLocations[index]
-                  //                               .title));
-                  //                     }),
-                  //               ),
-                  //             ),
-                  //           );
-                  //         },
-                  //       )
-                  //     : Container(),
-                ],
+                                ),
+                              ),
+                      )
+                    : Container(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
               ),
             ),
           ),

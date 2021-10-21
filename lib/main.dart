@@ -1,10 +1,12 @@
+import 'package:autosilentflutter/router.dart';
 import 'package:autosilentflutter/screens/intro.dart';
+import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/setup_locator.dart';
 import 'package:autosilentflutter/theme/theme.dart';
 import 'package:dialog_context/dialog_context.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:get_it/get_it.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 
 void main() async {
@@ -33,18 +35,14 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ThemeBuilder(
       defaultThemeMode: ThemeMode.light,
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        backgroundColor: Colors.cyan[700],
-        accentColor: Colors.cyan[700],
-        textTheme: GoogleFonts.latoTextTheme(
-          Theme.of(context).textTheme,
-        ),
-      ),
+      darkTheme: darkTheme,
       lightTheme: ligthTheme,
       builder: (BuildContext context, ThemeData regularTheme,
               ThemeData darkTheme, ThemeMode themeMode) =>
           MaterialApp(
+        navigatorKey: GetIt.I<NavigationService>().navigatorKey,
+        onGenerateRoute: AppRouter.generateRoutes,
+        initialRoute: AppRouter.home,
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,
         locale: context.locale,

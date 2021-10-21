@@ -1,6 +1,9 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/helpers/DbHelper.dart';
+import 'package:autosilentflutter/router.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
+import 'package:autosilentflutter/services/NavigationService.dart';
+import 'package:autosilentflutter/services/SearchService.dart';
 import 'package:get_it/get_it.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:stacked/stacked.dart';
@@ -9,13 +12,15 @@ import 'package:easy_localization/easy_localization.dart';
 class MainViewModel extends FutureViewModel {
   final DbHelper _dbHelper = GetIt.I<DbHelper>();
   final GeofenceService _geofenceService = GetIt.I<GeofenceService>();
-  final FloatingSearchBarController floatingSearchBarController =
-      FloatingSearchBarController();
+  final SearchBarService _searchBarService = GetIt.I<SearchBarService>();
+  final NavigationService _navigationService = GetIt.I<NavigationService>();
+  //
   bool multiSelect = false;
   List<LocationModel> selected = List.empty(growable: true);
   List<LocationModel> locations = List.empty(growable: true);
   List<LocationModel> filteredLocations = List.empty(growable: true);
   List<String> _menuItems = ['settings'.tr(), 'about'.tr()];
+
   @override
   Future<List<LocationModel>> futureToRun() async {
     locations = await _dbHelper.getLocations();
@@ -29,12 +34,21 @@ class MainViewModel extends FutureViewModel {
 
   List<LocationModel> getSelected() => selected;
 
-  FloatingSearchBarController getController() => floatingSearchBarController;
+  FloatingSearchBarController getController() =>
+      _searchBarService.floatingSearchBarController();
 
   List<String> getMenuItems() => _menuItems;
 
   void openSearchBar() {
-    this.floatingSearchBarController.open();
+    _searchBarService.open();
+  }
+
+  void closeSearchBar() {
+    _searchBarService.close();
+  }
+
+  void clearSearchBarText() {
+    _searchBarService.clearText();
   }
 
   void _checkMultiSelect() {
@@ -54,9 +68,11 @@ class MainViewModel extends FutureViewModel {
   }
 
   void filterLocation(String query) {
+    query = query.toLowerCase();
     filteredLocations = locations.where((LocationModel model) {
-      return model.title.contains(query);
+      return model.title.toLowerCase().contains(query);
     }).toList();
+    print(locations);
     notifyListeners();
   }
 
@@ -88,7 +104,7 @@ class MainViewModel extends FutureViewModel {
       }
       print('multi select mode enabled');
     } else {
-      print('//Navigate to detail screen');
+      _navigationService.navigateToLocationDetails(AppRouter.details, model);
     }
     print('handle item tap');
   }
@@ -103,10 +119,11 @@ class MainViewModel extends FutureViewModel {
   }
 
   void handleOnLongPress(LocationModel model) {
-    selected.add(model);
-    setMultiSelect(true);
-    print('multiselect');
-    print(selected);
+    if (!multiSelect) {
+      selected.add(model);
+      setMultiSelect(true);
+    } else
+      _cancelMultiSelect();
   }
 
   void deleteAllSelected() {
@@ -118,5 +135,15 @@ class MainViewModel extends FutureViewModel {
 
   void addLocation() {}
 
-  void handleMenuItemClick(String item) {}
+  void handleMenuItemClick(String item) {
+    switch (item) {
+      case '0':
+        _navigationService.navigateToSettings(AppRouter.setting);
+        break;
+      case '1':
+        _navigationService.navigateToSettings(AppRouter.about);
+        break;
+      default:
+    }
+  }
 }
