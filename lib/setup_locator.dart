@@ -4,6 +4,7 @@ import 'package:autosilentflutter/helpers/GeofenceHelper.dart';
 import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeocoderService.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
+import 'package:autosilentflutter/services/LocationDetailService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/services/SearchService.dart';
 import 'package:get_it/get_it.dart';
@@ -12,6 +13,8 @@ final serviceLocator = GetIt.instance;
 void setUp() {
   print('Register Singletones');
   serviceLocator.registerFactory<GeocoderService>(() => GeocoderService());
+  serviceLocator.registerLazySingleton<LocationDetailService>(
+      () => LocationDetailService());
   serviceLocator.registerLazySingleton<DbHelper>(() => DbHelper());
   serviceLocator
       .registerLazySingleton<GeofenceService>(() => GeofenceService());

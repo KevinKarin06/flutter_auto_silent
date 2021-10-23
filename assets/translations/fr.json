@@ -11,5 +11,9 @@
   "select_all": "Tout Selectioner",
   "search_in_app": "Rechercher dans l'application",
   "about": "À propos",
-  "clear": "Effacer"
+  "clear": "Effacer",
+  "current_location": "Utiliser Ma Position Actuelle",
+  "search_location": "Rechercher Un Lieu",
+  "add_location": "Ajouter Un Lieu",
+  "back": "Retour"
 }

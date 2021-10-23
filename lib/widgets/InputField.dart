@@ -19,8 +19,11 @@ class InputField extends StatefulWidget {
 }
 
 class _InputFieldState extends State<InputField> {
+  var numLine;
   @override
   void initState() {
+    numLine = '\n'.allMatches(widget.text).length + 1;
+    print(numLine);
     super.initState();
   }
 
@@ -30,7 +33,7 @@ class _InputFieldState extends State<InputField> {
       margin: EdgeInsets.only(bottom: 8.0),
       child: TextFormField(
         enabled: widget.enabled,
-        maxLines: widget.maxLines,
+        maxLines: numLine,
         decoration: InputDecoration(
           hintText: widget.text,
           floatingLabelBehavior: FloatingLabelBehavior.always,

@@ -1,5 +1,6 @@
 import 'package:autosilentflutter/view_models/MainViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -12,13 +13,16 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
     print('AnimatedSwitcher Rebuilt...');
     return SafeArea(
       child: AnimatedSwitcher(
+        transitionBuilder: (Widget child, Animation<double> animation) =>
+            ScaleTransition(scale: animation, child: child),
         duration: Duration(milliseconds: 500),
         child: vModel.multiSelect
             ? Material(
-                color: Colors.yellow[100],
+                color: Colors.cyan,
                 elevation: appBarElevation,
                 child: Container(
-                  padding: EdgeInsets.all(16.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,13 +38,16 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                               icon: Icon(Icons.arrow_back),
                             ),
                             SizedBox(
-                              width: 10.0,
+                              width: 5.0,
                             ),
                             Container(
-                              color: Colors.red,
-                              child: Text(
-                                vModel.selected.length.toString(),
-                                style: TextStyle(fontSize: 16.0),
+                              height: 24.0,
+                              width: 24.0,
+                              child: Center(
+                                child: Text(
+                                  vModel.selected.length.toString(),
+                                  style: TextStyle(fontSize: 18.0),
+                                ),
                               ),
                             )
                           ],
@@ -73,8 +80,10 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
               )
             : Container(
                 child: FloatingSearchAppBar(
+                  color: Colors.cyan,
                   height: kToolbarHeight,
                   onQueryChanged: (String val) {
+                    Logger().d('message', val);
                     vModel.filterLocation(val);
                   },
                   onSubmitted: (String val) {
@@ -104,7 +113,7 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                   alwaysOpened: false,
                   actions: [
                     FloatingSearchBarAction(
-                      showIfOpened: true,
+                      showIfOpened: vModel.showCamcelIcon,
                       showIfClosed: false,
                       child: CircularButton(
                         tooltip: 'clear'.tr(),

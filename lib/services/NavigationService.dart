@@ -1,5 +1,8 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
+import 'package:autosilentflutter/services/LocationDetailService.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 
 class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -14,6 +17,9 @@ class NavigationService {
 
   Future<dynamic> navigateToLocationDetails(
       String routeName, LocationModel model) async {
+    GetIt.I<LocationDetailService>().setModel(model);
+    Logger().d(
+        'From Navigation Service', GetIt.I<LocationDetailService>().getModel());
     return navigatorKey.currentState.pushNamed(routeName, arguments: model);
   }
 

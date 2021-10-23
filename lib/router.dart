@@ -23,7 +23,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => AboutScreen());
       case details:
         LocationModel model = settings.arguments as LocationModel;
-        return MaterialPageRoute(builder: (_) => LocationDetails(model: model));
+        return MaterialPageRoute(builder: (_) => LocationDetails());
         break;
       default:
         return MaterialPageRoute(builder: (_) => Intro());

@@ -1,14 +1,17 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
+import 'package:autosilentflutter/services/LocationDetailService.dart';
+import 'package:get_it/get_it.dart';
 import 'package:stacked/stacked.dart';
 
 class LocationDetailViewModel extends BaseViewModel {
+  final LocationDetailService _locationDetailService =
+      GetIt.I<LocationDetailService>();
+  bool isDirty = false;
   LocationModel model;
   LocationModel clonedModel;
   void initialise() {
-    print('locationn model working');
+    model = _locationDetailService.getModel();
   }
-
-  bool isDirty = false;
 
   void set(LocationModel m) {
     this.model = m;

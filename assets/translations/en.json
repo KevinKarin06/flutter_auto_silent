@@ -7,7 +7,7 @@
   "delete": "Delete",
   "delete_all": "Delete All",
   "select_all": "Select All",
-  "curent_location": "Use My Current Location",
+  "current_location": "Use My Current Location",
   "search_location": "Search Location Online",
   "search": "Search",
   "settings": "Settings",
@@ -17,5 +17,7 @@
   "always": "Always",
   "search_in_app": "Search in App",
   "about": "About",
-  "clear": "Clear"
+  "clear": "Clear",
+  "add_location": "Add Location",
+  "back": "Back"
 }

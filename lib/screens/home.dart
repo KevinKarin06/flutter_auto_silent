@@ -139,26 +139,28 @@ class _MyHomePageState extends State<MyHomePage>
               child: Center(
                 child: !vModel.isBusy && vModel.dataReady
                     ? Container(
-                        child: vModel.data.isNotEmpty
+                        child: vModel.locations.isNotEmpty
                             ? ListView.builder(
-                                itemCount: vModel.data.length,
+                                itemCount: vModel.locations.length,
                                 itemBuilder: (context, index) {
                                   return ListTile(
                                     onTap: () {
-                                      vModel.handleItemTap(vModel.data[index]);
+                                      vModel.handleItemTap(
+                                          vModel.locations[index]);
                                     },
                                     onLongPress: () {
                                       vModel.handleOnLongPress(
-                                          vModel.data[index]);
+                                          vModel.locations[index]);
                                     },
-                                    selected:
-                                        vModel.isSelected(vModel.data[index]),
+                                    selected: vModel
+                                        .isSelected(vModel.locations[index]),
                                     selectedTileColor: Colors.grey[300],
                                     title: Text(
-                                      vModel.data[index].title.toUpperCase(),
+                                      vModel.locations[index].title
+                                          .toUpperCase(),
                                     ),
                                     subtitle: Text(
-                                      vModel.data[index].subtitle,
+                                      vModel.locations[index].subtitle,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -169,8 +171,8 @@ class _MyHomePageState extends State<MyHomePage>
                                       alignment: Alignment.centerLeft,
                                       widthFactor: 0,
                                       child: Icon(
-                                        !vModel.selected
-                                                .contains(vModel.data[index])
+                                        !vModel.selected.contains(
+                                                vModel.locations[index])
                                             ? Icons.place_rounded
                                             : Icons.check_circle_rounded,
                                         size: 28.0,

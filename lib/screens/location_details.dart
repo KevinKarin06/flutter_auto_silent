@@ -1,5 +1,4 @@
-import 'package:autosilentflutter/database/LocationModel.dart';
-import 'package:autosilentflutter/view_models/LocationDetaialViewModel.dart';
+import 'package:autosilentflutter/view_models/LocationDetailViewModel.dart';
 import 'package:autosilentflutter/widgets/CustomSwitch.dart';
 import 'package:autosilentflutter/widgets/InputField.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +6,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:stacked/stacked.dart';
 
 class LocationDetails extends StatefulWidget {
-  final LocationModel model;
-  const LocationDetails({Key key, @required this.model}) : super(key: key);
+  // final LocationModel model;
+  // const LocationDetails({Key key, @required this.model}) : super(key: key);
 
   @override
   _LocationDetailsState createState() => _LocationDetailsState();
@@ -25,13 +24,16 @@ class _LocationDetailsState extends State<LocationDetails> {
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => LocationDetailViewModel(),
-      onModelReady: (model) => model.set(widget.model),
+      onModelReady: (LocationDetailViewModel model) => model.initialise(),
       builder: (BuildContext context, LocationDetailViewModel vModel,
               Widget child) =>
           Scaffold(
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.transparent,
+          title: Text(vModel.model.title,
+              maxLines: 1, overflow: TextOverflow.ellipsis),
+          centerTitle: true,
           actions: [
             IconButton(
               tooltip: 'delete'.tr(),
@@ -78,6 +80,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                     CustomSwitch(
                         leftText: 'once'.tr(),
                         rightText: 'always'.tr(),
+                        label: 'Trigger',
                         defaultValue: vModel.model.justOnce,
                         onValueChanged: (val) {
                           print(val);
