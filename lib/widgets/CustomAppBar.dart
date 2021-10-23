@@ -21,8 +21,7 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                 color: Colors.cyan,
                 elevation: appBarElevation,
                 child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,7 +140,6 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                             print(selected);
                           },
                           padding: EdgeInsets.zero,
-                          // initialValue: choices[_selection],
                           itemBuilder: (BuildContext context) {
                             return vModel
                                 .getMenuItems()
@@ -157,10 +155,7 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                     )
                   ],
                   body: Material(
-                    child: Container(
-                      color: Colors.red,
-                      height: 400,
-                    ),
+                    child: Container(),
                   ),
                 ),
               ),

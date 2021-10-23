@@ -1,4 +1,6 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
+import 'package:autosilentflutter/services/DatabaseService.dart';
+import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/LocationDetailService.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -9,6 +11,9 @@ import 'package:easy_localization/easy_localization.dart';
 class LocationDetailViewModel extends BaseViewModel {
   final LocationDetailService _locationDetailService =
       GetIt.I<LocationDetailService>();
+  final GeofenceService _geofenceService = GetIt.I<GeofenceService>();
+  final DatabaseService _databaseService = GetIt.I<DatabaseService>();
+  //
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _radiusController = TextEditingController();
   bool isDirty = false;
@@ -97,6 +102,11 @@ class LocationDetailViewModel extends BaseViewModel {
   }
 
   void saveLocation() {
+    if (model.id != null) {
+      _databaseService.updateLocation(model);
+    } else {
+      //create
+    }
     Logger().d('Model To Save', model.toMap());
   }
 }

@@ -134,74 +134,70 @@ class _MyHomePageState extends State<MyHomePage>
             child: Icon(Icons.add),
           ),
           body: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Center(
-                child: !vModel.isBusy && vModel.dataReady
-                    ? Container(
-                        child: vModel.locations.isNotEmpty
-                            ? ListView.builder(
-                                itemCount: vModel.locations.length,
-                                itemBuilder: (context, index) {
-                                  return ListTile(
-                                    onTap: () {
-                                      vModel.handleItemTap(
-                                          vModel.locations[index]);
-                                    },
-                                    onLongPress: () {
-                                      vModel.handleOnLongPress(
-                                          vModel.locations[index]);
-                                    },
-                                    selected: vModel
-                                        .isSelected(vModel.locations[index]),
-                                    selectedTileColor: Colors.grey[200],
-                                    title: Text(
-                                      vModel.locations[index].title
-                                          .toUpperCase(),
-                                    ),
-                                    subtitle: Text(
-                                      vModel.locations[index].subtitle,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    minVerticalPadding: 8.0,
-                                    trailing:
-                                        Icon(Icons.arrow_forward_ios_rounded),
-                                    leading: Align(
-                                      alignment: Alignment.centerLeft,
-                                      widthFactor: 0,
-                                      child: Icon(
-                                        !vModel.selected.contains(
-                                                vModel.locations[index])
-                                            ? Icons.place_rounded
-                                            : Icons.check_circle_rounded,
-                                        size: 28.0,
-                                      ),
-                                    ),
-                                  );
-                                })
-                            : Container(
-                                child: Center(
-                                  child: AnimatedTextKit(
-                                    totalRepeatCount: 1,
-                                    animatedTexts: [
-                                      TypewriterAnimatedText(
-                                        'No Locations Added Yet',
-                                      ),
-                                      TypewriterAnimatedText(
-                                        'Add Locations to get Started',
-                                      ),
-                                    ],
+            child: Center(
+              child: !vModel.isBusy && vModel.dataReady
+                  ? Container(
+                      child: vModel.locations.isNotEmpty
+                          ? ListView.builder(
+                              itemCount: vModel.locations.length,
+                              itemBuilder: (context, index) {
+                                return ListTile(
+                                  onTap: () {
+                                    vModel
+                                        .handleItemTap(vModel.locations[index]);
+                                  },
+                                  onLongPress: () {
+                                    vModel.handleOnLongPress(
+                                        vModel.locations[index]);
+                                  },
+                                  selected: vModel
+                                      .isSelected(vModel.locations[index]),
+                                  selectedTileColor: Colors.grey[200],
+                                  title: Text(
+                                    vModel.locations[index].title.toUpperCase(),
                                   ),
+                                  subtitle: Text(
+                                    vModel.locations[index].subtitle,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  minVerticalPadding: 8.0,
+                                  trailing:
+                                      Icon(Icons.arrow_forward_ios_rounded),
+                                  leading: Align(
+                                    alignment: Alignment.centerLeft,
+                                    widthFactor: 0,
+                                    child: Icon(
+                                      !vModel.selected
+                                              .contains(vModel.locations[index])
+                                          ? Icons.place_rounded
+                                          : Icons.check_circle_rounded,
+                                      size: 28.0,
+                                    ),
+                                  ),
+                                );
+                              })
+                          : Container(
+                              child: Center(
+                                child: AnimatedTextKit(
+                                  totalRepeatCount: 1,
+                                  animatedTexts: [
+                                    TypewriterAnimatedText(
+                                      'No Locations Added Yet',
+                                    ),
+                                    TypewriterAnimatedText(
+                                      'Add Locations to get Started',
+                                    ),
+                                  ],
                                 ),
                               ),
-                      )
-                    : Container(
-                        child: Center(
-                          child: CircularProgressIndicator(),
-                        ),
+                            ),
+                    )
+                  : Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
                       ),
-              ),
+                    ),
             ),
           ),
         ),

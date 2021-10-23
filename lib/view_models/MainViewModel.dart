@@ -1,6 +1,7 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/helpers/DbHelper.dart';
 import 'package:autosilentflutter/router.dart';
+import 'package:autosilentflutter/services/DatabaseService.dart';
 import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
@@ -12,7 +13,7 @@ import 'package:stacked/stacked.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class MainViewModel extends FutureViewModel {
-  final DbHelper _dbHelper = GetIt.I<DbHelper>();
+  final DatabaseService _databaseService = GetIt.I<DatabaseService>();
   final GeofenceService _geofenceService = GetIt.I<GeofenceService>();
   final SearchBarService _searchBarService = GetIt.I<SearchBarService>();
   final NavigationService _navigationService = GetIt.I<NavigationService>();
@@ -27,7 +28,7 @@ class MainViewModel extends FutureViewModel {
 
   @override
   Future<List<LocationModel>> futureToRun() async {
-    locations = await _dbHelper.getLocations();
+    locations = await _databaseService.getLocations();
     // filteredLocations.addAll(locations);
     return locations;
   }
