@@ -19,5 +19,13 @@
   "about": "About",
   "clear": "Clear",
   "add_location": "Add Location",
-  "back": "Back"
+  "back": "Back",
+  "radius_validation_null": "The radius is required",
+  "radius_validation_wrong": "The raduis shounld be greater than 200",
+  "radius": "Radius",
+  "location_validation": "Location is required",
+  "location_details": "Location Details",
+  "latitude": "Latitude",
+  "longitude": "Longitude",
+  "location_notify": "Trigger"
 }

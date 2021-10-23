@@ -46,6 +46,7 @@ dependencies:
   stacked_themes: ^0.3.6
   uiblock: ^0.1.0
   uuid: 3.0.4
+  equatable: ^2.0.0
 
 dev_dependencies:
   flutter_test:

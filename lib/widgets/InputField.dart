@@ -1,8 +1,10 @@
+import 'package:autosilentflutter/Utils.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class InputField extends StatefulWidget {
   final bool enabled;
-  final String label, text;
+  final String label, text, hint;
   final int maxLines;
   final Function validator;
   const InputField(
@@ -11,7 +13,8 @@ class InputField extends StatefulWidget {
       this.label,
       this.text,
       this.maxLines,
-      this.validator})
+      this.validator,
+      this.hint})
       : super(key: key);
 
   @override
@@ -19,11 +22,11 @@ class InputField extends StatefulWidget {
 }
 
 class _InputFieldState extends State<InputField> {
-  var numLine;
+  int numLine;
   @override
   void initState() {
-    numLine = '\n'.allMatches(widget.text).length + 1;
-    print(numLine);
+    numLine = Utils.numberOfLines(widget.text);
+    Logger().d('numLine', numLine);
     super.initState();
   }
 
@@ -32,8 +35,11 @@ class _InputFieldState extends State<InputField> {
     return Container(
       margin: EdgeInsets.only(bottom: 8.0),
       child: TextFormField(
+        validator: (String val) {
+          return widget.validator(val);
+        },
         enabled: widget.enabled,
-        maxLines: numLine,
+        maxLines: 1,
         decoration: InputDecoration(
           hintText: widget.text,
           floatingLabelBehavior: FloatingLabelBehavior.always,

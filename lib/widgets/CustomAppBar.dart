@@ -32,6 +32,7 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             IconButton(
+                              tooltip: 'back'.tr(),
                               onPressed: () {
                                 vModel.cancelSelection();
                               },
@@ -91,20 +92,20 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                   },
                   elevation: appBarElevation,
                   leadingActions: [
-                    FloatingSearchBarAction(
-                      showIfClosed: false,
-                      showIfOpened: true,
-                      child: CircularButton(
-                        tooltip: 'back'.tr(),
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () {
-                          vModel.closeSearchBar();
-                        },
-                      ),
-                    ),
+                    // FloatingSearchBarAction(
+                    //   showIfClosed: false,
+                    //   showIfOpened: true,
+                    //   child: CircularButton(
+                    //     tooltip: 'back'.tr(),
+                    //     icon: const Icon(Icons.arrow_back),
+                    //     onPressed: () {
+                    //       vModel.closeSearchBar();
+                    //     },
+                    //   ),
+                    // ),
                   ],
                   controller: vModel.getController(),
-                  hint: 'app_name'.tr(),
+                  hint: 'search'.tr(),
                   hideKeyboardOnDownScroll: true,
                   title: Text(
                     'app_name'.tr(),
@@ -155,7 +156,12 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                           }),
                     )
                   ],
-                  body: null,
+                  body: Material(
+                    child: Container(
+                      color: Colors.red,
+                      height: 400,
+                    ),
+                  ),
                 ),
               ),
       ),

@@ -6,6 +6,7 @@ import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/services/SearchService.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -27,7 +28,7 @@ class MainViewModel extends FutureViewModel {
   @override
   Future<List<LocationModel>> futureToRun() async {
     locations = await _dbHelper.getLocations();
-    filteredLocations.addAll(locations);
+    // filteredLocations.addAll(locations);
     return locations;
   }
 
@@ -83,12 +84,12 @@ class MainViewModel extends FutureViewModel {
       setShowCancelIcon(true);
     } else {
       setShowCancelIcon(false);
-      this.locations = filteredLocations;
     }
-    this.locations = locations.where((LocationModel model) {
+    this.filteredLocations = locations.where((LocationModel model) {
       return model.title.toLowerCase().contains(query);
     }).toList();
     notifyListeners();
+    Logger().d('Filtered', filteredLocations.length);
   }
 
   List<LocationModel> getFilteredList() => filteredLocations;

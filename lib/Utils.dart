@@ -34,4 +34,11 @@ class Utils {
     });
     return capitalized.join(' ');
   }
+
+  static int numberOfLines(String text) {
+    final span = TextSpan(text: text);
+    final tp = TextPainter(text: span, textDirection: TextDirection.ltr);
+    tp.layout();
+    return tp.computeLineMetrics().length;
+  }
 }

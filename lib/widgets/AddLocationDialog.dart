@@ -11,56 +11,62 @@ class AddLocationDialog extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => DialogViewModel(),
       builder: (BuildContext context, DialogViewModel dModel, Widget child) =>
-          SimpleDialog(
-        children: [
-          Container(
-            height: 50,
-            child: InkWell(
-              onTap: () {},
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.location_searching_rounded),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    Text(
-                      'current_location'.tr(),
-                    ),
-                  ],
+          WillPopScope(
+        onWillPop: () {
+          return Future.value(true);
+        },
+        child: Dialog(
+          child: Container(
+            height: MediaQuery.of(context).size.height / 3.5,
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Center(
+                  child: Text(
+                    'add_location'.tr(),
+                    style: TextStyle(fontSize: 18.0),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Divider(
-            color: Colors.grey,
-            height: 1,
-          ),
-          Container(
-            height: 50,
-            child: InkWell(
-              onTap: () {},
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.place_rounded),
-                    SizedBox(
-                      width: 5.0,
-                    ),
-                    Text(
-                      'search_location'.tr(),
-                    ),
-                  ],
+                Container(
+                  padding: EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Divider(
+                        height: 0,
+                      ),
+                      Container(
+                        height: 50,
+                        child: InkWell(
+                          child: Center(
+                            child: Text(
+                              'current_location'.tr(),
+                            ),
+                          ),
+                          onTap: () {},
+                        ),
+                      ),
+                      Divider(
+                        height: 0,
+                      ),
+                      Container(
+                        height: 50,
+                        child: InkWell(
+                          child: Center(
+                            child: Text(
+                              'search_location'.tr(),
+                            ),
+                          ),
+                          onTap: () {},
+                        ),
+                      ),
+                      Divider(
+                        height: 0,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
-        title: Center(
-          child: Text(
-            'add_location'.tr(),
           ),
         ),
       ),

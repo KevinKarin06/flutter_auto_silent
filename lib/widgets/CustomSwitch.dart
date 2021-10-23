@@ -119,7 +119,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
         ),
         Positioned(
           left: 8.0,
-          top: -1.0,
+          top: 0.0,
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 4.0),
             color: Theme.of(context).scaffoldBackgroundColor,
@@ -128,7 +128,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
                 Text(
                   widget.label,
                   style: TextStyle(
-                    fontSize: 13.0,
+                    fontSize: 12.0,
                   ),
                 ),
               ],

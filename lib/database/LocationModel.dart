@@ -1,13 +1,15 @@
 import 'package:autosilentflutter/Constants.dart';
 import 'package:autosilentflutter/Utils.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_photon/flutter_photon.dart';
 
-class LocationModel {
+// ignore: must_be_immutable
+class LocationModel extends Equatable {
   final double latitude, longitude;
   String title, subtitle, uuid;
   final int id;
-  final int radius;
-  final bool justOnce;
+  int radius;
+  bool justOnce;
 
   LocationModel({
     this.justOnce = false,
@@ -28,6 +30,8 @@ class LocationModel {
       'title': title,
       'subtitle': subtitle,
       'uuid': uuid,
+      'radius': radius,
+      'justOnce': justOnce,
     };
   }
 
@@ -59,6 +63,7 @@ class LocationModel {
   }
   factory LocationModel.clone(LocationModel model) {
     return LocationModel(
+      id: model.id,
       title: model.title,
       subtitle: model.subtitle,
       latitude: model.latitude,
@@ -84,4 +89,15 @@ class LocationModel {
         longitude: photon.coordinates.longitude,
         uuid: Utils.generateuuid());
   }
+
+  @override
+  List<Object> get props => [
+        justOnce,
+        radius,
+        latitude,
+        longitude,
+        title,
+        subtitle,
+        uuid,
+      ];
 }

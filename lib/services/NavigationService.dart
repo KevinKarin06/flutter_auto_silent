@@ -18,8 +18,6 @@ class NavigationService {
   Future<dynamic> navigateToLocationDetails(
       String routeName, LocationModel model) async {
     GetIt.I<LocationDetailService>().setModel(model);
-    Logger().d(
-        'From Navigation Service', GetIt.I<LocationDetailService>().getModel());
     return navigatorKey.currentState.pushNamed(routeName, arguments: model);
   }
 
