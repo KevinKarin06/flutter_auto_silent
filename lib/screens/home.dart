@@ -154,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage>
                                     },
                                     selected: vModel
                                         .isSelected(vModel.locations[index]),
-                                    selectedTileColor: Colors.grey[300],
+                                    selectedTileColor: Colors.grey[200],
                                     title: Text(
                                       vModel.locations[index].title
                                           .toUpperCase(),

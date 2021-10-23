@@ -4,14 +4,14 @@ class CustomSwitch extends StatefulWidget {
   final String leftText, rightText, label;
   final bool defaultValue;
   final Function onValueChanged;
-  const CustomSwitch(
-      {Key key,
-      this.leftText,
-      this.rightText,
-      this.defaultValue = false,
-      this.onValueChanged,
-      this.label})
-      : super(key: key);
+  CustomSwitch({
+    Key key,
+    this.leftText,
+    this.rightText,
+    this.defaultValue = false,
+    this.onValueChanged,
+    this.label,
+  }) : super(key: key);
 
   @override
   _CustomSwitchState createState() => _CustomSwitchState();
@@ -21,6 +21,15 @@ class _CustomSwitchState extends State<CustomSwitch> {
   bool _selected = false;
   final double _initialDistance = 8.0;
   double _distance;
+  void _updatePosition() {
+    _selected = widget.defaultValue;
+    if (widget.defaultValue) {
+      _distance = 200.0;
+    } else {
+      _distance = _initialDistance;
+    }
+  }
+
   @override
   void initState() {
     _selected = widget.defaultValue;
@@ -33,6 +42,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
 
   @override
   Widget build(BuildContext context) {
+    _updatePosition();
     return Stack(
       children: [
         AnimatedPositioned(
@@ -77,7 +87,6 @@ class _CustomSwitchState extends State<CustomSwitch> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    // duration: const Duration(milliseconds: 200),
                     child: Text(
                       widget.leftText,
                       maxLines: 1,
@@ -96,13 +105,12 @@ class _CustomSwitchState extends State<CustomSwitch> {
                     });
                     widget.onValueChanged(_selected);
                   },
-                  child: AnimatedContainer(
+                  child: Container(
                     padding:
                         EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    duration: const Duration(milliseconds: 500),
                     child: Text(
                       widget.rightText,
                       maxLines: 1,
