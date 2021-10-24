@@ -1,33 +1,33 @@
 import 'package:autosilentflutter/helpers/DbHelper.dart';
 import 'package:autosilentflutter/helpers/GeocoderHelper.dart';
 import 'package:autosilentflutter/helpers/GeofenceHelper.dart';
+import 'package:autosilentflutter/services/ApiService.dart';
 import 'package:autosilentflutter/services/DatabaseService.dart';
 import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeocoderService.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/LocationDetailService.dart';
+import 'package:autosilentflutter/services/LocationService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/services/SearchService.dart';
 import 'package:autosilentflutter/services/SettingsService.dart';
+import 'package:autosilentflutter/view_models/MainViewModel.dart';
 import 'package:get_it/get_it.dart';
 
-final serviceLocator = GetIt.instance;
+final locator = GetIt.instance;
 void setUp() {
   print('Register Singletones');
-  serviceLocator.registerFactory<GeocoderService>(() => GeocoderService());
-  serviceLocator.registerLazySingleton<LocationDetailService>(
+  locator.registerFactory<GeocoderService>(() => GeocoderService());
+  locator.registerLazySingleton<LocationDetailService>(
       () => LocationDetailService());
-  serviceLocator.registerLazySingleton<DbHelper>(() => DbHelper());
-  serviceLocator
-      .registerLazySingleton<GeofenceService>(() => GeofenceService());
-  serviceLocator
-      .registerLazySingleton<SearchBarService>(() => SearchBarService());
-  serviceLocator
-      .registerLazySingleton<NavigationService>(() => NavigationService());
-  serviceLocator.registerLazySingleton<DialogService>(() => DialogService());
-  serviceLocator
-      .registerLazySingleton<SettingsService>(() => SettingsService());
-  serviceLocator
-      .registerLazySingleton<DatabaseService>(() => DatabaseService());
-  // serviceLocator.registerLazySingleton<GeocoderHelper>(() => GeofenceHelper());
+  locator.registerLazySingleton<DbHelper>(() => DbHelper());
+  locator.registerLazySingleton<GeofenceService>(() => GeofenceService());
+  locator.registerLazySingleton<SearchBarService>(() => SearchBarService());
+  locator.registerLazySingleton<NavigationService>(() => NavigationService());
+  locator.registerLazySingleton<DialogService>(() => DialogService());
+  locator.registerLazySingleton<SettingsService>(() => SettingsService());
+  locator.registerLazySingleton<DatabaseService>(() => DatabaseService());
+  locator.registerLazySingleton<MainViewModel>(() => MainViewModel());
+  locator.registerLazySingleton<LocationService>(() => LocationService());
+  locator.registerLazySingleton<ApiService>(() => ApiService());
 }

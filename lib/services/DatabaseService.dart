@@ -1,6 +1,7 @@
 import 'package:autosilentflutter/Constants.dart';
 import 'package:autosilentflutter/database/Database.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
+import 'package:logger/logger.dart';
 
 class DatabaseService {
   Future<int> createLocation(LocationModel model) async {
@@ -32,12 +33,13 @@ class DatabaseService {
 
   Future<List<LocationModel>> getLocations() async {
     final database = await LocationDatabase().getDatabase();
-    // Query the table for all The Dogs.
+    // Query the table for all Models
     final List<Map<String, dynamic>> maps =
         await database.query(Constants.TABLE_NAME);
 
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    // Convert the List<Map<String, dynamic> into a List<Locations>.
     return List.generate(maps.length, (i) {
+      Logger().d('Locations $i', maps[i]);
       return LocationModel.fromMap(maps[i]);
     });
   }

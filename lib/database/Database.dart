@@ -14,12 +14,24 @@ class LocationDatabase {
   Future<Database> _initDatabase() async {
     return await openDatabase(
       join(await getDatabasesPath(), Constants.DATABASE_NAME),
+      onUpgrade: _onUpgrade,
       onCreate: (db, version) {
         return db.execute('''CREATE TABLE ${Constants.TABLE_NAME}
             (id INTEGER PRIMARY KEY, latitude INTEGER, 
-            longitude INTEGER, title TEXT, subtitle TEXT NOT NULL, uuid TEXT,radius INT DEFAULT 500,justOnce BOOLEAN DEFAULT FALSE)''');
+            longitude INTEGER, 
+            title TEXT, 
+            subtitle TEXT NOT NULL, 
+            uuid TEXT)''');
       },
-      version: 1,
+      version: 3,
     );
+  }
+
+  void _onUpgrade(Database db, int oldVersion, int newVersion) {
+    if (oldVersion < newVersion) {
+      db.execute('''ALTER TABLE ${Constants.TABLE_NAME}
+            ADD COLUMN radius INTEGER DEFAULT 500,
+            justOnce INTEGER DEFAULT 0''');
+    }
   }
 }

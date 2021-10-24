@@ -1,5 +1,4 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
-import 'package:autosilentflutter/helpers/DbHelper.dart';
 import 'package:autosilentflutter/router.dart';
 import 'package:autosilentflutter/services/DatabaseService.dart';
 import 'package:autosilentflutter/services/DialogService.dart';

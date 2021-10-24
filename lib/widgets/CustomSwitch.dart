@@ -135,6 +135,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
               children: [
                 Text(
                   widget.label,
+                  maxLines: 1,
                   style: TextStyle(
                     fontSize: 12.0,
                   ),

@@ -31,7 +31,7 @@ class LocationModel extends Equatable {
       'subtitle': subtitle,
       'uuid': uuid,
       'radius': radius,
-      'justOnce': justOnce,
+      'justOnce': justOnce == true ? 1 : 0,
     };
   }
 
@@ -59,6 +59,8 @@ class LocationModel extends Equatable {
       subtitle: map['subtitle'],
       title: map['title'],
       uuid: map['uuid'],
+      radius: map['radius'] == null ? 500 : map['radius'],
+      justOnce: map['justOnce'] == 1 ? true : false,
     );
   }
   factory LocationModel.clone(LocationModel model) {

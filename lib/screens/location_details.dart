@@ -1,6 +1,5 @@
 import 'package:autosilentflutter/view_models/LocationDetailViewModel.dart';
 import 'package:autosilentflutter/widgets/CustomSwitch.dart';
-import 'package:autosilentflutter/widgets/InputField.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:logger/logger.dart';
@@ -40,7 +39,6 @@ class _LocationDetailsState extends State<LocationDetails> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
-          centerTitle: true,
           actions: [
             vModel.getModel().id != null
                 ? IconButton(
@@ -133,11 +131,8 @@ class _LocationDetailsState extends State<LocationDetails> {
                         onValueChanged: (val) {
                           vModel.setJustOnce(val);
                         }),
-                    AnimatedSwitcher(
+                    AnimatedContainer(
                       duration: Duration(milliseconds: 500),
-                      transitionBuilder:
-                          (Widget child, Animation<double> animation) =>
-                              ScaleTransition(scale: animation, child: child),
                       child: vModel.isDirty
                           ? Container(
                               padding: EdgeInsets.symmetric(vertical: 8.0),
@@ -218,7 +213,7 @@ class _LocationDetailsState extends State<LocationDetails> {
   }
 
   Widget mySpacer() {
-    return SizedBox(height: 8.0);
+    return SizedBox(height: 10.0);
   }
 
   @override

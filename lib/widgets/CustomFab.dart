@@ -82,19 +82,7 @@ class _CustomFabState extends State<CustomFab> {
                         child: IconButton(
                           tooltip: 'Search Locations',
                           icon: Icon(Icons.search_rounded),
-                          onPressed: () {
-                            final Widget page = AutoComplete(
-                              onSelect: (LocationModel model) {
-                                widget.onSearchResult(model);
-                              },
-                            );
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => page,
-                              ),
-                            );
-                          },
+                          onPressed: () {},
                         ),
                       ),
                       Flexible(

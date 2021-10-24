@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 final double borderRadius = 6.0;
 
 final ThemeData darkTheme = ThemeData(
-  primarySwatch: Colors.cyan,
+  primaryColor: Colors.cyan,
   brightness: Brightness.dark,
   fontFamily: GoogleFonts.lato().fontFamily,
   buttonTheme: ButtonThemeData(
@@ -31,9 +31,10 @@ final ThemeData darkTheme = ThemeData(
   ),
 );
 final ThemeData ligthTheme = ThemeData(
-  primarySwatch: Colors.cyan,
+  primaryColor: Colors.cyan,
   brightness: Brightness.light,
   fontFamily: GoogleFonts.lato().fontFamily,
+  textTheme: TextTheme(),
   buttonTheme: ButtonThemeData(
     shape: RoundedRectangleBorder(
       side: BorderSide(color: Colors.red),

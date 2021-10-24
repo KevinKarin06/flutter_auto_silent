@@ -1,4 +1,5 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
+import 'package:autosilentflutter/router.dart';
 import 'package:autosilentflutter/services/LocationDetailService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
@@ -13,6 +14,10 @@ class NavigationService {
 
   Future<dynamic> navigateToAbout(String routeName) async {
     return navigatorKey.currentState.pushNamed(routeName);
+  }
+
+  Future<dynamic> navigateToAutoComplete() async {
+    return navigatorKey.currentState.pushNamed(AppRouter.searchLocation);
   }
 
   Future<dynamic> navigateToLocationDetails(

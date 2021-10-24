@@ -10,7 +10,7 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
   final double appBarElevation = 4.0;
   @override
   Widget build(BuildContext context, MainViewModel vModel) {
-    print('AnimatedSwitcher Rebuilt...');
+    Logger().d('AnimatedSwitcher Rebuilt...');
     return SafeArea(
       child: AnimatedSwitcher(
         transitionBuilder: (Widget child, Animation<double> animation) =>
@@ -18,8 +18,8 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
         duration: Duration(milliseconds: 500),
         child: vModel.multiSelect
             ? Material(
-                color: Colors.cyan,
-                elevation: appBarElevation,
+                // color: Colors.cyan,
+                // elevation: appBarElevation,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                   child: Center(
@@ -80,7 +80,9 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
               )
             : Container(
                 child: FloatingSearchAppBar(
-                  color: Colors.cyan,
+                  padding: EdgeInsets.only(left: 16.0),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  debounceDelay: Duration(milliseconds: 500),
                   height: kToolbarHeight,
                   onQueryChanged: (String val) {
                     Logger().d('message', val);
@@ -89,20 +91,6 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                   onSubmitted: (String val) {
                     vModel.filterLocation(val);
                   },
-                  elevation: appBarElevation,
-                  leadingActions: [
-                    // FloatingSearchBarAction(
-                    //   showIfClosed: false,
-                    //   showIfOpened: true,
-                    //   child: CircularButton(
-                    //     tooltip: 'back'.tr(),
-                    //     icon: const Icon(Icons.arrow_back),
-                    //     onPressed: () {
-                    //       vModel.closeSearchBar();
-                    //     },
-                    //   ),
-                    // ),
-                  ],
                   controller: vModel.getController(),
                   hint: 'search'.tr(),
                   hideKeyboardOnDownScroll: true,
