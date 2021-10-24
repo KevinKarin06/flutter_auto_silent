@@ -4,10 +4,11 @@ import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_photon/flutter_photon.dart';
 import 'package:http/http.dart' as http;
+  import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiService {
   String _url = 'https://photon.komoot.io/api/?lang=en&q=';
-  final String key = 'lNOPvqo4wWCS4Po2KGwDugaYhcemAdMu';
+  final String key = dotenv.env['PHOTON_KEY'];
   Future<List<LocationModel>> autoComplete(String query) async {
     print('Api Helper Function called');
     _url += query.trim().toLowerCase();
