@@ -26,6 +26,13 @@ class NavigationService {
     return navigatorKey.currentState.pushNamed(routeName, arguments: model);
   }
 
+  Future<dynamic> navigateToLocationDetailsAndReplace(
+      String routeName, LocationModel model) async {
+    GetIt.I<LocationDetailService>().setModel(model);
+    return navigatorKey.currentState
+        .pushReplacementNamed(routeName, arguments: model);
+  }
+
   void goBack() {
     return navigatorKey.currentState.pop();
   }

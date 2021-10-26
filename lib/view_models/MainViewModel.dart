@@ -141,10 +141,10 @@ class MainViewModel extends FutureViewModel {
   }
 
   void deleteAllSelected() {
-    selected.forEach((LocationModel model) async {
-      await _geofenceService.removeGeofence(model);
-    });
-    notifyListeners();
+    _dialogService.deleteDialog();
+    // selected.forEach((LocationModel model) async {
+    //   await _geofenceService.removeGeofence(model);
+    // });
   }
 
   void addLocation() {

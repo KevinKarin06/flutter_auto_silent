@@ -13,9 +13,11 @@ class AddLocationDialog extends StatelessWidget {
       builder: (BuildContext context, AddLocationDialogViewModel dModel,
               Widget child) =>
           WillPopScope(
-        onWillPop: () {
-          Navigator.pop(context);
-          return Future.value(true);
+        onWillPop: () async {
+          return Future.delayed(
+            Duration(milliseconds: 100),
+            () => Future.value(true),
+          );
         },
         child: SimpleDialog(
           title: Center(
@@ -55,6 +57,7 @@ class AddLocationDialog extends StatelessWidget {
                         ),
                       ),
                       onTap: () {
+                        Navigator.pop(context);
                         dModel.searchLocationOnline();
                       },
                     ),

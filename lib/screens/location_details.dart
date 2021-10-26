@@ -43,7 +43,9 @@ class _LocationDetailsState extends State<LocationDetails> {
             vModel.getModel().id != null
                 ? IconButton(
                     tooltip: 'delete'.tr(),
-                    onPressed: () {},
+                    onPressed: () {
+                      vModel.onDelete(vModel.model);
+                    },
                     icon: Icon(
                       Icons.delete_rounded,
                       color: Colors.red,
@@ -180,6 +182,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                                     ),
                                   ),
                                   onPressed: () {
+                                    _formKey.currentState.validate();
                                     vModel.clearChanges();
                                   },
                                   child: Center(

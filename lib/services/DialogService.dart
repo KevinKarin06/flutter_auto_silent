@@ -1,10 +1,22 @@
+import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/widgets/AddLocationDialog.dart';
-import 'package:dialog_context/dialog_context.dart';
+import 'package:autosilentflutter/widgets/ConfirmDialog.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 class DialogService {
+  final NavigationService _navigationService = GetIt.I<NavigationService>();
   void addLocationDialog() {
-    DialogContext().showDialog(builder: (context) => AddLocationDialog());
+    showDialog(
+      context: _navigationService.navigatorKey.currentContext,
+      builder: (BuildContext context) => AddLocationDialog(),
+    );
   }
 
-  void deleteDialog() {}
+  void deleteDialog() {
+    showDialog(
+      context: _navigationService.navigatorKey.currentContext,
+      builder: (BuildContext context) => ConfirmDialog(),
+    );
+  }
 }

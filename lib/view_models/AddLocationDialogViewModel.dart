@@ -10,4 +10,8 @@ class AddLocationDialogViewModel extends BaseViewModel {
   void searchLocationOnline() {
     _navigationService.navigateToAutoComplete();
   }
+
+  void confirmDialog() {
+    _dialogService.deleteDialog();
+  }
 }

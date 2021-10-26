@@ -27,5 +27,12 @@
   "location_details": "Location Details",
   "latitude": "Latitude",
   "longitude": "Longitude",
-  "location_notify": "Trigger"
+  "location_notify": "Trigger",
+  "confirm_delete": {
+    "zero": "{} will be removed",
+    "one": "{} Location will be removed",
+    "two": "{} Locations will be removed",
+    "many": "{} Locations will be removed",
+    "other": "{} Locations will be removed"
+  }
 }

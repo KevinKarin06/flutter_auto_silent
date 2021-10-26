@@ -1,5 +1,6 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/services/DatabaseService.dart';
+import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/LocationDetailService.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,8 @@ class LocationDetailViewModel extends BaseViewModel {
       GetIt.I<LocationDetailService>();
   final GeofenceService _geofenceService = GetIt.I<GeofenceService>();
   final DatabaseService _databaseService = GetIt.I<DatabaseService>();
+  final DialogService _dialogService = GetIt.I<DialogService>();
+
   //
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _radiusController = TextEditingController();
@@ -22,7 +25,11 @@ class LocationDetailViewModel extends BaseViewModel {
   //
   void initialise() {
     model = _locationDetailService.getModel();
-    this.clonedModel = LocationModel.clone(model);
+    if (model.id != null) {
+      this.clonedModel = LocationModel.clone(model);
+    } else {
+      this.clonedModel = model;
+    }
     _locationController.text = model.title;
     _radiusController.text = model.radius.toString();
   }
@@ -108,5 +115,9 @@ class LocationDetailViewModel extends BaseViewModel {
       //create
     }
     Logger().d('Model To Save', model.toMap());
+  }
+
+  void onDelete(LocationModel model) {
+    _dialogService.deleteDialog();
   }
 }

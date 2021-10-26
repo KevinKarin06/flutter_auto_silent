@@ -6,7 +6,7 @@
   "cancel": "Annuler",
   "once": "Une Fois",
   "always": "Toujours",
-  "search": "Rechercher dans l'application",
+  "search": "Rechercher un lieu",
   "settings": "Paramètres",
   "select_all": "Tout Selectioner",
   "search_in_app": "Rechercher dans l'application",
@@ -24,5 +24,12 @@
   "latitude": "Latitude",
   "longitude": "Longitude",
   "location_notify": "Trigger",
-  "location": "Lieu"
+  "location": "Lieu",
+  "confirm_delete": {
+    "zero": "{} sera supprimé",
+    "one": "{} Lieu sera supprimé",
+    "two": "{} Lieux seront supprimés",
+    "many": "{} Lieux seront supprimés",
+    "other": "{} Lieux seront supprimés"
+  }
 }

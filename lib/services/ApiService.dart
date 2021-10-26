@@ -4,7 +4,7 @@ import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_photon/flutter_photon.dart';
 import 'package:http/http.dart' as http;
-  import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class ApiService {
   String _url = 'https://photon.komoot.io/api/?lang=en&q=';
