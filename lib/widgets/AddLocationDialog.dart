@@ -42,7 +42,10 @@ class AddLocationDialog extends StatelessWidget {
                           'current_location'.tr(),
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                        dModel.addCurrentLocation();
+                      },
                     ),
                   ),
                   Divider(

@@ -39,7 +39,7 @@ class DatabaseService {
 
     // Convert the List<Map<String, dynamic> into a List<Locations>.
     return List.generate(maps.length, (i) {
-      Logger().d('Locations $i', maps[i]);
+      // Logger().d('Locations $i', maps[i]);
       return LocationModel.fromMap(maps[i]);
     });
   }

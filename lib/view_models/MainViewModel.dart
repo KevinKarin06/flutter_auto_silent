@@ -93,7 +93,6 @@ class MainViewModel extends FutureViewModel {
       this.locations.addAll(filteredLocations);
     }
     notifyListeners();
-    Logger().d('Filtered', locations);
   }
 
   List<LocationModel> getFilteredList() => filteredLocations;

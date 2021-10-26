@@ -13,6 +13,7 @@ import 'package:dialog_context/dialog_context.dart';
 import 'package:geocoder/model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 
 class LocationService {
   final GeocoderService _geocoderService = GetIt.I<GeocoderService>();
@@ -67,8 +68,9 @@ class LocationService {
         }
       }
       Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-          timeLimit: Duration(seconds: 5));
+        desiredAccuracy: LocationAccuracy.high,
+        // timeLimit: Duration(seconds: 10),
+      );
       if (await DataConnectionChecker().hasConnection) {
         Address address = await _geocoderService.getAdresseFromLatLon(
             position.latitude, position.longitude);
@@ -89,6 +91,7 @@ class LocationService {
             'Please make sure you have a working Internet connection and try again');
       }
     } catch (e) {
+      Logger().d('Error ', e);
       return Future.error(e.toString());
     }
   }
