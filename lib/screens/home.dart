@@ -5,6 +5,7 @@ import 'package:autosilentflutter/widgets/CustomAppBar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -103,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
-    print('Widget Rebuild Trigerred');
+    Logger().d('Widget Rebuild Trigerred', 'OK');
     return ViewModelBuilder<MainViewModel>.reactive(
       initialiseSpecialViewModelsOnce: true,
       disposeViewModel: false,

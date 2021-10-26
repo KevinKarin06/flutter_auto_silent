@@ -11,11 +11,12 @@ class ApiService {
   final String key = dotenv.env['PHOTON_KEY'];
   Future<List<LocationModel>> autoComplete(String query) async {
     print('Api Helper Function called');
+    http.Client client = http.Client();
     _url += query.trim().toLowerCase();
     List<LocationModel> models = List.empty(growable: true);
     if (await Utils.isConnected()) {
       try {
-        var response = await http.get(Uri.parse(_url));
+        var response = await client.get(Uri.parse(_url));
         var parsed = json.decode(response.body);
         List<dynamic> list = parsed['features'];
         list.forEach((element) {

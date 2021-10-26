@@ -24,8 +24,11 @@ class AutoCompleteLocation extends StatelessWidget {
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.07,
                   child: TextField(
+                    controller: vModel.searchController,
                     onChanged: (String value) {
-                      vModel.suggest(value.trim());
+                      if (value.isNotEmpty) {
+                        vModel.suggest(value.trim());
+                      }
                     },
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.symmetric(vertical: 0.0),
@@ -37,15 +40,16 @@ class AutoCompleteLocation extends StatelessWidget {
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.circular(6.0),
                       ),
-                      // focusedBorder: InputBorder.none,
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(Icons.place_rounded),
-                      ),
-                      // suffix: IconButton(
-                      //   onPressed: () {},
-                      //   icon: Icon(Icons.clear_rounded),
-                      // ),
+                      suffixIcon: vModel.searchController.text.isEmpty
+                          ? IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.place_rounded),
+                            )
+                          : IconButton(
+                              onPressed: () {
+                                vModel.clearText();
+                              },
+                              icon: Icon(Icons.cancel_rounded)),
                       prefixIcon: IconButton(
                         onPressed: () {
                           vModel.onBackIconPressded();
@@ -60,9 +64,9 @@ class AutoCompleteLocation extends StatelessWidget {
               ),
               vModel.isBusy
                   ? Container(
-                      padding: EdgeInsets.all(8.0),
-                      margin: EdgeInsets.symmetric(vertical: 16.0),
-                      child: CircularProgressIndicator(),
+                      padding: EdgeInsets.all(0.0),
+                      color: Colors.yellow,
+                      child: LinearProgressIndicator(),
                     )
                   : Container(),
               Expanded(
@@ -84,16 +88,17 @@ class AutoCompleteLocation extends StatelessWidget {
                               subtitle:
                                   Text(vModel.suggestions[index].subtitle),
                               minVerticalPadding: 8.0,
+                              leading: Align(
+                                alignment: Alignment.centerLeft,
+                                widthFactor: 0,
+                                child: Icon(
+                                  Icons.place_rounded,
+                                ),
+                              ),
                             ),
                           ),
                         )
-                      : vModel.suggestions.isEmpty
-                          ? Text('no result yet')
-                          : Container(
-                              padding: EdgeInsets.all(8.0),
-                              margin: EdgeInsets.symmetric(vertical: 16.0),
-                              child: CircularProgressIndicator(),
-                            ),
+                      : Text(vModel.searchResult),
                 ),
               ),
             ]),

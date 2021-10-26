@@ -17,7 +17,7 @@
   "add_location": "Ajouter Un Lieu",
   "back": "Retour",
   "radius_validation_null": "Le champ rayon est obligatoire",
-  "radius_validation_wrong": "Le rayon devrait être supérieur à 200",
+  "radius_validation_wrong": "Le rayon devrait être supérieur ou egale à 200",
   "radius": "Rayon",
   "location_validation": "Le lieu est obligatoire",
   "location_details": "Détails du lieu",

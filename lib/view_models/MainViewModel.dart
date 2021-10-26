@@ -28,7 +28,7 @@ class MainViewModel extends FutureViewModel {
   @override
   Future<List<LocationModel>> futureToRun() async {
     locations = await _databaseService.getLocations();
-    // filteredLocations.addAll(locations);
+    filteredLocations.addAll(locations);
     return locations;
   }
 
@@ -85,11 +85,15 @@ class MainViewModel extends FutureViewModel {
     } else {
       setShowCancelIcon(false);
     }
-    this.filteredLocations = locations.where((LocationModel model) {
+    this.locations = locations.where((LocationModel model) {
       return model.title.toLowerCase().contains(query);
     }).toList();
+    if (query.length < 1) {
+      this.locations.clear();
+      this.locations.addAll(filteredLocations);
+    }
     notifyListeners();
-    Logger().d('Filtered', filteredLocations.length);
+    Logger().d('Filtered', locations);
   }
 
   List<LocationModel> getFilteredList() => filteredLocations;

@@ -3,6 +3,7 @@ import 'package:autosilentflutter/services/DatabaseService.dart';
 import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/LocationDetailService.dart';
+import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -15,6 +16,7 @@ class LocationDetailViewModel extends BaseViewModel {
   final GeofenceService _geofenceService = GetIt.I<GeofenceService>();
   final DatabaseService _databaseService = GetIt.I<DatabaseService>();
   final DialogService _dialogService = GetIt.I<DialogService>();
+  final NavigationService _navigationService = GetIt.I<NavigationService>();
 
   //
   final TextEditingController _locationController = TextEditingController();
@@ -26,10 +28,10 @@ class LocationDetailViewModel extends BaseViewModel {
   void initialise() {
     model = _locationDetailService.getModel();
     if (model.id != null) {
-      this.clonedModel = LocationModel.clone(model);
     } else {
-      this.clonedModel = model;
+      setIsDirty(true);
     }
+    this.clonedModel = LocationModel.clone(model);
     _locationController.text = model.title;
     _radiusController.text = model.radius.toString();
   }
@@ -38,10 +40,12 @@ class LocationDetailViewModel extends BaseViewModel {
   TextEditingController getLocationController() => _locationController;
 
   void _checkIsDirty() {
-    if (clonedModel == model) {
-      isDirty = false;
-    } else
-      isDirty = true;
+    if (model.id != null) {
+      if (clonedModel == model) {
+        isDirty = false;
+      } else
+        isDirty = true;
+    }
     notifyListeners();
   }
 
@@ -51,6 +55,11 @@ class LocationDetailViewModel extends BaseViewModel {
   }
 
   void clearChanges() {
+    if (model == clonedModel) {
+      if (model.id == null) {
+        _navigationService.goBack();
+      }
+    }
     setRadius(clonedModel.radius.toString());
     setJustOnce(clonedModel.justOnce);
     setTitle(clonedModel.title);
@@ -112,7 +121,7 @@ class LocationDetailViewModel extends BaseViewModel {
     if (model.id != null) {
       _databaseService.updateLocation(model);
     } else {
-      //create
+      _geofenceService.addGeofence(model);
     }
     Logger().d('Model To Save', model.toMap());
   }

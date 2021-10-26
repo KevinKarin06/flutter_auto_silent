@@ -21,7 +21,7 @@
   "add_location": "Add Location",
   "back": "Back",
   "radius_validation_null": "The radius is required",
-  "radius_validation_wrong": "The raduis shounld be greater than 200",
+  "radius_validation_wrong": "The raduis shounld be greater than or equal to 200",
   "radius": "Radius",
   "location_validation": "Location is required",
   "location_details": "Location Details",
@@ -34,5 +34,7 @@
     "two": "{} Locations will be removed",
     "many": "{} Locations will be removed",
     "other": "{} Locations will be removed"
-  }
+  },
+  "type_to_search": "Type To Start Searching",
+  "no_search_result": "Looks like we found nothing"
 }

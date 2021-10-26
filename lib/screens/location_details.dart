@@ -122,6 +122,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                       },
                       decoration: InputDecoration(
                         labelText: 'radius'.tr(),
+                        suffixText: 'meters'.tr(),
                       ),
                     ),
                     mySpacer(),
