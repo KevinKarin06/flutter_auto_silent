@@ -104,10 +104,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   @override
   Widget build(BuildContext context) {
-    Logger().d('Widget Rebuild Trigerred', 'OK');
     return ViewModelBuilder<MainViewModel>.reactive(
-      initialiseSpecialViewModelsOnce: true,
-      disposeViewModel: false,
       viewModelBuilder: () => GetIt.I<MainViewModel>(),
       builder: (BuildContext context, MainViewModel vModel, Widget child) =>
           WillPopScope(
@@ -154,6 +151,8 @@ class _MyHomePageState extends State<MyHomePage>
                                     title: Text(
                                       vModel.locations[index].title
                                           .toUpperCase(),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: Text(
                                       vModel.locations[index].subtitle,

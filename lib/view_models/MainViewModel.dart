@@ -27,6 +27,7 @@ class MainViewModel extends FutureViewModel {
 
   @override
   Future<List<LocationModel>> futureToRun() async {
+    Logger().d('Futre to run');
     locations = await _databaseService.getLocations();
     filteredLocations.addAll(locations);
     return locations;

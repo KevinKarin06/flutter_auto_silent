@@ -123,7 +123,8 @@ class LocationDetailViewModel extends BaseViewModel {
     } else {
       _geofenceService.addGeofence(model);
     }
-    Logger().d('Model To Save', model.toMap());
+    this.initialise();
+    notifyListeners();
   }
 
   void onDelete(LocationModel model) {

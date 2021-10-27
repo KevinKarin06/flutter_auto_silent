@@ -14,9 +14,12 @@ class AddLocationDialog extends StatelessWidget {
               Widget child) =>
           WillPopScope(
         onWillPop: () async {
+          Navigator.pop(context);
           return Future.delayed(
             Duration(milliseconds: 100),
-            () => Future.value(true),
+            () {
+              return Future.value(false);
+            },
           );
         },
         child: SimpleDialog(

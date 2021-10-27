@@ -25,9 +25,7 @@ class AutoCompleteViewModel extends BaseViewModel {
     searchResult = 'type_to_search'.tr();
     if (_debounce?.isActive ?? false) _debounce?.cancel();
     _debounce = Timer(Duration(milliseconds: 1000), () async {
-      Logger().d(query);
       _suggestions = await runBusyFuture(_apiService.photonSearch(query));
-      Logger().d("Suggestions", _suggestions);
       if (_suggestions.isNotEmpty) {
         _suggestions = _suggestions.reversed.toList();
       }

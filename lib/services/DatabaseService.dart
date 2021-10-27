@@ -2,8 +2,15 @@ import 'package:autosilentflutter/Constants.dart';
 import 'package:autosilentflutter/database/Database.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:logger/logger.dart';
+import 'package:stacked/stacked.dart';
 
-class DatabaseService {
+class DatabaseService with ReactiveServiceMixin {
+  DatabaseService() {
+    listenToReactiveValues([_locations]);
+  }
+  ReactiveValue<List<LocationModel>> _locations =
+      ReactiveValue<List<LocationModel>>(
+          List<LocationModel>.empty(growable: true));
   Future<int> createLocation(LocationModel model) async {
     final database = await LocationDatabase().getDatabase();
     print(model.toMap());
@@ -35,7 +42,7 @@ class DatabaseService {
     final database = await LocationDatabase().getDatabase();
     // Query the table for all Models
     final List<Map<String, dynamic>> maps =
-        await database.query(Constants.TABLE_NAME);
+        await database.query(Constants.TABLE_NAME, orderBy: 'id desc');
 
     // Convert the List<Map<String, dynamic> into a List<Locations>.
     return List.generate(maps.length, (i) {
