@@ -23,7 +23,7 @@ class MainViewModel extends FutureViewModel {
   List<LocationModel> selected = List.empty(growable: true);
   List<LocationModel> locations = List.empty(growable: true);
   List<LocationModel> filteredLocations = List.empty(growable: true);
-  List<String> _menuItems = ['settings'.tr(), 'about'.tr()];
+  List<String> _menuItems = ['settings', 'about'];
 
   @override
   Future<List<LocationModel>> futureToRun() async {

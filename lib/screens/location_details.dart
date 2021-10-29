@@ -134,7 +134,10 @@ class _LocationDetailsState extends State<LocationDetails> {
                         onValueChanged: (val) {
                           vModel.setJustOnce(val);
                         }),
-                    AnimatedContainer(
+                    AnimatedSwitcher(
+                      transitionBuilder:
+                          (Widget child, Animation<double> animation) =>
+                              ScaleTransition(scale: animation, child: child),
                       duration: Duration(milliseconds: 500),
                       child: vModel.isDirty
                           ? Container(

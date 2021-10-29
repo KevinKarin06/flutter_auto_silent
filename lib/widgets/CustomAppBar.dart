@@ -136,7 +136,7 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                                 .map((entry) {
                               return PopupMenuItem<String>(
                                 value: entry.key.toString(),
-                                child: Text(entry.value),
+                                child: Text(entry.value).tr(),
                               );
                             }).toList();
                           }),

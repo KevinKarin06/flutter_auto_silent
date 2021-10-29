@@ -31,5 +31,22 @@
     "two": "{} Lieux seront supprimés",
     "many": "{} Lieux seront supprimés",
     "other": "{} Lieux seront supprimés"
-  }
+  },
+  "theme": "Theme",
+  "light": "Claire",
+  "dark": "Sombre",
+  "notify_on_entry": "Me Notifier Lorsque J'entre Dans Le Rayon",
+  "notify_on_exit": "Me Notifier Lorsque Je Sors Du Rayon",
+  "action_on_entry": "Lorsque J'entre Dans Le Rayon",
+  "action_on_exit": "Lorsque Je Sors Du Rayon",
+  "silent_mode":"Mode Silence",
+  "air_plane_mode":"Mode Avion",
+  "yes": "Oui",
+  "no": "Non",
+  "notifications": "Notifications",
+  "select_locale": "Choisissez Votre Langue",
+  "language": "Langue",
+  "fr": "French",
+  "en": "Anglais",
+  "reset_settings": "Reset"
 }

@@ -1,48 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class CustomSwitch extends StatefulWidget {
   final String leftText, rightText, label;
-  final bool defaultValue;
+  final bool defaultValue, disabled;
   final Function onValueChanged;
   CustomSwitch({
     Key key,
     this.leftText,
     this.rightText,
-    this.defaultValue = false,
+    this.defaultValue,
     this.onValueChanged,
     this.label,
+    this.disabled,
   }) : super(key: key);
 
   @override
   _CustomSwitchState createState() => _CustomSwitchState();
 }
 
-class _CustomSwitchState extends State<CustomSwitch> {
+class _CustomSwitchState extends State<CustomSwitch>
+    with WidgetsBindingObserver {
   bool _selected = false;
-  final double _initialDistance = 8.0;
-  double _distance;
-  void _updatePosition() {
-    _selected = widget.defaultValue;
-    if (widget.defaultValue) {
-      _distance = 200.0;
-    } else {
+  final double _initialDistance = 17.0;
+  double _distance = 17.0;
+  void _updatePosition(context) {
+    if (widget.defaultValue != _selected) {
       _distance = _initialDistance;
+    } else {
+      _distance = MediaQuery.of(context).size.width - 170;
+      _selected = widget.defaultValue ?? true;
     }
   }
 
   @override
   void initState() {
-    _selected = widget.defaultValue;
-    if (_selected) {
-      _distance = 200.0;
-    } else
-      _distance = _initialDistance;
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _selected = widget.defaultValue ?? true;
+      if (_selected) {
+        _distance = MediaQuery.of(context).size.width - 170;
+        Logger().d('During Bindings', widget.defaultValue);
+      } else
+        _distance = _initialDistance;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    _updatePosition();
+    // _updatePosition(context);
     return Stack(
       children: [
         AnimatedPositioned(
@@ -82,17 +89,18 @@ class _CustomSwitchState extends State<CustomSwitch> {
                     widget.onValueChanged(_selected);
                   },
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                    width: MediaQuery.of(context).size.width / 3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Text(
-                      widget.leftText,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: _selected ? Colors.black : Colors.white,
-                        fontSize: 14.0,
+                    child: Center(
+                      child: Text(
+                        widget.leftText,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: _selected ? Colors.black : Colors.white,
+                          fontSize: 14.0,
+                        ),
                       ),
                     ),
                   ),
@@ -101,22 +109,23 @@ class _CustomSwitchState extends State<CustomSwitch> {
                   onTap: () {
                     setState(() {
                       _selected = true;
-                      _distance = 200;
+                      _distance = MediaQuery.of(context).size.width - 170;
                     });
                     widget.onValueChanged(_selected);
                   },
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                    width: MediaQuery.of(context).size.width / 3,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: Text(
-                      widget.rightText,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: _selected ? Colors.white : Colors.black,
-                        fontSize: 14.0,
+                    child: Center(
+                      child: Text(
+                        widget.rightText,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: _selected ? Colors.white : Colors.black,
+                          fontSize: 14.0,
+                        ),
                       ),
                     ),
                   ),
@@ -146,5 +155,11 @@ class _CustomSwitchState extends State<CustomSwitch> {
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
 }

@@ -1,6 +1,7 @@
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/widgets/AddLocationDialog.dart';
 import 'package:autosilentflutter/widgets/ConfirmDialog.dart';
+import 'package:autosilentflutter/widgets/LanguageDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -17,6 +18,13 @@ class DialogService {
     showDialog(
       context: _navigationService.navigatorKey.currentContext,
       builder: (BuildContext context) => ConfirmDialog(),
+    );
+  }
+
+  void localDialog() {
+    showDialog(
+      context: _navigationService.navigatorKey.currentContext,
+      builder: (BuildContext context) => LanguageDialog(),
     );
   }
 }

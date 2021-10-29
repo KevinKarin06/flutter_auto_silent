@@ -36,5 +36,22 @@
     "other": "{} Locations will be removed"
   },
   "type_to_search": "Type To Start Searching",
-  "no_search_result": "Looks like we found nothing"
+  "no_search_result": "Looks like we found nothing",
+  "theme": "Theme",
+  "light": "Light",
+  "dark": "Dark",
+  "notify_on_entry": "Notify Me On Zone Entry",
+  "notify_on_exit": "Notify Me On Zone Exit",
+  "action_on_entry": "Action  On Zone Entry",
+  "action_on_exit": "Action On Zone Exit",
+  "silent_mode": "Silent Mode",
+  "air_plane_mode": "Air Plane Mode",
+  "yes": "Yes",
+  "no": "No",
+  "notifications": "Notifications",
+  "select_locale": "Select Your Language",
+  "language": "Language",
+  "fr": "French",
+  "en": "English",
+  "reset_settings": "Reset"
 }
