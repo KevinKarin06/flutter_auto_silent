@@ -19,7 +19,7 @@ import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 
-public class MainActivity extends FlutterActivity {
+public class MainActivity extends FlutterActivity  {
     private static final String CHANNEL_NAME = "app.geofeonce.channel";
     private static final String TAG = "MainActivity";
     NotificationHelper notificationHelper = new NotificationHelper(this);

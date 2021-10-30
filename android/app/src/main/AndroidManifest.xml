@@ -9,6 +9,8 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- Required only when requesting background location access on Android 10 (API level 29) and higher. -->
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -26,6 +28,16 @@
             android:name=".receivers.GeofenceBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
+        <receiver   android:name="com.webstersys.geofence.geofence.GeofenceBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
+        <service android:name="com.webstersys.geofence.geofence.GeofenceTransitionsJobIntentService" android:enabled="true" android:exported="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <receiver android:name="com.webstersys.geofence.BootDeviceReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".MainActivity"

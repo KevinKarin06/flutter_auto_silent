@@ -3,10 +3,10 @@ import 'package:autosilentflutter/screens/intro.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/setup_locator.dart';
 import 'package:autosilentflutter/theme/theme.dart';
-import 'package:dialog_context/dialog_context.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:one_context/one_context.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -49,7 +49,7 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: context.supportedLocales,
         locale: context.locale,
         debugShowCheckedModeBanner: false,
-        builder: DialogContext().builder,
+        builder: OneContext().builder,
         title: 'Auto Silent',
         theme: regularTheme,
         darkTheme: darkTheme,

@@ -4,6 +4,7 @@ import 'package:autosilentflutter/Constants.dart';
 import 'package:autosilentflutter/Utils.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/router.dart';
+import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeocoderService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/widgets/PermissionDialog.dart';
@@ -18,7 +19,10 @@ import 'package:logger/logger.dart';
 class LocationService {
   final GeocoderService _geocoderService = GetIt.I<GeocoderService>();
   final NavigationService _navigationServcie = GetIt.I<NavigationService>();
+  final DialogService _dialogService = GetIt.I<DialogService>();
+  //
   Future<LocationModel> getCurrentPosition() async {
+    _dialogService.loadingDialog();
     try {
       bool serviceEnabled = false;
       LocationPermission permission;
@@ -84,14 +88,17 @@ class LocationService {
           subtitle: subtitle,
           uuid: Utils.generateuuid(),
         );
+        _dialogService.stopLading();
         _navigationServcie.navigateToLocationDetails(AppRouter.details, model);
         return model;
       } else {
+        _dialogService.showError();
         return Future.error(
             'Please make sure you have a working Internet connection and try again');
       }
     } catch (e) {
       Logger().d('Error ', e);
+      _dialogService.showError();
       return Future.error(e.toString());
     }
   }

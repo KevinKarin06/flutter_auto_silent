@@ -48,6 +48,10 @@ dependencies:
   uuid: 3.0.4
   equatable: ^2.0.0
   flutter_dotenv: ^5.0.2
+  # geofencing: ^0.1.0
+  ndialog: ^4.1.0
+  one_context: ^1.1.1
+  flutter_local_notifications: ^9.0.1
 
 dev_dependencies:
   flutter_test:

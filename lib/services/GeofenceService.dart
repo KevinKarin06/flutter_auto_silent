@@ -1,6 +1,8 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/helpers/DbHelper.dart';
+import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 
 class GeofenceService {
   static const _platform = const MethodChannel('app.geofeonce.channel');
@@ -19,6 +21,7 @@ class GeofenceService {
       } else {
         return Future.error('Failed to add Location please try again');
       }
+      GetIt.I<DialogService>().showSuccess();
     } on PlatformException catch (exception) {
       print(exception);
       return Future.error('Ooops Something went wrong please try again');
@@ -53,4 +56,6 @@ class GeofenceService {
       return Future.error('Ooops Something went wrong please try again');
     }
   }
+
+  static Future<void> syncGeofences() {}
 }

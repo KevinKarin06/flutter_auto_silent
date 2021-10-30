@@ -12,28 +12,31 @@ class LanguageDialog extends StatelessWidget {
     return ViewModelBuilder.nonReactive(
       viewModelBuilder: () => SettingsViewModel(),
       builder: (BuildContext context, SettingsViewModel sModel, Widget child) =>
-          SimpleDialog(
-        title: Center(
-          child: Text(
-            'select_locale'.tr(),
-            style: TextStyle(fontSize: 18.0),
+          WillPopScope(
+        onWillPop: () async => true,
+        child: SimpleDialog(
+          title: Center(
+            child: Text(
+              'select_locale'.tr(),
+              style: TextStyle(fontSize: 18.0),
+            ),
           ),
+          children: [
+            ...sModel.locales.asMap().entries.map((e) {
+              return RadioListTile(
+                toggleable: true,
+                title: Text(e.value).tr(),
+                value: e.value,
+                groupValue: true,
+                selected: sModel.selectedLocale(e.value),
+                onChanged: (bool) {
+                  sModel.setLocale(bool);
+                  Navigator.pop(context);
+                },
+              );
+            }).toList()
+          ],
         ),
-        children: [
-          ...sModel.locales.asMap().entries.map((e) {
-            return RadioListTile(
-              toggleable: true,
-              title: Text(e.value).tr(),
-              value: e.value,
-              groupValue: true,
-              selected: sModel.selectedLocale(e.value),
-              onChanged: (bool) {
-                sModel.setLocale(bool);
-                Navigator.pop(context);
-              },
-            );
-          }).toList()
-        ],
       ),
     );
   }

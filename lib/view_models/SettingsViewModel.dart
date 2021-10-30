@@ -7,12 +7,13 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class SettingsViewModel extends BaseViewModel {
+class SettingsViewModel extends MultipleFutureViewModel {
   final SettingsService _settingsService = GetIt.I<SettingsService>();
   final DialogService _dialogService = GetIt.I<DialogService>();
   final List<String> locales = ['fr', 'en'];
-  bool notifyOnEntry = true;
-  bool notifyOnExit = true;
+  static const String _NotifyOnEntry = 'notifyOnEntry';
+  static const String _NotifyOnExit = 'notifyOnExit';
+  static const String _ActionOnEntry = 'actionOnEntry';
   //
   void toggleDarkMode(bool themeMode) {
     _settingsService.setTheme(themeMode);
@@ -24,7 +25,7 @@ class SettingsViewModel extends BaseViewModel {
   }
 
   void setLanguage() {
-    _dialogService.localDialog();
+    _dialogService.localeDialog();
   }
 
   Locale getCurrentLocale() {
@@ -40,21 +41,43 @@ class SettingsViewModel extends BaseViewModel {
     return lang == getCurrentLocale();
   }
 
-  Future<void> getNotifyOnEntry() async {
-    notifyOnEntry = await runBusyFuture(_settingsService.getNotifyOnEntry());
+  bool get fetchedNotifyOnEntry => dataMap[_NotifyOnEntry];
+  bool get fetchedNotifyOnExit => dataMap[_NotifyOnExit];
+  bool get fetchedActionOnEntry => dataMap[_ActionOnEntry];
+
+  bool get fetchtingNotifyOnEntry => busy(_NotifyOnEntry);
+  bool get fetchtingNotifyOnExit => busy(_NotifyOnExit);
+  bool get fetchtingActionOnEnrty => busy(_ActionOnEntry);
+
+  Future<bool> getNotifyOnEntry() async {
+    return await _settingsService.getNotifyOnEntry();
   }
 
-  Future<void> getNotifyOnExit() async {
-    notifyOnExit = await runBusyFuture(_settingsService.getNotifyOnExit());
+  Future<bool> getNotifyOnExit() async {
+    return await _settingsService.getNotifyOnExit();
   }
 
-  setNotifyOnEntry(bool b) {
-    runBusyFuture(_settingsService.setNotifyOnEntry(b));
-    getNotifyOnEntry();
+  Future<bool> getActionOnEntry() async {
+    setBusyForObject(_NotifyOnEntry, true);
+    bool b = await _settingsService.getNotifyOnExit();
+    setBusyForObject(_NotifyOnEntry, false);
+    return b;
   }
 
-  setNotifyOnExit(bool b) {
-    runBusyFuture(_settingsService.setNotifyOnExit(b));
-    getNotifyOnExit();
+  setNotifyOnEntry(bool b) async {
+    await _settingsService.setNotifyOnEntry(b);
+    notifyListeners();
   }
+
+  setNotifyOnExit(bool b) async {
+    await _settingsService.setNotifyOnExit(b);
+    notifyListeners();
+  }
+
+  @override
+  Map<String, Future Function()> get futuresMap => {
+        _NotifyOnEntry: getNotifyOnEntry,
+        _NotifyOnExit: getNotifyOnExit,
+        _ActionOnEntry: getActionOnEntry
+      };
 }

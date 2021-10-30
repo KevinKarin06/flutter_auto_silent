@@ -153,6 +153,7 @@ class MainViewModel extends FutureViewModel {
 
   void addLocation() {
     _dialogService.addLocationDialog();
+    // _dialogService.loadingDialog();
   }
 
   void handleMenuItemClick(String item) {

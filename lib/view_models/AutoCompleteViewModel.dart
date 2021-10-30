@@ -40,9 +40,9 @@ class AutoCompleteViewModel extends BaseViewModel {
   TextEditingController get searchController => _searchController;
 
   void onItemTap(LocationModel model) {
-    _navigationService.navigateToLocationDetails(AppRouter.details, model);
-    // _navigationService.navigateToLocationDetailsAndReplace(
-    //     AppRouter.details, model);
+    // _navigationService.navigateToLocationDetails(AppRouter.details, model);
+    _navigationService.navigateToLocationDetailsAndReplace(
+        AppRouter.details, model);
   }
 
   void onBackIconPressded() {

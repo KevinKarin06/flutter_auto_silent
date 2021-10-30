@@ -11,19 +11,20 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-      disposeViewModel: true,
       viewModelBuilder: () => SettingsViewModel(),
-      onModelReady: (SettingsViewModel model) {
-        model.getNotifyOnEntry();
-        model.getNotifyOnExit();
-      },
+      onModelReady: (SettingsViewModel model) {},
       builder: (BuildContext context, SettingsViewModel sModel, Widget child) =>
           Scaffold(
         appBar: AppBar(
           title: Text('settings'.tr()),
           elevation: 0.0,
           backgroundColor: Colors.transparent,
-          actions: [],
+          actions: [
+            TextButton(
+              onPressed: () {},
+              child: Text('reset_settings').tr(),
+            )
+          ],
         ),
         body: SafeArea(
           child: Padding(
@@ -52,34 +53,35 @@ class SettingsScreen extends StatelessWidget {
                     sModel.toggleDarkMode(val);
                   },
                 ),
-                !sModel.isBusy
-                    ? CustomSwitch(
+                sModel.isBusy
+                    ? LinearProgressIndicator()
+                    : CustomSwitch(
                         leftText: 'no'.tr(),
                         rightText: 'yes'.tr(),
                         label: 'notify_on_entry'.tr(),
-                        defaultValue: sModel.notifyOnEntry,
+                        defaultValue: sModel.fetchedNotifyOnEntry,
                         onValueChanged: (val) {
+                          Logger().d('NotifyOnEntry', val);
                           sModel.setNotifyOnEntry(val);
                         },
-                      )
-                    : LinearProgressIndicator(),
-                !sModel.isBusy
-                    ? CustomSwitch(
+                      ),
+                sModel.isBusy
+                    ? LinearProgressIndicator()
+                    : CustomSwitch(
                         leftText: 'no'.tr(),
                         rightText: 'yes'.tr(),
                         label: 'notify_on_exit'.tr(),
-                        defaultValue: sModel.notifyOnExit,
+                        defaultValue: sModel.fetchedNotifyOnExit,
                         onValueChanged: (val) {
-                          Logger().d('on_entry', val);
+                          Logger().d('NotifyOnExit', val);
                           sModel.setNotifyOnExit(val);
                         },
-                      )
-                    : LinearProgressIndicator(),
+                      ),
                 CustomSwitch(
                   leftText: 'silent_mode'.tr(),
                   rightText: 'air_plane_mode'.tr(),
                   label: 'action_on_entry'.tr(),
-                  defaultValue: sModel.notifyOnExit,
+                  defaultValue: sModel.fetchedNotifyOnExit,
                   onValueChanged: (val) {
                     sModel.setNotifyOnExit(val);
                   },
@@ -93,12 +95,6 @@ class SettingsScreen extends StatelessWidget {
                 //     sModel.setNotifyOnExit(val);
                 //   },
                 // ),
-                Center(
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text('reset_settings').tr(),
-                  ),
-                )
               ],
             ),
           ),

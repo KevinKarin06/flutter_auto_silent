@@ -28,7 +28,7 @@ class LocationDatabase {
             subtitle TEXT NOT NULL, 
             uuid TEXT)''');
       },
-      version: 4,
+      version: 6,
     );
   }
 
@@ -37,8 +37,9 @@ class LocationDatabase {
     if (oldVersion < newVersion) {
       Logger().d('DataBase Version From If', newVersion);
       db.execute('''ALTER TABLE ${Constants.TABLE_NAME}
-            ADD COLUMN radius INTEGER DEFAULT 500,
-            justOnce INTEGER DEFAULT 0''');
+            ADD COLUMN radius INTEGER DEFAULT 500''');
+      db.execute('''ALTER TABLE ${Constants.TABLE_NAME}
+            ADD COLUMN justOnce INTEGER DEFAULT 0''');
     }
   }
 }
