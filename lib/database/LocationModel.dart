@@ -1,9 +1,7 @@
-import 'package:autosilentflutter/Constants.dart';
+import 'package:autosilentflutter/constants/constants.dart';
 import 'package:autosilentflutter/Utils.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_photon/flutter_photon.dart';
 
-// ignore: must_be_immutable
 class LocationModel {
   final double latitude, longitude;
   String title, subtitle, uuid;
@@ -91,15 +89,4 @@ class LocationModel {
         longitude: photon.coordinates.longitude,
         uuid: Utils.generateuuid());
   }
-
-  // @override
-  // List<Object> get props => [
-  //       justOnce,
-  //       radius,
-  //       latitude,
-  //       longitude,
-  //       title,
-  //       subtitle,
-  //       uuid,
-  //     ];
 }

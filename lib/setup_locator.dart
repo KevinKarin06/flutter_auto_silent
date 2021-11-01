@@ -1,6 +1,3 @@
-import 'package:autosilentflutter/helpers/DbHelper.dart';
-import 'package:autosilentflutter/helpers/GeocoderHelper.dart';
-import 'package:autosilentflutter/helpers/GeofenceHelper.dart';
 import 'package:autosilentflutter/services/ApiService.dart';
 import 'package:autosilentflutter/services/DataConnectionService.dart';
 import 'package:autosilentflutter/services/DatabaseService.dart';
@@ -22,7 +19,6 @@ void setUp() {
   locator.registerFactory<GeocoderService>(() => GeocoderService());
   locator.registerLazySingleton<LocationDetailService>(
       () => LocationDetailService());
-  locator.registerLazySingleton<DbHelper>(() => DbHelper());
   locator.registerLazySingleton<GeofenceService>(() => GeofenceService());
   locator.registerLazySingleton<SearchBarService>(() => SearchBarService());
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
