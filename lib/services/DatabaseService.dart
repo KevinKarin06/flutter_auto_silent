@@ -1,4 +1,5 @@
 import 'package:autosilentflutter/constants/constants.dart';
+import 'package:autosilentflutter/constants/errors.dart';
 import 'package:autosilentflutter/database/Database.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 
@@ -9,7 +10,7 @@ class DatabaseService {
       final database = await LocationDatabase().getDatabase();
       return await database.insert(Constants.TABLE_NAME, model.toMap());
     } catch (e) {
-      return Future.error('geofence_add_to_db_falied');
+      return Future.error(AppErrors.DB_ADD_FAILED);
     }
   }
 
@@ -22,7 +23,7 @@ class DatabaseService {
         whereArgs: [id],
       );
     } catch (e) {
-      return Future.error('geofence_delete_to_db_falied');
+      return Future.error(AppErrors.DB_DELETE_FAILED);
     }
   }
 
@@ -38,7 +39,7 @@ class DatabaseService {
         whereArgs: [model.id],
       );
     } catch (e) {
-      return Future.error('geofence_update_failes');
+      return Future.error(AppErrors.DB_UPDATE_FAILED);
     }
   }
 
@@ -51,11 +52,10 @@ class DatabaseService {
 
       // Convert the List<Map<String, dynamic> into a List<Locations>.
       return List.generate(maps.length, (i) {
-        // Logger().d('Locations $i', maps[i]);
         return LocationModel.fromMap(maps[i]);
       });
     } catch (e) {
-      return Future.error('geofence_load_from_db_falied');
+      return Future.error(AppErrors.DB_LOAD_FAILED);
     }
   }
 
@@ -70,7 +70,7 @@ class DatabaseService {
       );
       return maps.isNotEmpty ? LocationModel.fromMap(maps.first) : -1;
     } catch (e) {
-      return Future.error('geofence_get_from_db_falied');
+      return Future.error(AppErrors.DB_GET_FAILED);
     }
   }
 }

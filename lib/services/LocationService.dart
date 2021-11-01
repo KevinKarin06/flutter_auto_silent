@@ -1,4 +1,5 @@
 import 'package:autosilentflutter/Utils.dart';
+import 'package:autosilentflutter/constants/errors.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/router.dart';
 import 'package:autosilentflutter/services/DataConnectionService.dart';
@@ -45,9 +46,9 @@ class LocationService {
           _navigationServcie.navigateToLocationDetails(
               AppRouter.details, model);
         } else
-          return Future.error('no_internet');
+          return Future.error(AppErrors.NO_INTERNET);
       } else
-        return Future.error('permission_denied');
+        return Future.error(AppErrors.PERMISSION_DENIED);
     } catch (e) {
       Logger().d('Error ', e);
       return Future.error(e.toString());

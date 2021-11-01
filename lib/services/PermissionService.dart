@@ -21,12 +21,16 @@ class PermissionService {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      //if denied show rationale
+      //if not granted request again
       if (permission == LocationPermission.denied) {
-        _dialogService.showPermissionDialog('permission_required', () async {
-          await Geolocator.requestPermission();
-        });
+        await Geolocator.requestPermission();
       }
+    }
+    //if denied show rationale
+    if (permission == LocationPermission.denied) {
+      _dialogService.showPermissionDialog('permission_required', () async {
+        await Geolocator.requestPermission();
+      });
     }
     //permission denied forever go to setting
     if (permission == LocationPermission.deniedForever) {
