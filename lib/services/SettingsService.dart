@@ -1,7 +1,6 @@
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:easy_localization/easy_localization.dart';

@@ -39,8 +39,8 @@
   "notify_on_exit": "Me Notifier Lorsque Je Sors Du Rayon",
   "action_on_entry": "Lorsque J'entre Dans Le Rayon",
   "action_on_exit": "Lorsque Je Sors Du Rayon",
-  "silent_mode":"Mode Silence",
-  "air_plane_mode":"Mode Avion",
+  "silent_mode": "Mode Silence",
+  "air_plane_mode": "Mode Avion",
   "yes": "Oui",
   "no": "Non",
   "notifications": "Notifications",
@@ -48,5 +48,9 @@
   "language": "Langue",
   "fr": "French",
   "en": "Anglais",
-  "reset_settings": "Reset"
+  "reset_settings": "Reset",
+  "no_internet": "Pas De Connexion Internet",
+  "permission_required": "You Need To Grant Location Permission For The To Work Properly",
+  "permission_required_always": "You Need To Grant Permission To Always For The App To Work",
+  "permission_denied": "Permission Denied"
 }

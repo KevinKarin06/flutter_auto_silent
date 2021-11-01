@@ -1,6 +1,5 @@
 import 'package:autosilentflutter/view_models/MainViewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:stacked/stacked.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -10,7 +9,7 @@ class ConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.nonReactive(
-      viewModelBuilder: () => GetIt.I<MainViewModel>(),
+      viewModelBuilder: () => MainViewModel(),
       builder: (BuildContext context, MainViewModel viewModel, Widget child) =>
           AlertDialog(
         scrollable: true,

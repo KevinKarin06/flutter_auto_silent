@@ -53,5 +53,8 @@
   "language": "Language",
   "fr": "French",
   "en": "English",
-  "reset_settings": "Reset"
+  "reset_settings": "Reset",
+  "permission_required": "You Need To Grant Location Permission For The To Work Properly",
+  "permission_required_always": "You Need To Grant Permission To Always For The App To Work",
+  "permission_denied": "Permission Denied"
 }

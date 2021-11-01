@@ -1,13 +1,12 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
+import "package:text/text.dart";
 
 class Utils {
-  static Size size(BuildContext context) {
-    return MediaQuery.of(context).size;
-  }
-
+  //
   static Future<bool> isConnected() async {
     bool connected = true;
     try {
@@ -36,9 +35,7 @@ class Utils {
   }
 
   static int numberOfLines(String text) {
-    final span = TextSpan(text: text);
-    final tp = TextPainter(text: span, textDirection: TextDirection.ltr);
-    tp.layout();
-    return tp.computeLineMetrics().length;
+    Logger().d('Number of lines', Text(text).lines().length);
+    return Text(text).lineCount;
   }
 }

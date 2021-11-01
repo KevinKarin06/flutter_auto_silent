@@ -1,30 +1,36 @@
 import 'package:autosilentflutter/database/LocationModel.dart';
-import 'package:autosilentflutter/helpers/DbHelper.dart';
-import 'package:autosilentflutter/services/DialogService.dart';
+import 'package:autosilentflutter/services/DatabaseService.dart';
+import 'package:autosilentflutter/services/PermissionService.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 
 class GeofenceService {
+  //
   static const _platform = const MethodChannel('app.geofeonce.channel');
+  final DatabaseService _databaseService = GetIt.I<DatabaseService>();
+  final PermissionService _permissionService = GetIt.I<PermissionService>();
+  //
   Future<void> addGeofence(LocationModel model) async {
     try {
-      var result = await _platform.invokeMethod(
-        'addGeofence',
-        <String, dynamic>{
-          'uuid': model.uuid,
-          'latitude': model.latitude,
-          'longitude': model.longitude,
-        },
-      );
-      if (result == true) {
-        DbHelper().createLocation(model);
-      } else {
-        return Future.error('Failed to add Location please try again');
-      }
-      GetIt.I<DialogService>().showSuccess();
+      if (await _permissionService.requestLocationPermision()) {
+        var result = await _platform.invokeMethod(
+          'addGeofence',
+          <String, dynamic>{
+            'uuid': model.uuid,
+            'latitude': model.latitude,
+            'longitude': model.longitude,
+          },
+        );
+        if (result == true) {
+          await _databaseService.createLocation(model);
+        } else {
+          return Future.error('goefence_add_failed');
+        }
+      } else
+        return Future.error('permission_denied');
     } on PlatformException catch (exception) {
       print(exception);
-      return Future.error('Ooops Something went wrong please try again');
+      return Future.error('geofence_platform_exception');
     }
   }
 
@@ -37,7 +43,7 @@ class GeofenceService {
         },
       );
       if (result == true) {
-        DbHelper().deleteLocation(model.id);
+        await _databaseService.deleteLocation(model.id);
       } else {
         return Future.error('Failed to add Location please try again');
       }

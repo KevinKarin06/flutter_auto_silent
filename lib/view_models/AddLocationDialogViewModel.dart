@@ -13,8 +13,14 @@ class AddLocationDialogViewModel extends BaseViewModel {
     _navigationService.navigateToAutoComplete();
   }
 
-  void addCurrentLocation() {
-    _locationService.getCurrentPosition();
+  void addCurrentLocation() async {
+    _dialogService.loadingDialog();
+    try {
+      await _locationService.getCurrentPosition();
+    } catch (e) {
+      _dialogService.showError(e.toString());
+    }
+    _dialogService.stopLading();
   }
 
   void confirmDialog() {

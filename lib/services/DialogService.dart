@@ -1,14 +1,12 @@
-import 'package:autosilentflutter/services/NavigationService.dart';
-import 'package:autosilentflutter/services/ProgressDialog.dart';
 import 'package:autosilentflutter/widgets/AddLocationDialog.dart';
 import 'package:autosilentflutter/widgets/ConfirmDialog.dart';
 import 'package:autosilentflutter/widgets/LanguageDialog.dart';
+import 'package:autosilentflutter/widgets/PermissionDialog.dart';
+import 'package:autosilentflutter/widgets/SnackBars.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:one_context/one_context.dart';
 
 class DialogService {
-  final NavigationService _navigationService = GetIt.I<NavigationService>();
   //
   void addLocationDialog() {
     OneContext().showDialog(
@@ -35,13 +33,22 @@ class DialogService {
     OneContext().hideProgressIndicator();
   }
 
-  void showSuccess() {
-    OneContext()
-        .showSnackBar(builder: (_) => SnackBar(content: Text('success')));
+  void showSuccess(String msg) {
+    OneContext().showSnackBar(
+      builder: (_) => buildSnackBar(msg, type: SnackBarType.success),
+    );
   }
 
-  void showError() {
-    OneContext()
-        .showSnackBar(builder: (_) => SnackBar(content: Text('success')));
+  void showError(String msg) {
+    OneContext().showSnackBar(
+      builder: (_) => buildSnackBar(msg, type: SnackBarType.error),
+    );
+  }
+
+  void showPermissionDialog(String msg, Function onGrant) {
+    OneContext().showDialog(
+      builder: (BuildContext context) =>
+          PermissionDialog(msg: msg, onGrant: onGrant),
+    );
   }
 }

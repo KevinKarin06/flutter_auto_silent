@@ -4,6 +4,7 @@ import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/LocationDetailService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
+import 'package:autosilentflutter/view_models/MainViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -22,26 +23,28 @@ class LocationDetailViewModel extends BaseViewModel {
   final TextEditingController _locationController = TextEditingController();
   final TextEditingController _radiusController = TextEditingController();
   bool isDirty = false;
-  LocationModel model;
-  LocationModel clonedModel;
+  LocationModel _model;
+  LocationModel _clonedModel;
   //
   void initialise() {
-    model = _locationDetailService.getModel();
-    if (model.id != null) {
+    _model = _locationDetailService.getModel();
+    if (_model.id != null) {
     } else {
       setIsDirty(true);
     }
-    this.clonedModel = LocationModel.clone(model);
-    _locationController.text = model.title;
-    _radiusController.text = model.radius.toString();
+    this._clonedModel = LocationModel.clone(_model);
+    _locationController.text = _model.title;
+    _radiusController.text = _model.radius.toString();
   }
 
   TextEditingController getRadiusController() => _radiusController;
   TextEditingController getLocationController() => _locationController;
 
   void _checkIsDirty() {
-    if (model.id != null) {
-      if (clonedModel == model) {
+    if (_model.id != null) {
+      if (_clonedModel.title == _model.title &&
+          _clonedModel.radius == _model.radius &&
+          _clonedModel.justOnce == _model.justOnce) {
         isDirty = false;
       } else
         isDirty = true;
@@ -55,42 +58,42 @@ class LocationDetailViewModel extends BaseViewModel {
   }
 
   void clearChanges() {
-    if (model == clonedModel) {
-      if (model.id == null) {
+    if (_model == _clonedModel) {
+      if (_model.id == null) {
         _navigationService.goBack();
       }
     }
-    setRadius(clonedModel.radius.toString());
-    setJustOnce(clonedModel.justOnce);
-    setTitle(clonedModel.title);
-    _locationController.text = clonedModel.title;
-    _radiusController.text = clonedModel.radius.toString();
+    setRadius(_clonedModel.radius.toString());
+    setJustOnce(_clonedModel.justOnce);
+    setTitle(_clonedModel.title);
+    _locationController.text = _clonedModel.title;
+    _radiusController.text = _clonedModel.radius.toString();
   }
 
-  LocationModel getModel() => model;
+  LocationModel getModel() => _model;
 
   void setTitle(String value) {
-    this.model.title = value;
+    this._model.title = value;
     _checkIsDirty();
   }
 
   void setRadius(String val) {
     if (val != null && val.isNotEmpty) {
       int value = int.parse(val);
-      if (value > 0 && value >= 200) {
-        this.model.radius = value;
+      if (value > 0 && value >= 200 && value <= 1500) {
+        this._model.radius = value;
         _checkIsDirty();
       }
     }
   }
 
   void setJustOnce(bool b) {
-    model.justOnce = b;
+    _model.justOnce = b;
     _checkIsDirty();
   }
 
   bool getJustOnce() {
-    return model.justOnce;
+    return _model.justOnce;
   }
 
   validateLocation(String value) {
@@ -108,7 +111,6 @@ class LocationDetailViewModel extends BaseViewModel {
     if (value < 0 || value < 200) {
       return 'radius_validation_wrong'.tr();
     }
-
     return null;
   }
 
@@ -117,14 +119,27 @@ class LocationDetailViewModel extends BaseViewModel {
     _radiusController.dispose();
   }
 
-  void saveLocation() {
-    if (model.id != null) {
-      _databaseService.updateLocation(model);
-    } else {
-      _geofenceService.addGeofence(model);
+  void _refreshModel() {
+    _clonedModel = LocationModel.clone(_model);
+  }
+
+  void saveLocation() async {
+    _dialogService.loadingDialog();
+    try {
+      if (_model.id != null) {
+        await _databaseService.updateLocation(_model);
+      } else {
+        await _geofenceService.addGeofence(_model);
+        GetIt.I<MainViewModel>().locations.add(_model);
+      }
+      _dialogService.showSuccess('msg');
+    } catch (e) {
+      _dialogService.stopLading();
+      _dialogService.showError(e.toString());
     }
-    this.initialise();
-    notifyListeners();
+    _dialogService.stopLading();
+    _refreshModel();
+    setIsDirty(false);
   }
 
   void onDelete(LocationModel model) {

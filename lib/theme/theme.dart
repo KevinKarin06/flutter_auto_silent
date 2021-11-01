@@ -31,6 +31,7 @@ final ThemeData darkTheme = ThemeData(
   ),
 );
 final ThemeData ligthTheme = ThemeData(
+  snackBarTheme: SnackBarThemeData(),
   primaryColor: Colors.cyan,
   brightness: Brightness.light,
   fontFamily: GoogleFonts.lato().fontFamily,
@@ -58,3 +59,8 @@ final ThemeData ligthTheme = ThemeData(
     ),
   ),
 );
+
+class AppColors {
+  static const error = Colors.red;
+  static const success = Colors.green;
+}

@@ -25,10 +25,12 @@ class LocationDatabase {
             (id INTEGER PRIMARY KEY, latitude INTEGER, 
             longitude INTEGER, 
             title TEXT, 
-            subtitle TEXT NOT NULL, 
+            subtitle TEXT NOT NULL,
+            radius INTEGER DEFAULT 500, 
+            justOnce INTEGER DEFAULT 0,
             uuid TEXT)''');
       },
-      version: 6,
+      version: 1,
     );
   }
 

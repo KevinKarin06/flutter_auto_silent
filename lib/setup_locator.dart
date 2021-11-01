@@ -2,6 +2,7 @@ import 'package:autosilentflutter/helpers/DbHelper.dart';
 import 'package:autosilentflutter/helpers/GeocoderHelper.dart';
 import 'package:autosilentflutter/helpers/GeofenceHelper.dart';
 import 'package:autosilentflutter/services/ApiService.dart';
+import 'package:autosilentflutter/services/DataConnectionService.dart';
 import 'package:autosilentflutter/services/DatabaseService.dart';
 import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeocoderService.dart';
@@ -9,6 +10,7 @@ import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/LocationDetailService.dart';
 import 'package:autosilentflutter/services/LocationService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
+import 'package:autosilentflutter/services/PermissionService.dart';
 import 'package:autosilentflutter/services/SearchService.dart';
 import 'package:autosilentflutter/services/SettingsService.dart';
 import 'package:autosilentflutter/view_models/MainViewModel.dart';
@@ -30,4 +32,7 @@ void setUp() {
   locator.registerLazySingleton<MainViewModel>(() => MainViewModel());
   locator.registerLazySingleton<LocationService>(() => LocationService());
   locator.registerLazySingleton<ApiService>(() => ApiService());
+  locator.registerLazySingleton<PermissionService>(() => PermissionService());
+  locator.registerLazySingleton<DataConnectionService>(
+      () => DataConnectionService());
 }

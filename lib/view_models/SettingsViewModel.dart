@@ -17,6 +17,7 @@ class SettingsViewModel extends MultipleFutureViewModel {
   //
   void toggleDarkMode(bool themeMode) {
     _settingsService.setTheme(themeMode);
+    notifyListeners();
   }
 
   bool getTheme() {
@@ -58,15 +59,11 @@ class SettingsViewModel extends MultipleFutureViewModel {
   }
 
   Future<bool> getActionOnEntry() async {
-    setBusyForObject(_NotifyOnEntry, true);
-    bool b = await _settingsService.getNotifyOnExit();
-    setBusyForObject(_NotifyOnEntry, false);
-    return b;
+    return await _settingsService.getNotifyOnExit();
   }
 
   setNotifyOnEntry(bool b) async {
     await _settingsService.setNotifyOnEntry(b);
-    notifyListeners();
   }
 
   setNotifyOnExit(bool b) async {

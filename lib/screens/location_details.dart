@@ -1,3 +1,4 @@
+import 'package:autosilentflutter/Utils.dart';
 import 'package:autosilentflutter/view_models/LocationDetailViewModel.dart';
 import 'package:autosilentflutter/widgets/CustomSwitch.dart';
 import 'package:flutter/material.dart';
@@ -5,19 +6,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 
-class LocationDetails extends StatefulWidget {
-  const LocationDetails({Key key}) : super(key: key);
-
-  @override
-  _LocationDetailsState createState() => _LocationDetailsState();
-}
-
-class _LocationDetailsState extends State<LocationDetails> {
+class LocationDetails extends StatelessWidget {
+  //
   final _formKey = GlobalKey<FormState>();
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +35,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                 ? IconButton(
                     tooltip: 'delete'.tr(),
                     onPressed: () {
-                      vModel.onDelete(vModel.model);
+                      vModel.onDelete(vModel.getModel());
                     },
                     icon: Icon(
                       Icons.delete_rounded,
@@ -66,13 +57,11 @@ class _LocationDetailsState extends State<LocationDetails> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     TextFormField(
+                      maxLines: Utils.numberOfLines(vModel.getModel().title),
                       controller: vModel.getLocationController(),
                       onFieldSubmitted: (String val) {
                         _formKey.currentState.validate();
                         vModel.setTitle(val.trim());
-                      },
-                      onChanged: (String value) {
-                        // vModel.setTitle(value.trim());
                       },
                       validator: (String val) {
                         return vModel.validateLocation(val);
@@ -83,7 +72,7 @@ class _LocationDetailsState extends State<LocationDetails> {
                     ),
                     mySpacer(),
                     TextFormField(
-                      maxLines: 3,
+                      maxLines: Utils.numberOfLines(vModel.getModel().subtitle),
                       readOnly: true,
                       initialValue: vModel.getModel().subtitle,
                       decoration: InputDecoration(
@@ -221,10 +210,5 @@ class _LocationDetailsState extends State<LocationDetails> {
 
   Widget mySpacer() {
     return SizedBox(height: 10.0);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 }

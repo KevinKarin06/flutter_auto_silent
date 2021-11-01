@@ -44,6 +44,7 @@ class SettingsScreen extends StatelessWidget {
                   leading: Icon(Icons.language_rounded),
                   minVerticalPadding: 8.0,
                 ),
+                Divider(),
                 CustomSwitch(
                   leftText: 'dark'.tr(),
                   rightText: 'light'.tr(),
@@ -53,7 +54,7 @@ class SettingsScreen extends StatelessWidget {
                     sModel.toggleDarkMode(val);
                   },
                 ),
-                sModel.isBusy
+                sModel.fetchtingNotifyOnEntry
                     ? LinearProgressIndicator()
                     : CustomSwitch(
                         leftText: 'no'.tr(),
@@ -61,11 +62,10 @@ class SettingsScreen extends StatelessWidget {
                         label: 'notify_on_entry'.tr(),
                         defaultValue: sModel.fetchedNotifyOnEntry,
                         onValueChanged: (val) {
-                          Logger().d('NotifyOnEntry', val);
                           sModel.setNotifyOnEntry(val);
                         },
                       ),
-                sModel.isBusy
+                sModel.fetchtingNotifyOnExit
                     ? LinearProgressIndicator()
                     : CustomSwitch(
                         leftText: 'no'.tr(),
@@ -73,7 +73,6 @@ class SettingsScreen extends StatelessWidget {
                         label: 'notify_on_exit'.tr(),
                         defaultValue: sModel.fetchedNotifyOnExit,
                         onValueChanged: (val) {
-                          Logger().d('NotifyOnExit', val);
                           sModel.setNotifyOnExit(val);
                         },
                       ),

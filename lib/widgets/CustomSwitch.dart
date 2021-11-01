@@ -19,37 +19,26 @@ class CustomSwitch extends StatefulWidget {
   _CustomSwitchState createState() => _CustomSwitchState();
 }
 
-class _CustomSwitchState extends State<CustomSwitch>
-    with WidgetsBindingObserver {
+class _CustomSwitchState extends State<CustomSwitch> {
   bool _selected = false;
   final double _initialDistance = 17.0;
   double _distance = 17.0;
   void _updatePosition(context) {
-    if (widget.defaultValue != _selected) {
-      _distance = _initialDistance;
-    } else {
+    _selected = widget.defaultValue ?? true;
+    if (_selected) {
       _distance = MediaQuery.of(context).size.width - 170;
-      _selected = widget.defaultValue ?? true;
-    }
+    } else
+      _distance = _initialDistance;
   }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _selected = widget.defaultValue ?? true;
-      if (_selected) {
-        _distance = MediaQuery.of(context).size.width - 170;
-        Logger().d('During Bindings', widget.defaultValue);
-      } else
-        _distance = _initialDistance;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // _updatePosition(context);
+    _updatePosition(context);
     return Stack(
       children: [
         AnimatedPositioned(
@@ -160,6 +149,5 @@ class _CustomSwitchState extends State<CustomSwitch>
   @override
   void dispose() {
     super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
   }
 }

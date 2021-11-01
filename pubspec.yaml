@@ -52,6 +52,7 @@ dependencies:
   ndialog: ^4.1.0
   one_context: ^1.1.1
   flutter_local_notifications: ^9.0.1
+  text: ^0.2.0
 
 dev_dependencies:
   flutter_test:

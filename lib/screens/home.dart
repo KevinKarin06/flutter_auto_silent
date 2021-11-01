@@ -8,99 +8,8 @@ import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatelessWidget {
   MyHomePage({Key key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage>
-    with WidgetsBindingObserver, TickerProviderStateMixin {
-  // Future<void> _addCurrentLocation() async {
-  //   UIBlock.block(context);
-  //   try {
-  //     LocationModel model = await helper.getCurrentPosition();
-  //     await _geofenceHelper.addGeofence(model);
-  //     await _loadLocations();
-  //     UIBlock.unblock(context);
-  //     DialogContext().showSnackBar(
-  //       snackBar: snackBar(error: false, msg: 'Added Succesfully'),
-  //     );
-  //   } catch (e) {
-  //     UIBlock.unblock(context);
-  //     DialogContext().showSnackBar(
-  //       snackBar: snackBar(error: true, msg: e.toString()
-  //           // msg:
-  //           //     'Failed to add Location please try again make sure you have a worknig internet connection'
-  //           ),
-  //     );
-  //     print('From Home Screen: ' + e);
-  //   }
-  // }
-
-  // Future<void> _addFetchedCurrentLocation(LocationModel model) async {
-  //   UIBlock.block(context);
-  //   try {
-  //     await _geofenceHelper.addGeofence(model);
-  //     await _loadLocations();
-  //     UIBlock.unblock(context);
-  //     DialogContext().showSnackBar(
-  //       snackBar: snackBar(error: false, msg: 'Added Succesfully'),
-  //     );
-  //   } catch (e) {
-  //     UIBlock.unblock(context);
-  //     DialogContext().showSnackBar(
-  //       snackBar: snackBar(error: true, msg: e.toString()),
-  //     );
-  //     print(e);
-  //   }
-  // }
-
-  // Future<void> _updateLocations(LocationModel model) async {
-  //   UIBlock.block(context);
-  //   try {
-  //     await _dbHelper.updateLocation(model);
-  //     await _loadLocations();
-  //     UIBlock.unblock(context);
-  //   } catch (e) {
-  //     UIBlock.unblock(context);
-  //     print(e);
-  //   }
-  // }
-
-  // Future<void> _batchDelete(List<LocationModel> models) async {
-  //   int deleted = models.length;
-  //   UIBlock.block(context);
-  //   try {
-  //     for (int i = 0; i < models.length; i++) {
-  //       await _geofenceHelper.removeGeofence(models[i]);
-  //     }
-  //     _cancelMultiSelect();
-  //     _loadLocations();
-  //     UIBlock.unblock(context);
-  //     DialogContext().showSnackBar(
-  //       snackBar: snackBar(
-  //           error: false,
-  //           msg: '$deleted ${deleted > 1 ? 'Locations' : 'Location'} Removed'),
-  //     );
-  //   } catch (e) {
-  //     UIBlock.unblock(context);
-  //     DialogContext()
-  //         .showSnackBar(snackBar: snackBar(error: true, msg: e.toString()));
-  //     print(e);
-  //   }
-  // }
-  AnimationController _animationController;
-
-  @override
-  void initState() {
-    super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
-    WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,12 +91,5 @@ class _MyHomePageState extends State<MyHomePage>
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _animationController.dispose();
-    WidgetsBinding.instance.removeObserver(this);
   }
 }

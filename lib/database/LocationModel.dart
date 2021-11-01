@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_photon/flutter_photon.dart';
 
 // ignore: must_be_immutable
-class LocationModel extends Equatable {
+class LocationModel {
   final double latitude, longitude;
   String title, subtitle, uuid;
   final int id;
@@ -92,14 +92,14 @@ class LocationModel extends Equatable {
         uuid: Utils.generateuuid());
   }
 
-  @override
-  List<Object> get props => [
-        justOnce,
-        radius,
-        latitude,
-        longitude,
-        title,
-        subtitle,
-        uuid,
-      ];
+  // @override
+  // List<Object> get props => [
+  //       justOnce,
+  //       radius,
+  //       latitude,
+  //       longitude,
+  //       title,
+  //       subtitle,
+  //       uuid,
+  //     ];
 }
