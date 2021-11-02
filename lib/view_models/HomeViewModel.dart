@@ -11,7 +11,7 @@ import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class MainViewModel extends FutureViewModel {
+class HomeViewModel extends FutureViewModel {
   final DatabaseService _databaseService = GetIt.I<DatabaseService>();
   final GeofenceService _geofenceService = GetIt.I<GeofenceService>();
   final SearchBarService _searchBarService = GetIt.I<SearchBarService>();
@@ -19,18 +19,22 @@ class MainViewModel extends FutureViewModel {
   final DialogService _dialogService = GetIt.I<DialogService>();
   //
   bool multiSelect = false;
-  bool showCamcelIcon = false;
-  List<LocationModel> selected = List.empty(growable: true);
+  bool showCancelIcon = false;
+  List<LocationModel> _selected = List.empty(growable: true);
   List<LocationModel> locations = List.empty(growable: true);
-  List<LocationModel> filteredLocations = List.empty(growable: true);
+  List<LocationModel> _tempLocations = List.empty(growable: true);
   List<String> _menuItems = ['settings', 'about'];
 
   @override
   Future<List<LocationModel>> futureToRun() async {
     Logger().d('Futre to run');
     locations = await _databaseService.getLocations();
-    filteredLocations.addAll(locations);
+    _tempLocations.addAll(locations);
     return locations;
+  }
+
+  void refresh() {
+    notifyListeners();
   }
 
   void setMultiSelect(bool b) {
@@ -39,16 +43,16 @@ class MainViewModel extends FutureViewModel {
   }
 
   void setShowCancelIcon(bool b) {
-    this.showCamcelIcon = b;
+    this.showCancelIcon = b;
     notifyListeners();
   }
 
-  List<LocationModel> getSelected() => selected;
+  List<LocationModel> get selected => _selected;
 
   FloatingSearchBarController getController() =>
       _searchBarService.floatingSearchBarController();
 
-  List<String> getMenuItems() => _menuItems;
+  List<String> get menuItems => _menuItems;
 
   void openSearchBar() {
     _searchBarService.open();
@@ -64,14 +68,14 @@ class MainViewModel extends FutureViewModel {
   }
 
   void _checkMultiSelect() {
-    if (selected.isEmpty) {
+    if (_selected.isEmpty) {
       setMultiSelect(false);
     }
     notifyListeners();
   }
 
   void _cancelMultiSelect() {
-    selected.clear();
+    _selected.clear();
     setMultiSelect(false);
   }
 
@@ -80,6 +84,8 @@ class MainViewModel extends FutureViewModel {
   }
 
   void filterLocation(String query) {
+    this.locations.clear();
+    locations.addAll(_tempLocations);
     query = query.toLowerCase();
     if (query.isNotEmpty) {
       setShowCancelIcon(true);
@@ -89,37 +95,33 @@ class MainViewModel extends FutureViewModel {
     this.locations = locations.where((LocationModel model) {
       return model.title.toLowerCase().contains(query);
     }).toList();
-    if (query.length < 1) {
-      this.locations.clear();
-      this.locations.addAll(filteredLocations);
-    }
     notifyListeners();
   }
 
-  List<LocationModel> getFilteredList() => filteredLocations;
+  List<LocationModel> getFilteredList() => _tempLocations;
 
   void selectAll() {
-    if (selected.length == locations.length) {
+    if (_selected.length == locations.length) {
       _cancelMultiSelect();
     } else {
-      selected.clear();
-      selected.addAll(locations);
+      _selected.clear();
+      _selected.addAll(locations);
       notifyListeners();
     }
   }
 
   bool isSelected(LocationModel model) {
-    return selected.contains(model);
+    return _selected.contains(model);
   }
 
   void handleItemTap(LocationModel model) {
     if (multiSelect) {
-      if (!selected.contains(model)) {
-        selected.add(model);
+      if (!_selected.contains(model)) {
+        _selected.add(model);
         notifyListeners();
       } else {
-        selected.remove(model);
-        print(selected.length);
+        _selected.remove(model);
+        print(_selected.length);
         _checkMultiSelect();
       }
     } else {
@@ -138,7 +140,7 @@ class MainViewModel extends FutureViewModel {
 
   void handleOnLongPress(LocationModel model) {
     if (!multiSelect) {
-      selected.add(model);
+      _selected.add(model);
       setMultiSelect(true);
     } else
       _cancelMultiSelect();

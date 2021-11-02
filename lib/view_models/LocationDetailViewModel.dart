@@ -2,9 +2,8 @@ import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/services/DatabaseService.dart';
 import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
-import 'package:autosilentflutter/services/LocationDetailService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
-import 'package:autosilentflutter/view_models/MainViewModel.dart';
+import 'package:autosilentflutter/view_models/HomeViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
@@ -12,8 +11,7 @@ import 'package:stacked/stacked.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class LocationDetailViewModel extends BaseViewModel {
-  final LocationDetailService _locationDetailService =
-      GetIt.I<LocationDetailService>();
+  //
   final GeofenceService _geofenceService = GetIt.I<GeofenceService>();
   final DatabaseService _databaseService = GetIt.I<DatabaseService>();
   final DialogService _dialogService = GetIt.I<DialogService>();
@@ -26,10 +24,9 @@ class LocationDetailViewModel extends BaseViewModel {
   LocationModel _model;
   LocationModel _clonedModel;
   //
-  void initialise() {
-    _model = _locationDetailService.getModel();
-    if (_model.id != null) {
-    } else {
+  void initialise(LocationModel model) {
+    _model = model;
+    if (_model.id == null) {
       setIsDirty(true);
     }
     this._clonedModel = LocationModel.clone(_model);
@@ -37,8 +34,8 @@ class LocationDetailViewModel extends BaseViewModel {
     _radiusController.text = _model.radius.toString();
   }
 
-  TextEditingController getRadiusController() => _radiusController;
-  TextEditingController getLocationController() => _locationController;
+  TextEditingController get radiusController => _radiusController;
+  TextEditingController get locationController => _locationController;
 
   void _checkIsDirty() {
     if (_model.id != null) {
@@ -70,7 +67,7 @@ class LocationDetailViewModel extends BaseViewModel {
     _radiusController.text = _clonedModel.radius.toString();
   }
 
-  LocationModel getModel() => _model;
+  LocationModel get model => _model;
 
   void setTitle(String value) {
     this._model.title = value;
@@ -130,7 +127,7 @@ class LocationDetailViewModel extends BaseViewModel {
         await _databaseService.updateLocation(_model);
       } else {
         await _geofenceService.addGeofence(_model);
-        GetIt.I<MainViewModel>().locations.add(_model);
+        GetIt.I<HomeViewModel>().locations.add(model);
       }
       _dialogService.showSuccess('msg');
     } catch (e) {
@@ -140,6 +137,7 @@ class LocationDetailViewModel extends BaseViewModel {
     _dialogService.stopLading();
     _refreshModel();
     setIsDirty(false);
+    GetIt.I<HomeViewModel>().refresh();
   }
 
   void onDelete(LocationModel model) {

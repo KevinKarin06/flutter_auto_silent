@@ -1,9 +1,10 @@
 import 'package:autosilentflutter/screens/loading.dart';
 import 'package:autosilentflutter/screens/no_location.dart';
-import 'package:autosilentflutter/view_models/MainViewModel.dart';
+import 'package:autosilentflutter/view_models/HomeViewModel.dart';
 import 'package:autosilentflutter/widgets/CustomAppBar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
@@ -13,9 +14,13 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MainViewModel>.reactive(
-      viewModelBuilder: () => GetIt.I<MainViewModel>(),
-      builder: (BuildContext context, MainViewModel vModel, Widget child) =>
+    return ViewModelBuilder<HomeViewModel>.reactive(
+      initialiseSpecialViewModelsOnce: true,
+      viewModelBuilder: () => GetIt.I<HomeViewModel>(),
+      onDispose: (model) {
+        Logger().d("HomeViewModelBeingDispose", 'Yep');
+      },
+      builder: (BuildContext context, HomeViewModel vModel, Widget child) =>
           WillPopScope(
         onWillPop: () async {
           return Future.delayed(

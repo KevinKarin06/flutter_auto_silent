@@ -1,4 +1,5 @@
 import 'package:autosilentflutter/Utils.dart';
+import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/view_models/LocationDetailViewModel.dart';
 import 'package:autosilentflutter/widgets/CustomSwitch.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 
 class LocationDetails extends StatelessWidget {
+  final LocationModel locationModel;
+  LocationDetails(this.locationModel);
   //
   final _formKey = GlobalKey<FormState>();
 
@@ -18,7 +21,8 @@ class LocationDetails extends StatelessWidget {
       },
       fireOnModelReadyOnce: true,
       viewModelBuilder: () => LocationDetailViewModel(),
-      onModelReady: (LocationDetailViewModel model) => model.initialise(),
+      onModelReady: (LocationDetailViewModel model) =>
+          model.initialise(locationModel),
       builder: (BuildContext context, LocationDetailViewModel vModel,
               Widget child) =>
           Scaffold(
@@ -26,16 +30,16 @@ class LocationDetails extends StatelessWidget {
           elevation: 0.0,
           backgroundColor: Colors.transparent,
           title: Text(
-            vModel.getModel().title,
+            vModel.model.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           actions: [
-            vModel.getModel().id != null
+            vModel.model.id != null
                 ? IconButton(
                     tooltip: 'delete'.tr(),
                     onPressed: () {
-                      vModel.onDelete(vModel.getModel());
+                      vModel.onDelete(vModel.model);
                     },
                     icon: Icon(
                       Icons.delete_rounded,
@@ -57,8 +61,8 @@ class LocationDetails extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     TextFormField(
-                      maxLines: Utils.numberOfLines(vModel.getModel().title),
-                      controller: vModel.getLocationController(),
+                      maxLines: Utils.numberOfLines(vModel.model.title),
+                      controller: vModel.locationController,
                       onFieldSubmitted: (String val) {
                         _formKey.currentState.validate();
                         vModel.setTitle(val.trim());
@@ -72,9 +76,9 @@ class LocationDetails extends StatelessWidget {
                     ),
                     mySpacer(),
                     TextFormField(
-                      maxLines: Utils.numberOfLines(vModel.getModel().subtitle),
+                      maxLines: Utils.numberOfLines(vModel.model.subtitle),
                       readOnly: true,
-                      initialValue: vModel.getModel().subtitle,
+                      initialValue: vModel.model.subtitle,
                       decoration: InputDecoration(
                         labelText: 'location_details'.tr(),
                         enabled: false,
@@ -83,7 +87,7 @@ class LocationDetails extends StatelessWidget {
                     mySpacer(),
                     TextFormField(
                       readOnly: true,
-                      initialValue: vModel.getModel().latitude.toString(),
+                      initialValue: vModel.model.latitude.toString(),
                       decoration: InputDecoration(
                         labelText: 'latitude'.tr(),
                         enabled: false,
@@ -92,7 +96,7 @@ class LocationDetails extends StatelessWidget {
                     mySpacer(),
                     TextFormField(
                       readOnly: true,
-                      initialValue: vModel.getModel().longitude.toString(),
+                      initialValue: vModel.model.longitude.toString(),
                       decoration: InputDecoration(
                         labelText: 'longitude'.tr(),
                         enabled: false,
@@ -100,7 +104,7 @@ class LocationDetails extends StatelessWidget {
                     ),
                     mySpacer(),
                     TextFormField(
-                      controller: vModel.getRadiusController(),
+                      controller: vModel.radiusController,
                       onFieldSubmitted: (String val) {
                         _formKey.currentState.validate();
                         vModel.setRadius(val);
@@ -119,7 +123,7 @@ class LocationDetails extends StatelessWidget {
                         leftText: 'always'.tr(),
                         rightText: 'once'.tr(),
                         label: 'location_notify'.tr(),
-                        defaultValue: vModel.getModel().justOnce,
+                        defaultValue: vModel.model.justOnce,
                         onValueChanged: (val) {
                           vModel.setJustOnce(val);
                         }),

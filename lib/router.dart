@@ -24,8 +24,8 @@ class AppRouter {
       case about:
         return MaterialPageRoute(builder: (_) => AboutScreen());
       case details:
-        // LocationModel model = settings.arguments as LocationModel;
-        return MaterialPageRoute(builder: (_) => LocationDetails());
+        LocationModel model = settings.arguments as LocationModel;
+        return MaterialPageRoute(builder: (_) => LocationDetails(model));
         break;
       case searchLocation:
         return MaterialPageRoute(builder: (_) => AutoCompleteLocation());

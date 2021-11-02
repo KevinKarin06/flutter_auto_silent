@@ -1,16 +1,15 @@
-import 'package:autosilentflutter/view_models/MainViewModel.dart';
+import 'package:autosilentflutter/view_models/HomeViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:stacked/stacked.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class CustomAppBar extends ViewModelWidget<MainViewModel>
+class CustomAppBar extends ViewModelWidget<HomeViewModel>
     with PreferredSizeWidget {
   final double appBarElevation = 4.0;
   @override
-  Widget build(BuildContext context, MainViewModel vModel) {
-    Logger().d('AnimatedSwitcher Rebuilt...');
+  Widget build(BuildContext context, HomeViewModel vModel) {
     return SafeArea(
       child: AnimatedSwitcher(
         transitionBuilder: (Widget child, Animation<double> animation) =>
@@ -64,7 +63,8 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                             IconButton(
                                 tooltip: 'select_all'.tr(),
                                 icon: Icon(
-                                  vModel.selected.length == vModel.data.length
+                                  vModel.selected.length ==
+                                          vModel.locations.length
                                       ? Icons.check_circle_rounded
                                       : Icons.check_circle_outline_rounded,
                                 ),
@@ -101,7 +101,7 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                   alwaysOpened: false,
                   actions: [
                     FloatingSearchBarAction(
-                      showIfOpened: vModel.showCamcelIcon,
+                      showIfOpened: vModel.showCancelIcon,
                       showIfClosed: false,
                       child: CircularButton(
                         tooltip: 'clear'.tr(),
@@ -129,8 +129,7 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                           },
                           padding: EdgeInsets.zero,
                           itemBuilder: (BuildContext context) {
-                            return vModel
-                                .getMenuItems()
+                            return vModel.menuItems
                                 .asMap()
                                 .entries
                                 .map((entry) {
@@ -143,7 +142,13 @@ class CustomAppBar extends ViewModelWidget<MainViewModel>
                     )
                   ],
                   body: Material(
-                    child: Container(),
+                    child: Container(
+                      height: 100.0,
+                      color: Colors.red[500],
+                      child: Container(
+                        color: Colors.red,
+                      ),
+                    ),
                   ),
                 ),
               ),

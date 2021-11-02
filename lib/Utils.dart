@@ -34,7 +34,7 @@ class Utils {
   }
 
   static int numberOfLines(String text) {
-    Logger().d('Number of lines', Text(text).lines().length);
+    // Logger().d('Number of lines', Text(text).lines().length);
     return Text(text).lineCount;
   }
 }
