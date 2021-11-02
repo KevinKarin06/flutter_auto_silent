@@ -1,3 +1,4 @@
+import 'package:autosilentflutter/constants/colors.dart';
 import 'package:autosilentflutter/view_models/HomeViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -17,8 +18,8 @@ class CustomAppBar extends ViewModelWidget<HomeViewModel>
         duration: Duration(milliseconds: 500),
         child: vModel.multiSelect
             ? Material(
-                // color: Colors.cyan,
-                // elevation: appBarElevation,
+                color: AppColors().appBarColor(),
+                elevation: appBarElevation,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
                   child: Center(
@@ -80,8 +81,9 @@ class CustomAppBar extends ViewModelWidget<HomeViewModel>
               )
             : Container(
                 child: FloatingSearchAppBar(
+                  elevation: appBarElevation,
                   padding: EdgeInsets.only(left: 16.0),
-                  color: Theme.of(context).scaffoldBackgroundColor,
+                  color: AppColors().appBarColor(),
                   debounceDelay: Duration(milliseconds: 500),
                   height: kToolbarHeight,
                   onQueryChanged: (String val) {
@@ -142,13 +144,7 @@ class CustomAppBar extends ViewModelWidget<HomeViewModel>
                     )
                   ],
                   body: Material(
-                    child: Container(
-                      height: 100.0,
-                      color: Colors.red[500],
-                      child: Container(
-                        color: Colors.red,
-                      ),
-                    ),
+                    child: Container(),
                   ),
                 ),
               ),

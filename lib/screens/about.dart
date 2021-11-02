@@ -9,8 +9,6 @@ class AboutScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('about'.tr()),
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
         child: Padding(

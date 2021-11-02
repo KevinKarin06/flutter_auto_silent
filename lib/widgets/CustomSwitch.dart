@@ -1,3 +1,4 @@
+import 'package:autosilentflutter/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -62,7 +63,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
             height: 60.0,
             margin: EdgeInsets.only(bottom: 8.0),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
+              border: Border.all(color: AppColors().customSwitchBorderColor()),
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: Row(
@@ -87,7 +88,9 @@ class _CustomSwitchState extends State<CustomSwitch> {
                         widget.leftText,
                         maxLines: 1,
                         style: TextStyle(
-                          color: _selected ? Colors.black : Colors.white,
+                          color: _selected
+                              ? AppColors().customSwitchSelectedTextColor()
+                              : AppColors().customSwitchUnSelectedTextColor(),
                           fontSize: 14.0,
                         ),
                       ),
@@ -112,7 +115,9 @@ class _CustomSwitchState extends State<CustomSwitch> {
                         widget.rightText,
                         maxLines: 1,
                         style: TextStyle(
-                          color: _selected ? Colors.white : Colors.black,
+                          color: _selected
+                              ? AppColors().customSwitchSelectedTextColor()
+                              : AppColors().customSwitchUnSelectedTextColor(),
                           fontSize: 14.0,
                         ),
                       ),
@@ -135,8 +140,8 @@ class _CustomSwitchState extends State<CustomSwitch> {
                   widget.label,
                   maxLines: 1,
                   style: TextStyle(
-                    fontSize: 12.0,
-                  ),
+                      fontSize: 12.0,
+                      color: AppColors().customSwitchLabelColor()),
                 ),
               ],
             ),

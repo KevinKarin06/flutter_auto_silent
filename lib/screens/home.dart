@@ -35,11 +35,11 @@ class MyHomePage extends StatelessWidget {
             onPressed: () {
               vModel.addLocation();
             },
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(6.0),
-              ),
-            ),
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.all(
+            //     Radius.circular(6.0),
+            //   ),
+            // ),
             child: Icon(Icons.add),
           ),
           body: SafeArea(

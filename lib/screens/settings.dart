@@ -17,8 +17,6 @@ class SettingsScreen extends StatelessWidget {
           Scaffold(
         appBar: AppBar(
           title: Text('settings'.tr()),
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
           actions: [
             TextButton(
               onPressed: () {},

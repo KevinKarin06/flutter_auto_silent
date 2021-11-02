@@ -27,8 +27,6 @@ class LocationDetails extends StatelessWidget {
               Widget child) =>
           Scaffold(
         appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
           title: Text(
             vModel.model.title,
             maxLines: 1,
@@ -43,7 +41,6 @@ class LocationDetails extends StatelessWidget {
                     },
                     icon: Icon(
                       Icons.delete_rounded,
-                      color: Colors.red,
                     ),
                   )
                 : Container(),
@@ -115,7 +112,6 @@ class LocationDetails extends StatelessWidget {
                       },
                       decoration: InputDecoration(
                         labelText: 'radius'.tr(),
-                        suffixText: 'meters'.tr(),
                       ),
                     ),
                     mySpacer(),
@@ -136,13 +132,11 @@ class LocationDetails extends StatelessWidget {
                           ? Container(
                               padding: EdgeInsets.symmetric(vertical: 8.0),
                               child: Column(children: [
-                                MaterialButton(
-                                  color: Colors.cyan,
-                                  textColor: Colors.white,
-                                  padding: EdgeInsets.all(12.0),
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8.0),
+                                OutlinedButton(
+                                  style: ButtonStyle(
+                                    minimumSize:
+                                        MaterialStateProperty.resolveWith(
+                                      (states) => Size(double.infinity, 50),
                                     ),
                                   ),
                                   onPressed: () {
@@ -150,53 +144,23 @@ class LocationDetails extends StatelessWidget {
                                       vModel.saveLocation();
                                     }
                                   },
-                                  child: Center(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text('save'.tr()),
-                                        SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        Icon(Icons.check),
-                                      ],
-                                    ),
-                                  ),
+                                  child: Text('save'.tr()),
                                 ),
                                 SizedBox(
                                   height: 16.0,
                                 ),
-                                MaterialButton(
-                                  textColor: Colors.black,
-                                  padding: EdgeInsets.all(12.0),
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(color: Colors.red),
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(8.0),
+                                OutlinedButton(
+                                  style: ButtonStyle(
+                                    minimumSize:
+                                        MaterialStateProperty.resolveWith(
+                                      (states) => Size(double.infinity, 50),
                                     ),
                                   ),
                                   onPressed: () {
                                     _formKey.currentState.validate();
                                     vModel.clearChanges();
                                   },
-                                  child: Center(
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text('cancel'.tr()),
-                                        SizedBox(
-                                          width: 8.0,
-                                        ),
-                                        Icon(Icons.cancel),
-                                      ],
-                                    ),
-                                  ),
+                                  child: Text('cancel'.tr()),
                                 ),
                               ]),
                             )
