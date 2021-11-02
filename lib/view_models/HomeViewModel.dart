@@ -24,6 +24,7 @@ class HomeViewModel extends FutureViewModel {
   List<LocationModel> locations = List.empty(growable: true);
   List<LocationModel> _tempLocations = List.empty(growable: true);
   List<String> _menuItems = ['settings', 'about'];
+  int deleted = 0;
 
   @override
   Future<List<LocationModel>> futureToRun() async {
@@ -148,14 +149,26 @@ class HomeViewModel extends FutureViewModel {
 
   void deleteAllSelected() {
     _dialogService.deleteDialog();
-    // selected.forEach((LocationModel model) async {
-    //   await _geofenceService.removeGeofence(model);
-    // });
+  }
+
+  void bactDelete() async {
+    _dialogService.deleteProgress();
+    Logger().d('start', 'Progress Start');
+    try {
+      selected.forEach((LocationModel locationModel) async {
+        await Future.delayed(Duration(seconds: 5), () {
+          Logger().d('progress', deleted);
+        });
+        deleted++;
+      });
+    } catch (e) {
+      _dialogService.showError(e.toString());
+    }
+    _dialogService.stopLading();
   }
 
   void addLocation() {
     _dialogService.addLocationDialog();
-    // _dialogService.loadingDialog();
   }
 
   void handleMenuItemClick(String item) {

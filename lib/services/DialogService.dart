@@ -1,5 +1,6 @@
 import 'package:autosilentflutter/widgets/AddLocationDialog.dart';
 import 'package:autosilentflutter/widgets/ConfirmDialog.dart';
+import 'package:autosilentflutter/widgets/DeletingDialog.dart';
 import 'package:autosilentflutter/widgets/LanguageDialog.dart';
 import 'package:autosilentflutter/widgets/PermissionDialog.dart';
 import 'package:autosilentflutter/widgets/SnackBars.dart';
@@ -23,6 +24,11 @@ class DialogService {
   void localeDialog() {
     OneContext()
         .showDialog(builder: (BuildContext context) => LanguageDialog());
+  }
+
+  void deleteProgress() {
+    OneContext().showProgressIndicator();
+    // OneContext().showProgressIndicator(builder: (_) => DeletingDialog());
   }
 
   void loadingDialog() {

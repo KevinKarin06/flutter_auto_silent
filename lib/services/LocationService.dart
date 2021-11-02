@@ -46,9 +46,9 @@ class LocationService {
           _navigationServcie.navigateToLocationDetails(
               AppRouter.details, model);
         } else
-          return Future.error(AppErrors.NO_INTERNET);
+          return Future.error(AppError.NO_INTERNET);
       } else
-        return Future.error(AppErrors.PERMISSION_DENIED);
+        return Future.error(AppError.PERMISSION_DENIED);
     } catch (e) {
       Logger().d('Error ', e);
       return Future.error(e.toString());

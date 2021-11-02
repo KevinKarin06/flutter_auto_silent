@@ -10,7 +10,7 @@ class GeofenceService {
   final DatabaseService _databaseService = GetIt.I<DatabaseService>();
   final PermissionService _permissionService = GetIt.I<PermissionService>();
   //
-  Future<void> addGeofence(LocationModel model) async {
+  Future<int> addGeofence(LocationModel model) async {
     try {
       if (await _permissionService.requestLocationPermision()) {
         var result = await _platform.invokeMethod(
@@ -22,7 +22,7 @@ class GeofenceService {
           },
         );
         if (result == true) {
-          await _databaseService.createLocation(model);
+          return await _databaseService.createLocation(model);
         } else {
           return Future.error('goefence_add_failed');
         }
@@ -51,6 +51,14 @@ class GeofenceService {
       print(exception);
       return Future.error('Ooops Something went wrong please try again');
     }
+  }
+
+  Stream<int> batchRemove(List<LocationModel> list) async* {
+    int deleted = 0;
+    list.forEach((LocationModel model) async* {
+      await removeGeofence(model);
+      yield deleted++;
+    });
   }
 
   Future<void> test() async {

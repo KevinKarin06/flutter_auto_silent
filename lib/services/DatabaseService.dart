@@ -10,7 +10,7 @@ class DatabaseService {
       final database = await LocationDatabase().getDatabase();
       return await database.insert(Constants.TABLE_NAME, model.toMap());
     } catch (e) {
-      return Future.error(AppErrors.DB_ADD_FAILED);
+      return Future.error(AppError.DB_ADD_FAILED);
     }
   }
 
@@ -23,7 +23,7 @@ class DatabaseService {
         whereArgs: [id],
       );
     } catch (e) {
-      return Future.error(AppErrors.DB_DELETE_FAILED);
+      return Future.error(AppError.DB_DELETE_FAILED);
     }
   }
 
@@ -39,7 +39,7 @@ class DatabaseService {
         whereArgs: [model.id],
       );
     } catch (e) {
-      return Future.error(AppErrors.DB_UPDATE_FAILED);
+      return Future.error(AppError.DB_UPDATE_FAILED);
     }
   }
 
@@ -55,7 +55,7 @@ class DatabaseService {
         return LocationModel.fromMap(maps[i]);
       });
     } catch (e) {
-      return Future.error(AppErrors.DB_LOAD_FAILED);
+      return Future.error(AppError.DB_LOAD_FAILED);
     }
   }
 
@@ -70,7 +70,7 @@ class DatabaseService {
       );
       return maps.isNotEmpty ? LocationModel.fromMap(maps.first) : -1;
     } catch (e) {
-      return Future.error(AppErrors.DB_GET_FAILED);
+      return Future.error(AppError.DB_GET_FAILED);
     }
   }
 }

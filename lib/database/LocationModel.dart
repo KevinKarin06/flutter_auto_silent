@@ -5,7 +5,7 @@ import 'package:flutter_photon/flutter_photon.dart';
 class LocationModel {
   final double latitude, longitude;
   String title, subtitle, uuid;
-  final int id;
+  int id;
   int radius;
   bool justOnce;
 

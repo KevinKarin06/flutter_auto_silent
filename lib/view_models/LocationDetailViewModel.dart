@@ -118,6 +118,7 @@ class LocationDetailViewModel extends BaseViewModel {
 
   void _refreshModel() {
     _clonedModel = LocationModel.clone(_model);
+    setIsDirty(false);
   }
 
   void saveLocation() async {
@@ -126,8 +127,9 @@ class LocationDetailViewModel extends BaseViewModel {
       if (_model.id != null) {
         await _databaseService.updateLocation(_model);
       } else {
-        await _geofenceService.addGeofence(_model);
-        GetIt.I<HomeViewModel>().locations.add(model);
+        int id = await _geofenceService.addGeofence(_model);
+        _model.id = id;
+        GetIt.I<HomeViewModel>().locations.insert(0, model);
       }
       _dialogService.showSuccess('msg');
     } catch (e) {
@@ -136,11 +138,11 @@ class LocationDetailViewModel extends BaseViewModel {
     }
     _dialogService.stopLading();
     _refreshModel();
-    setIsDirty(false);
     GetIt.I<HomeViewModel>().refresh();
   }
 
   void onDelete(LocationModel model) {
+    GetIt.I<HomeViewModel>().selected.add(model);
     _dialogService.deleteDialog();
   }
 }
