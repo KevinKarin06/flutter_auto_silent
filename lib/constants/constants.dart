@@ -9,4 +9,5 @@ class Constants {
   static const String APP_NAME = 'Auto Silent';
   static const String DC_CORP = 'Powered By Dc Corp';
   static const int GEOFENCE_RADIUS = 500;
+  static const double BORDER_RADIUS = 4.0;
 }

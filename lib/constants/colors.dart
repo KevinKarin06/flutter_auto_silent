@@ -13,24 +13,29 @@ class AppColors {
   Color customSwitchBorderColor() {
     return _settingsService.getTheme().themeMode == ThemeMode.dark
         ? Colors.cyan
-        : Colors.grey;
-  }
-
-  Color customSwitchSelectedTextColor() {
-    return _settingsService.getTheme().themeMode == ThemeMode.dark
-        ? Colors.white
         : Colors.cyan;
   }
 
-  Color customSwitchUnSelectedTextColor() {
-    return _settingsService.getTheme().themeMode == ThemeMode.dark
-        ? Colors.white
-        : Color(0x42000000);
+  Color customSwitchTextColor(bool selected) {
+    if (!selected) {
+      return _settingsService.getTheme().themeMode == ThemeMode.dark
+          ? Colors.white
+          : Colors.black;
+    } else
+      return _settingsService.getTheme().themeMode == ThemeMode.dark
+          ? Colors.white
+          : Colors.black;
   }
 
   Color customSwitchLabelColor() {
     return _settingsService.getTheme().themeMode == ThemeMode.light
-        ? Color(0x42000000)
+        ? Colors.black
         : Colors.cyan;
+  }
+
+  Color errorColor() {
+    return _settingsService.getTheme().themeMode == ThemeMode.light
+        ? Colors.red
+        : Colors.red.shade300;
   }
 }

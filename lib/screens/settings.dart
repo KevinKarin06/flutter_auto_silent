@@ -18,9 +18,19 @@ class SettingsScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('settings'.tr()),
           actions: [
-            TextButton(
-              onPressed: () {},
-              child: Text('reset_settings').tr(),
+            Center(
+              child: InkWell(
+                onTap: () {
+                  //reset settings
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
+                  child: Text('reset_settings').tr(),
+                ),
+              ),
             )
           ],
         ),
@@ -31,6 +41,7 @@ class SettingsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Divider(),
                 ListTile(
                   title: Text('language').tr(),
                   subtitle: Text(
@@ -39,7 +50,11 @@ class SettingsScreen extends StatelessWidget {
                   onTap: () {
                     sModel.setLanguage();
                   },
-                  leading: Icon(Icons.language_rounded),
+                  minLeadingWidth: 20.0,
+                  leading: Align(
+                    widthFactor: 0,
+                    child: Icon(Icons.language_rounded),
+                  ),
                   minVerticalPadding: 8.0,
                 ),
                 Divider(),

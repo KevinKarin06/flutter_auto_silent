@@ -133,12 +133,6 @@ class LocationDetails extends StatelessWidget {
                               padding: EdgeInsets.symmetric(vertical: 8.0),
                               child: Column(children: [
                                 OutlinedButton(
-                                  style: ButtonStyle(
-                                    minimumSize:
-                                        MaterialStateProperty.resolveWith(
-                                      (states) => Size(double.infinity, 50),
-                                    ),
-                                  ),
                                   onPressed: () {
                                     if (_formKey.currentState.validate()) {
                                       vModel.saveLocation();
@@ -151,10 +145,12 @@ class LocationDetails extends StatelessWidget {
                                 ),
                                 OutlinedButton(
                                   style: ButtonStyle(
-                                    minimumSize:
+                                    // ignore: missing_return
+                                    foregroundColor:
                                         MaterialStateProperty.resolveWith(
-                                      (states) => Size(double.infinity, 50),
-                                    ),
+                                            (states) {
+                                      return Colors.red;
+                                    }),
                                   ),
                                   onPressed: () {
                                     _formKey.currentState.validate();

@@ -1,4 +1,5 @@
 import 'package:autosilentflutter/constants/colors.dart';
+import 'package:autosilentflutter/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -51,7 +52,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
             padding: EdgeInsets.symmetric(horizontal: 36.0, vertical: 8.0),
             decoration: BoxDecoration(
               color: Colors.cyan,
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(Constants.BORDER_RADIUS),
             ),
           ),
           duration: Duration(milliseconds: 500),
@@ -64,7 +65,7 @@ class _CustomSwitchState extends State<CustomSwitch> {
             margin: EdgeInsets.only(bottom: 8.0),
             decoration: BoxDecoration(
               border: Border.all(color: AppColors().customSwitchBorderColor()),
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(Constants.BORDER_RADIUS),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -81,16 +82,15 @@ class _CustomSwitchState extends State<CustomSwitch> {
                   child: Container(
                     width: MediaQuery.of(context).size.width / 3,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius:
+                          BorderRadius.circular(Constants.BORDER_RADIUS),
                     ),
                     child: Center(
                       child: Text(
                         widget.leftText,
                         maxLines: 1,
                         style: TextStyle(
-                          color: _selected
-                              ? AppColors().customSwitchSelectedTextColor()
-                              : AppColors().customSwitchUnSelectedTextColor(),
+                          color: AppColors().customSwitchTextColor(_selected),
                           fontSize: 14.0,
                         ),
                       ),
@@ -108,16 +108,15 @@ class _CustomSwitchState extends State<CustomSwitch> {
                   child: Container(
                     width: MediaQuery.of(context).size.width / 3,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius:
+                          BorderRadius.circular(Constants.BORDER_RADIUS),
                     ),
                     child: Center(
                       child: Text(
                         widget.rightText,
                         maxLines: 1,
                         style: TextStyle(
-                          color: _selected
-                              ? AppColors().customSwitchSelectedTextColor()
-                              : AppColors().customSwitchUnSelectedTextColor(),
+                          color: AppColors().customSwitchTextColor(_selected),
                           fontSize: 14.0,
                         ),
                       ),

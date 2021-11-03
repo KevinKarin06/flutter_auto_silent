@@ -11,6 +11,7 @@ class CustomAppBar extends ViewModelWidget<HomeViewModel>
   final double appBarElevation = 4.0;
   @override
   Widget build(BuildContext context, HomeViewModel vModel) {
+    Logger().d('Custom AppBar', 'Rebuilt');
     return SafeArea(
       child: AnimatedSwitcher(
         transitionBuilder: (Widget child, Animation<double> animation) =>
@@ -143,9 +144,7 @@ class CustomAppBar extends ViewModelWidget<HomeViewModel>
                           }),
                     )
                   ],
-                  body: Material(
-                    child: Container(),
-                  ),
+                  body: Container(),
                 ),
               ),
       ),

@@ -68,6 +68,29 @@ final ThemeData darkTheme = ThemeData(
       ),
     ),
   ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      // ignore: missing_return
+      foregroundColor: MaterialStateProperty.resolveWith((states) {
+        if (!states.contains(MaterialState.disabled)) {
+          return Colors.cyan;
+        }
+      }),
+      // ignore: missing_return
+      side: MaterialStateProperty.resolveWith((states) {
+        if (!states.contains(MaterialState.disabled)) {
+          return BorderSide(color: Colors.cyan);
+        }
+      }),
+      padding: MaterialStateProperty.resolveWith((states) {
+        return EdgeInsets.symmetric(vertical: 16.0);
+      }),
+      overlayColor: MaterialStateProperty.all(Colors.cyan.withOpacity(.15)),
+      minimumSize: MaterialStateProperty.resolveWith(
+        (states) => Size(double.infinity, 50),
+      ),
+    ),
+  ),
 );
 
 ///              ///
@@ -79,6 +102,7 @@ final ThemeData ligthTheme = ThemeData(
   brightness: Brightness.light,
   appBarTheme: AppBarTheme(
     color: Colors.cyan,
+    titleSpacing: 10.0,
   ),
   snackBarTheme: SnackBarThemeData(),
   primaryColor: Colors.cyan,
@@ -166,7 +190,19 @@ final ThemeData ligthTheme = ThemeData(
           return Colors.cyan;
         }
       }),
+      // ignore: missing_return
+      side: MaterialStateProperty.resolveWith((states) {
+        if (!states.contains(MaterialState.disabled)) {
+          return BorderSide(color: Colors.cyan);
+        }
+      }),
+      padding: MaterialStateProperty.resolveWith((states) {
+        return EdgeInsets.symmetric(vertical: 16.0);
+      }),
       overlayColor: MaterialStateProperty.all(Colors.cyan.withOpacity(.15)),
+      minimumSize: MaterialStateProperty.resolveWith(
+        (states) => Size(double.infinity, 50),
+      ),
     ),
   ),
   textButtonTheme: TextButtonThemeData(

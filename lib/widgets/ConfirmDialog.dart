@@ -1,3 +1,4 @@
+import 'package:autosilentflutter/constants/colors.dart';
 import 'package:autosilentflutter/view_models/HomeViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -38,6 +39,7 @@ class ConfirmDialog extends StatelessWidget {
           },
           child: Text(
             'delete'.tr(),
+            style: TextStyle(color: AppColors().errorColor()),
           ),
         ),
       ],
