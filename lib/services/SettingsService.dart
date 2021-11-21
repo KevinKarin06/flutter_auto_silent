@@ -1,12 +1,13 @@
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SettingsService {
   final NavigationService _navigationService = GetIt.I<NavigationService>();
+  final hiveBox = Hive.box('settings');
   //
   void setTheme(bool themeMode) async {
     if (themeMode) {
@@ -18,17 +19,17 @@ class SettingsService {
   }
 
   Future<void> setNotifyOnEntry(bool value) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setBool('notify_on_entry', value);
+    await hiveBox.put('notify_on_entry', value);
   }
 
   Future<void> setNotifyOnExit(bool value) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setBool('notify_on_exit', value);
+    await hiveBox.put('notify_on_exit', value);
   }
 
-  Future<void> setActionOnEnrty() async {}
-  Future<void> setActionOnExit() async {}
+  Future<void> setActionOnEnrty(bool value) async {
+    await hiveBox.put('action_on_entry', value);
+  }
+
   void setLocale(String locale) {
     Locale lang = Locale(locale);
     _navigationService.navigatorKey.currentContext.setLocale(lang);
@@ -44,18 +45,22 @@ class SettingsService {
         .getSelectedTheme();
   }
 
-  Future<bool> getNotifyOnEntry() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getBool('notify_on_entry') ?? true;
+  bool getNotifyOnEntry() {
+    return hiveBox.get('notify_on_entry', defaultValue: true);
   }
 
-  Future<bool> getNotifyOnExit() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getBool('notify_on_exit') ?? true;
+  bool getNotifyOnExit() {
+    return hiveBox.get('notify_on_exit', defaultValue: true);
   }
 
-  Future<void> getActionOnEnrty() async {}
-  Future<void> getActionOnExit() async {}
+  bool getActionOnEnrty() {
+    return hiveBox.get('action_on_entry', defaultValue: true);
+  }
+
+  int getTransitionDwellTime() {
+    return hiveBox.get('dwell_time', defaultValue: 15);
+  }
+
   //
   Future<void> reset() async {}
 }

@@ -55,10 +55,8 @@ class LocationDetailViewModel extends BaseViewModel {
   }
 
   void clearChanges() {
-    if (_model == _clonedModel) {
-      if (_model.id == null) {
-        _navigationService.goBack();
-      }
+    if (_model.id == null) {
+      _navigationService.goBack();
     }
     setRadius(_clonedModel.radius.toString());
     setJustOnce(_clonedModel.justOnce);

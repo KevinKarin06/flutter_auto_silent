@@ -7,13 +7,11 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class SettingsViewModel extends MultipleFutureViewModel {
+class SettingsViewModel extends BaseViewModel {
   final SettingsService _settingsService = GetIt.I<SettingsService>();
   final DialogService _dialogService = GetIt.I<DialogService>();
   final List<String> locales = ['fr', 'en'];
-  static const String _NotifyOnEntry = 'notifyOnEntry';
-  static const String _NotifyOnExit = 'notifyOnExit';
-  static const String _ActionOnEntry = 'actionOnEntry';
+
   //
   void toggleDarkMode(bool themeMode) {
     _settingsService.setTheme(themeMode);
@@ -42,39 +40,50 @@ class SettingsViewModel extends MultipleFutureViewModel {
     return lang == getCurrentLocale();
   }
 
-  bool get fetchedNotifyOnEntry => dataMap[_NotifyOnEntry];
-  bool get fetchedNotifyOnExit => dataMap[_NotifyOnExit];
-  bool get fetchedActionOnEntry => dataMap[_ActionOnEntry];
-
-  bool get fetchtingNotifyOnEntry => busy(_NotifyOnEntry);
-  bool get fetchtingNotifyOnExit => busy(_NotifyOnExit);
-  bool get fetchtingActionOnEnrty => busy(_ActionOnEntry);
-
-  Future<bool> getNotifyOnEntry() async {
-    return await _settingsService.getNotifyOnEntry();
+  bool getNotifyOnEntry() {
+    return _settingsService.getNotifyOnEntry();
   }
 
-  Future<bool> getNotifyOnExit() async {
-    return await _settingsService.getNotifyOnExit();
+  bool getNotifyOnExit() {
+    return _settingsService.getNotifyOnExit();
   }
 
-  Future<bool> getActionOnEntry() async {
-    return await _settingsService.getNotifyOnExit();
+  bool getActionOnEntry() {
+    return _settingsService.getActionOnEnrty();
   }
 
   setNotifyOnEntry(bool b) async {
-    await _settingsService.setNotifyOnEntry(b);
-  }
-
-  setNotifyOnExit(bool b) async {
-    await _settingsService.setNotifyOnExit(b);
+    try {
+      await _settingsService.setNotifyOnEntry(b);
+    } catch (e) {
+      _dialogService.showError('msg');
+    }
     notifyListeners();
   }
 
-  @override
-  Map<String, Future Function()> get futuresMap => {
-        _NotifyOnEntry: getNotifyOnEntry,
-        _NotifyOnExit: getNotifyOnExit,
-        _ActionOnEntry: getActionOnEntry
-      };
+  setNotifyOnExit(bool b) async {
+    try {
+      await _settingsService.setNotifyOnExit(b);
+    } catch (e) {
+      _dialogService.showError('msg');
+    }
+    notifyListeners();
+  }
+
+  setActionOnEntry(bool b) async {
+    try {
+      await _settingsService.setActionOnEnrty(b);
+    } catch (e) {
+      _dialogService.showError('msg');
+    }
+    notifyListeners();
+  }
+
+  int getDwellTransitionTime() {
+    return _settingsService.getTransitionDwellTime();
+  }
+
+  void setTransitionTime(int delay) {
+    //
+  }
 }

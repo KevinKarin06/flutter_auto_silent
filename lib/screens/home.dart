@@ -74,6 +74,7 @@ class MyHomePage extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     minVerticalPadding: 8.0,
+                                    minLeadingWidth: 24.0,
                                     trailing:
                                         Icon(Icons.arrow_forward_ios_rounded),
                                     leading: Align(

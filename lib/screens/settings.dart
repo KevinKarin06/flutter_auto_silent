@@ -67,46 +67,33 @@ class SettingsScreen extends StatelessWidget {
                     sModel.toggleDarkMode(val);
                   },
                 ),
-                sModel.fetchtingNotifyOnEntry
-                    ? LinearProgressIndicator()
-                    : CustomSwitch(
-                        leftText: 'no'.tr(),
-                        rightText: 'yes'.tr(),
-                        label: 'notify_on_entry'.tr(),
-                        defaultValue: sModel.fetchedNotifyOnEntry,
-                        onValueChanged: (val) {
-                          sModel.setNotifyOnEntry(val);
-                        },
-                      ),
-                sModel.fetchtingNotifyOnExit
-                    ? LinearProgressIndicator()
-                    : CustomSwitch(
-                        leftText: 'no'.tr(),
-                        rightText: 'yes'.tr(),
-                        label: 'notify_on_exit'.tr(),
-                        defaultValue: sModel.fetchedNotifyOnExit,
-                        onValueChanged: (val) {
-                          sModel.setNotifyOnExit(val);
-                        },
-                      ),
                 CustomSwitch(
-                  leftText: 'silent_mode'.tr(),
-                  rightText: 'air_plane_mode'.tr(),
-                  label: 'action_on_entry'.tr(),
-                  defaultValue: sModel.fetchedNotifyOnExit,
+                  leftText: 'no'.tr(),
+                  rightText: 'yes'.tr(),
+                  label: 'notify_on_entry'.tr(),
+                  defaultValue: sModel.getNotifyOnEntry(),
+                  onValueChanged: (val) {
+                    sModel.setNotifyOnEntry(val);
+                  },
+                ),
+                CustomSwitch(
+                  leftText: 'no'.tr(),
+                  rightText: 'yes'.tr(),
+                  label: 'notify_on_exit'.tr(),
+                  defaultValue: sModel.getNotifyOnExit(),
                   onValueChanged: (val) {
                     sModel.setNotifyOnExit(val);
                   },
                 ),
-                // CustomSwitch(
-                //   leftText: 'silent_mode'.tr(),
-                //   rightText: 'air_plane_mode'.tr(),
-                //   label: 'action_on_exit'.tr(),
-                //   defaultValue: sModel.notifyOnExit,
-                //   onValueChanged: (val) {
-                //     sModel.setNotifyOnExit(val);
-                //   },
-                // ),
+                CustomSwitch(
+                  leftText: 'silent_mode'.tr(),
+                  rightText: 'air_plane_mode'.tr(),
+                  label: 'action_on_entry'.tr(),
+                  defaultValue: sModel.getActionOnEntry(),
+                  onValueChanged: (val) {
+                    sModel.setActionOnEntry(val);
+                  },
+                ),
               ],
             ),
           ),

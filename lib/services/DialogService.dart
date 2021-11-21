@@ -1,7 +1,6 @@
-import 'package:autosilentflutter/widgets/AddLocationDialog.dart';
 import 'package:autosilentflutter/widgets/ConfirmDialog.dart';
-import 'package:autosilentflutter/widgets/DeletingDialog.dart';
 import 'package:autosilentflutter/widgets/LanguageDialog.dart';
+import 'package:autosilentflutter/widgets/LocationBottomSheet.dart';
 import 'package:autosilentflutter/widgets/PermissionDialog.dart';
 import 'package:autosilentflutter/widgets/SnackBars.dart';
 import 'package:flutter/material.dart';
@@ -10,9 +9,14 @@ import 'package:one_context/one_context.dart';
 class DialogService {
   //
   void addLocationDialog() {
-    OneContext().showDialog(
-      builder: (BuildContext context) => AddLocationDialog(),
-    );
+    OneContext().showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(6.0),
+            topRight: Radius.circular(6.0),
+          ),
+        ),
+        builder: (BuildContext context) => LocationBottomSheet());
   }
 
   void deleteDialog() {

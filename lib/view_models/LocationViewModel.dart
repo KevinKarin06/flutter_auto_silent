@@ -4,7 +4,7 @@ import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:get_it/get_it.dart';
 import 'package:stacked/stacked.dart';
 
-class AddLocationDialogViewModel extends BaseViewModel {
+class LocationViewModel extends BaseViewModel {
   final DialogService _dialogService = GetIt.I<DialogService>();
   final NavigationService _navigationService = GetIt.I<NavigationService>();
   final LocationService _locationService = GetIt.I<LocationService>();

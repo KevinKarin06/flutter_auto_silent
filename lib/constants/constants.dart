@@ -8,6 +8,7 @@ class Constants {
   static const int ANDROID_NOUGAT = 24;
   static const String APP_NAME = 'Auto Silent';
   static const String DC_CORP = 'Powered By Dc Corp';
+  static const String SETTINGS_DB = 'auto_silent';
   static const int GEOFENCE_RADIUS = 500;
   static const double BORDER_RADIUS = 4.0;
 }

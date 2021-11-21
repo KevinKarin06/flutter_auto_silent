@@ -152,19 +152,18 @@ class HomeViewModel extends FutureViewModel {
   }
 
   void bactDelete() async {
-    _dialogService.deleteProgress();
-    Logger().d('start', 'Progress Start');
+    // _dialogService.loadingDialog();
     try {
       selected.forEach((LocationModel locationModel) async {
-        await Future.delayed(Duration(seconds: 5), () {
-          Logger().d('progress', deleted);
-        });
-        deleted++;
+        await _geofenceService.removeGeofence(locationModel);
+        this.locations.remove(locationModel);
+        notifyListeners();
       });
     } catch (e) {
       _dialogService.showError(e.toString());
     }
-    _dialogService.stopLading();
+    this.cancelSelection();
+    notifyListeners();
   }
 
   void addLocation() {

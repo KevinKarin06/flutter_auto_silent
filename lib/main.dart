@@ -6,14 +6,18 @@ import 'package:autosilentflutter/theme/theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:one_context/one_context.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await ThemeManager.initialise();
+  await Hive.initFlutter();
+  await Hive.openBox('settings');
   await dotenv.load(fileName: ".env");
   setUp();
   runApp(
