@@ -5,6 +5,7 @@ import 'package:autosilentflutter/setup_locator.dart';
 import 'package:autosilentflutter/theme/theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:geofencing/geofencing.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:one_context/one_context.dart';
@@ -19,6 +20,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('settings');
   await dotenv.load(fileName: ".env");
+  await GeofencingManager.initialize();
   setUp();
   runApp(
     EasyLocalization(

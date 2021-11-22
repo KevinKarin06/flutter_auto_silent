@@ -1,5 +1,6 @@
 package com.example.autosilentflutter;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.util.Log;
@@ -25,12 +26,13 @@ public class MainActivity extends FlutterActivity  {
     NotificationHelper notificationHelper = new NotificationHelper(this);
 
 
+    @SuppressLint("MissingPermission")
     @Override
     public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
         super.configureFlutterEngine(flutterEngine);
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL_NAME)
                 .setMethodCallHandler((call, result) -> {
-                    GeofenceHelper geofenceHelper = new GeofenceHelper(getApplicationContext());
+                    GeofenceHelper geofenceHelper = new GeofenceHelper(getApplicationContext(),result);
                     OnFailureListener onFailureListener = new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {

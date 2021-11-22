@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 class CustomAppBar extends ViewModelWidget<HomeViewModel>
     with PreferredSizeWidget {
   final double appBarElevation = 4.0;
+
   @override
   Widget build(BuildContext context, HomeViewModel vModel) {
     Logger().d('Custom AppBar', 'Rebuilt');

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:autosilentflutter/screens/loading.dart';
 import 'package:autosilentflutter/screens/no_location.dart';
 import 'package:autosilentflutter/view_models/HomeViewModel.dart';
@@ -33,6 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
   //
   @override
   Widget build(BuildContext context) {

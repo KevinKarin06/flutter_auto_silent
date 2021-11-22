@@ -5,11 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import java.util.List;
 import java.util.ArrayList;
 
 import com.example.autosilentflutter.GeoModel;
 
+import io.flutter.plugin.common.MethodChannel;
 import io.flutter.util.PathUtils;
 
 public class DbHelper {
@@ -57,7 +60,22 @@ public class DbHelper {
                     GeoModel model = new GeoModel(cursor.getDouble(latitude), cursor.getDouble(longitude), cursor.getString(uuid));
                     modelList.add(model);
                 }
-                GeofenceHelper geofenceHelper = new GeofenceHelper(context);
+                GeofenceHelper geofenceHelper = new GeofenceHelper(context, new MethodChannel.Result() {
+                    @Override
+                    public void success(@Nullable Object result) {
+
+                    }
+
+                    @Override
+                    public void error(String errorCode, @Nullable String errorMessage, @Nullable Object errorDetails) {
+
+                    }
+
+                    @Override
+                    public void notImplemented() {
+
+                    }
+                });
                 for (GeoModel model : modelList) {
                     geofenceHelper.addGeofence(model);
                     Log.d(TAG, "list: " + " " + model.getUuid());

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:autosilentflutter/constants/constants.dart';
 import 'package:autosilentflutter/services/DialogService.dart';
-import 'package:device_info/device_info.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get_it/get_it.dart';
 

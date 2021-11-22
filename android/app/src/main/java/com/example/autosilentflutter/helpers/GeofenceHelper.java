@@ -1,5 +1,6 @@
 package com.example.autosilentflutter.helpers;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import io.flutter.plugin.common.MethodChannel;
 
 public class GeofenceHelper {
@@ -26,14 +29,17 @@ public class GeofenceHelper {
     private PendingIntent goefencePendingIntent;
     private float GEOFENCE_RADIUS = 500;
     private NotificationHelper notificationHelper;
+    private MethodChannel.Result result;
 
-    public GeofenceHelper(Context context) {
+    public GeofenceHelper(Context context,MethodChannel.Result result) {
         this.context = context;
         geofencingClient = LocationServices.getGeofencingClient(context);
         permissionHelper = new PermissionHelper(context);
         notificationHelper = new NotificationHelper(context);
+        this.result = result;
 
     }
+
     public GeofencingClient getGeofencingClient() {
         return geofencingClient;
     }
@@ -64,24 +70,22 @@ public class GeofenceHelper {
         return goefencePendingIntent;
     }
 
+    @SuppressLint("MissingPermission")
     public void addGeofence(GeoModel model) {
         if (permissionHelper.checkPermissions()) {
             geofencingClient.addGeofences(getGeofencingRequest(model), getGeofencePendingIntent())
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-//                            Toast.makeText(context, "added successfully",
-//                                    Toast.LENGTH_SHORT).show();
-                            notificationHelper.showNotification("AddGeofence Event","Added Succeeded",null);
-
+                            notificationHelper.showNotification("AddGeofence Event", "Added Succeeded", null);
+                            result.success(true);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(context, "failed to add geofence" + e.getMessage(),
-//                                    Toast.LENGTH_SHORT).show();
-                            notificationHelper.showNotification("AddGeofence Event","Add Geofence Failed",null);
+                            notificationHelper.showNotification("AddGeofence Event", "Add Geofence Failed", null);
+                            result.error("-1",e.getMessage(),false);
                         }
                     });
         } else {
