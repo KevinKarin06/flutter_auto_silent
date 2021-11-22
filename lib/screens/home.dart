@@ -5,13 +5,35 @@ import 'package:autosilentflutter/widgets/CustomAppBar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
 
+class _MyHomePageState extends State<MyHomePage> {
+  SearchBar _searchBar;
+  //
+  _MyHomePageState() {
+    _searchBar = new SearchBar(
+      inBar: false,
+      setState: setState,
+      onSubmitted: print,
+      buildDefaultAppBar: (BuildContext context) => AppBar(
+        title: Text('app_name').tr(),
+        actions: [
+          _searchBar.getSearchAction(context),
+        ],
+      ),
+    );
+  }
+  //
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
@@ -29,7 +51,8 @@ class MyHomePage extends StatelessWidget {
           );
         },
         child: Scaffold(
-          appBar: CustomAppBar(),
+          // appBar: CustomAppBar(),
+          appBar: _searchBar.build(context),
           floatingActionButton: FloatingActionButton(
             tooltip: 'add_location'.tr(),
             onPressed: () {
