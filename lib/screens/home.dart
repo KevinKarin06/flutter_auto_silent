@@ -1,10 +1,6 @@
-import 'dart:ui';
-
 import 'package:autosilentflutter/screens/loading.dart';
 import 'package:autosilentflutter/screens/no_location.dart';
-import 'package:autosilentflutter/services/SearchService.dart';
 import 'package:autosilentflutter/view_models/HomeViewModel.dart';
-import 'package:autosilentflutter/widgets/CustomAppBar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

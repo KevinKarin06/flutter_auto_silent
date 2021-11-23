@@ -4,17 +4,13 @@ import 'package:autosilentflutter/services/DatabaseService.dart';
 import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
-import 'package:autosilentflutter/services/SearchService.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
-import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:stacked/stacked.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class HomeViewModel extends FutureViewModel {
   final DatabaseService _databaseService = GetIt.I<DatabaseService>();
   final GeofenceService _geofenceService = GetIt.I<GeofenceService>();
-  final SearchBarService _searchBarService = GetIt.I<SearchBarService>();
   final NavigationService _navigationService = GetIt.I<NavigationService>();
   final DialogService _dialogService = GetIt.I<DialogService>();
   //
@@ -50,23 +46,7 @@ class HomeViewModel extends FutureViewModel {
 
   List<LocationModel> get selected => _selected;
 
-  FloatingSearchBarController getController() =>
-      _searchBarService.floatingSearchBarController();
-
   List<String> get menuItems => _menuItems;
-
-  void openSearchBar() {
-    _searchBarService.open();
-  }
-
-  void closeSearchBar() {
-    _searchBarService.close();
-    setShowCancelIcon(false);
-  }
-
-  void clearSearchBarText() {
-    _searchBarService.clearText();
-  }
 
   void _checkMultiSelect() {
     if (_selected.isEmpty) {

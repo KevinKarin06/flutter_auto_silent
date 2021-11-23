@@ -4,8 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.example.autosilentflutter.GeoModel;
 import com.example.autosilentflutter.receivers.GeofenceBroadcastReceiver;
@@ -15,9 +16,6 @@ import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import io.flutter.plugin.common.MethodChannel;
 
@@ -31,7 +29,7 @@ public class GeofenceHelper {
     private NotificationHelper notificationHelper;
     private MethodChannel.Result result;
 
-    public GeofenceHelper(Context context,MethodChannel.Result result) {
+    public GeofenceHelper(Context context, MethodChannel.Result result) {
         this.context = context;
         geofencingClient = LocationServices.getGeofencingClient(context);
         permissionHelper = new PermissionHelper(context);
@@ -50,6 +48,7 @@ public class GeofenceHelper {
                 .setCircularRegion(model.getLatitude(), model.getLongitude(), GEOFENCE_RADIUS)
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
+                .setLoiteringDelay(1000 * 60)
                 .build();
 
     }
@@ -85,7 +84,7 @@ public class GeofenceHelper {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             notificationHelper.showNotification("AddGeofence Event", "Add Geofence Failed", null);
-                            result.error("-1",e.getMessage(),false);
+                            result.error("-1", e.getMessage(), false);
                         }
                     });
         } else {

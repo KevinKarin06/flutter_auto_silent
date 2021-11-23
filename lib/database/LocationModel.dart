@@ -1,5 +1,5 @@
 import 'package:autosilentflutter/constants/constants.dart';
-import 'package:autosilentflutter/Utils.dart';
+import 'package:autosilentflutter/utils/Utils.dart';
 import 'package:flutter_photon/flutter_photon.dart';
 
 class LocationModel {

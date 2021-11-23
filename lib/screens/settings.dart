@@ -2,7 +2,6 @@ import 'package:autosilentflutter/view_models/SettingsViewModel.dart';
 import 'package:autosilentflutter/widgets/CustomSwitch.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -83,15 +82,6 @@ class SettingsScreen extends StatelessWidget {
                   defaultValue: sModel.getNotifyOnExit(),
                   onValueChanged: (val) {
                     sModel.setNotifyOnExit(val);
-                  },
-                ),
-                CustomSwitch(
-                  leftText: 'silent_mode'.tr(),
-                  rightText: 'air_plane_mode'.tr(),
-                  label: 'action_on_entry'.tr(),
-                  defaultValue: sModel.getActionOnEntry(),
-                  onValueChanged: (val) {
-                    sModel.setActionOnEntry(val);
                   },
                 ),
               ],

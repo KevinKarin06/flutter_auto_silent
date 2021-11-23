@@ -1,4 +1,4 @@
-import 'package:autosilentflutter/Utils.dart';
+import 'package:autosilentflutter/utils/Utils.dart';
 import 'package:autosilentflutter/constants/errors.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/router.dart';

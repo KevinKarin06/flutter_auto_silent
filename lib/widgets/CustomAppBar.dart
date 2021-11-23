@@ -81,73 +81,7 @@ class CustomAppBar extends ViewModelWidget<HomeViewModel>
                   ),
                 ),
               )
-            : Container(
-                child: FloatingSearchAppBar(
-                  elevation: appBarElevation,
-                  padding: EdgeInsets.only(left: 16.0),
-                  color: AppColors().appBarColor(),
-                  debounceDelay: Duration(milliseconds: 500),
-                  height: kToolbarHeight,
-                  onQueryChanged: (String val) {
-                    Logger().d('message', val);
-                    vModel.filterLocation(val);
-                  },
-                  onSubmitted: (String val) {
-                    vModel.filterLocation(val);
-                  },
-                  controller: vModel.getController(),
-                  hint: 'search'.tr(),
-                  hideKeyboardOnDownScroll: true,
-                  title: Text(
-                    'app_name'.tr(),
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                  alwaysOpened: false,
-                  actions: [
-                    FloatingSearchBarAction(
-                      showIfOpened: vModel.showCancelIcon,
-                      showIfClosed: false,
-                      child: CircularButton(
-                        tooltip: 'clear'.tr(),
-                        icon: const Icon(Icons.clear_rounded),
-                        onPressed: () {
-                          vModel.clearSearchBarText();
-                        },
-                      ),
-                    ),
-                    FloatingSearchBarAction(
-                      showIfOpened: false,
-                      child: CircularButton(
-                        tooltip: 'settings'.tr(),
-                        icon: const Icon(Icons.search_rounded),
-                        onPressed: () {
-                          vModel.openSearchBar();
-                        },
-                      ),
-                    ),
-                    FloatingSearchBarAction(
-                      child: PopupMenuButton(
-                          onSelected: (String selected) {
-                            vModel.handleMenuItemClick(selected);
-                            print(selected);
-                          },
-                          padding: EdgeInsets.zero,
-                          itemBuilder: (BuildContext context) {
-                            return vModel.menuItems
-                                .asMap()
-                                .entries
-                                .map((entry) {
-                              return PopupMenuItem<String>(
-                                value: entry.key.toString(),
-                                child: Text(entry.value).tr(),
-                              );
-                            }).toList();
-                          }),
-                    )
-                  ],
-                  body: Container(),
-                ),
-              ),
+            : Container(),
       ),
     );
   }

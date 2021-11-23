@@ -1,4 +1,4 @@
-import 'package:autosilentflutter/Utils.dart';
+import 'package:autosilentflutter/utils/Utils.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/view_models/LocationDetailViewModel.dart';
 import 'package:autosilentflutter/widgets/CustomSwitch.dart';

@@ -1,13 +1,13 @@
 import 'package:autosilentflutter/services/NavigationService.dart';
+import 'package:autosilentflutter/utils/SharedPrefs.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class SettingsService {
   final NavigationService _navigationService = GetIt.I<NavigationService>();
-  final hiveBox = Hive.box('settings');
+  final SharedPrefs prefs = SharedPrefs();
   //
   void setTheme(bool themeMode) async {
     if (themeMode) {
@@ -19,15 +19,11 @@ class SettingsService {
   }
 
   Future<void> setNotifyOnEntry(bool value) async {
-    await hiveBox.put('notify_on_entry', value);
+    await prefs.setnotifyOnEntry(value);
   }
 
   Future<void> setNotifyOnExit(bool value) async {
-    await hiveBox.put('notify_on_exit', value);
-  }
-
-  Future<void> setActionOnEnrty(bool value) async {
-    await hiveBox.put('action_on_entry', value);
+    await prefs.setnotifyOnExit(value);
   }
 
   void setLocale(String locale) {
@@ -46,19 +42,11 @@ class SettingsService {
   }
 
   bool getNotifyOnEntry() {
-    return hiveBox.get('notify_on_entry', defaultValue: true);
+    return prefs.notifyOnEntry;
   }
 
   bool getNotifyOnExit() {
-    return hiveBox.get('notify_on_exit', defaultValue: true);
-  }
-
-  bool getActionOnEnrty() {
-    return hiveBox.get('action_on_entry', defaultValue: true);
-  }
-
-  int getTransitionDwellTime() {
-    return hiveBox.get('dwell_time', defaultValue: 15);
+    return prefs.notifyOnExit;
   }
 
   //

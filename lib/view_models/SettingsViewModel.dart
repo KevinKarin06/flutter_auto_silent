@@ -2,10 +2,8 @@ import 'package:autosilentflutter/services/DialogService.dart';
 import 'package:autosilentflutter/services/SettingsService.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_themes/stacked_themes.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class SettingsViewModel extends BaseViewModel {
   final SettingsService _settingsService = GetIt.I<SettingsService>();
@@ -48,10 +46,6 @@ class SettingsViewModel extends BaseViewModel {
     return _settingsService.getNotifyOnExit();
   }
 
-  bool getActionOnEntry() {
-    return _settingsService.getActionOnEnrty();
-  }
-
   setNotifyOnEntry(bool b) async {
     try {
       await _settingsService.setNotifyOnEntry(b);
@@ -68,22 +62,5 @@ class SettingsViewModel extends BaseViewModel {
       _dialogService.showError('msg');
     }
     notifyListeners();
-  }
-
-  setActionOnEntry(bool b) async {
-    try {
-      await _settingsService.setActionOnEnrty(b);
-    } catch (e) {
-      _dialogService.showError('msg');
-    }
-    notifyListeners();
-  }
-
-  int getDwellTransitionTime() {
-    return _settingsService.getTransitionDwellTime();
-  }
-
-  void setTransitionTime(int delay) {
-    //
   }
 }

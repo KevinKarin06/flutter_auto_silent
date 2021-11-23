@@ -11,4 +11,7 @@ class Constants {
   static const String SETTINGS_DB = 'auto_silent';
   static const int GEOFENCE_RADIUS = 500;
   static const double BORDER_RADIUS = 4.0;
+  //
+  static const String NOTIFY_ON_ENTRY = 'notify_on_entry';
+  static const String NOTIFY_ON_EXIT = 'notify_on_exit';
 }

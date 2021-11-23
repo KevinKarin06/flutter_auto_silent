@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:autosilentflutter/Utils.dart';
+import 'package:autosilentflutter/utils/Utils.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter_photon/flutter_photon.dart';

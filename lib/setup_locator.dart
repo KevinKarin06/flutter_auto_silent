@@ -7,7 +7,6 @@ import 'package:autosilentflutter/services/GeofenceService.dart';
 import 'package:autosilentflutter/services/LocationService.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/services/PermissionService.dart';
-import 'package:autosilentflutter/services/SearchService.dart';
 import 'package:autosilentflutter/services/SettingsService.dart';
 import 'package:autosilentflutter/view_models/HomeViewModel.dart';
 import 'package:get_it/get_it.dart';
@@ -17,7 +16,6 @@ void setUp() {
   print('Register Singletones');
   locator.registerFactory<GeocoderService>(() => GeocoderService());
   locator.registerLazySingleton<GeofenceService>(() => GeofenceService());
-  locator.registerLazySingleton<SearchBarService>(() => SearchBarService());
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<DialogService>(() => DialogService());
   locator.registerLazySingleton<SettingsService>(() => SettingsService());
