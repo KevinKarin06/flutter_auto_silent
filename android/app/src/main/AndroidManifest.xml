@@ -30,15 +30,8 @@
             android:name=".receivers.GeofenceBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
-        <receiver
-            android:name="io.flutter.plugins.geofencing.GeofencingBroadcastReceiver"
-            android:enabled="true"
-            android:exported="true" />
 
-        <service
-            android:name="io.flutter.plugins.geofencing.GeofencingService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE" />
+
 
         <activity
             android:name=".MainActivity"
