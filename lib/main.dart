@@ -1,3 +1,6 @@
+import 'dart:isolate';
+import 'dart:ui';
+
 import 'package:autosilentflutter/router.dart';
 import 'package:autosilentflutter/screens/intro.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
@@ -8,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:geofencing/geofencing.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
 import 'package:one_context/one_context.dart';
 import 'package:stacked_themes/stacked_themes.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -20,7 +24,7 @@ void main() async {
   await Hive.initFlutter();
   await Hive.openBox('settings');
   await dotenv.load(fileName: ".env");
-  await GeofencingManager.initialize();
+  // await GeofencingManager.initialize();
   setUp();
   runApp(
     EasyLocalization(
@@ -39,6 +43,19 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  ReceivePort port = ReceivePort();
+  //
+  @override
+  void initState() {
+    super.initState();
+    IsolateNameServer.registerPortWithName(
+        port.sendPort, 'geofencing_send_port');
+    port.listen((message) {
+      Logger().d('message port', message);
+    });
+    GeofencingManager.initialize();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ThemeBuilder(

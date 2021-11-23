@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:autosilentflutter/screens/loading.dart';
 import 'package:autosilentflutter/screens/no_location.dart';
+import 'package:autosilentflutter/services/SearchService.dart';
 import 'package:autosilentflutter/view_models/HomeViewModel.dart';
 import 'package:autosilentflutter/widgets/CustomAppBar.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -11,7 +12,6 @@ import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key}) : super(key: key);
@@ -24,13 +24,75 @@ class _MyHomePageState extends State<MyHomePage> {
   //
   _MyHomePageState() {
     _searchBar = new SearchBar(
-      inBar: false,
       setState: setState,
-      onSubmitted: print,
+      onChanged: (String val) {
+        GetIt.I<HomeViewModel>().filterLocation(val);
+      },
       buildDefaultAppBar: (BuildContext context) => AppBar(
-        title: Text('app_name').tr(),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Text('app_name').tr(),
+        ),
         actions: [
-          _searchBar.getSearchAction(context),
+          AnimatedSwitcher(
+            transitionBuilder: (
+              Widget child,
+              Animation<double> animation,
+            ) =>
+                ScaleTransition(
+              scale: animation,
+              child: child,
+            ),
+            duration: Duration(milliseconds: 500),
+            child: GetIt.I<HomeViewModel>().multiSelect
+                ? Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      IconButton(
+                          tooltip: 'delete'.tr(),
+                          icon: Icon(Icons.delete_rounded),
+                          onPressed: () {
+                            GetIt.I<HomeViewModel>().deleteAllSelected();
+                          }),
+                      IconButton(
+                          tooltip: 'select_all'.tr(),
+                          icon: Icon(
+                            GetIt.I<HomeViewModel>().selected.length ==
+                                    GetIt.I<HomeViewModel>().locations.length
+                                ? Icons.check_circle_rounded
+                                : Icons.check_circle_outline_rounded,
+                          ),
+                          onPressed: () {
+                            GetIt.I<HomeViewModel>().selectAll();
+                          })
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _searchBar.getSearchAction(context),
+                      PopupMenuButton(
+                          onSelected: (String selected) {
+                            GetIt.I<HomeViewModel>()
+                                .handleMenuItemClick(selected);
+                            print(selected);
+                          },
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext context) {
+                            return GetIt.I<HomeViewModel>()
+                                .menuItems
+                                .asMap()
+                                .entries
+                                .map((entry) {
+                              return PopupMenuItem<String>(
+                                value: entry.key.toString(),
+                                child: Text(entry.value).tr(),
+                              );
+                            }).toList();
+                          }),
+                    ],
+                  ),
+          ),
         ],
       ),
     );
@@ -39,6 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
   //
   @override
   Widget build(BuildContext context) {
+    Logger().d("HomeViewModelBeingRebuilt", 'Yep');
     return ViewModelBuilder<HomeViewModel>.reactive(
       initialiseSpecialViewModelsOnce: true,
       viewModelBuilder: () => GetIt.I<HomeViewModel>(),
