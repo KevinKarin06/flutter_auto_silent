@@ -5,6 +5,7 @@ import 'package:autosilentflutter/screens/intro.dart';
 import 'package:autosilentflutter/services/NavigationService.dart';
 import 'package:autosilentflutter/setup_locator.dart';
 import 'package:autosilentflutter/theme/theme.dart';
+import 'package:autosilentflutter/utils/SharedPrefs.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -17,6 +18,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await ThemeManager.initialise();
   await dotenv.load(fileName: ".env");
+  await SharedPrefs().init();
   setUp();
   runApp(
     EasyLocalization(
