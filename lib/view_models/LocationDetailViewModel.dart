@@ -19,7 +19,6 @@ class LocationDetailViewModel extends BaseViewModel {
 
   //
   final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _radiusController = TextEditingController();
   bool isDirty = false;
   LocationModel _model;
   LocationModel _clonedModel;
@@ -31,17 +30,17 @@ class LocationDetailViewModel extends BaseViewModel {
     }
     this._clonedModel = LocationModel.clone(_model);
     _locationController.text = _model.title;
-    _radiusController.text = _model.radius.toString();
+    Logger().d('default model', _model.toMap());
   }
 
-  TextEditingController get radiusController => _radiusController;
   TextEditingController get locationController => _locationController;
 
   void _checkIsDirty() {
     if (_model.id != null) {
       if (_clonedModel.title == _model.title &&
           _clonedModel.radius == _model.radius &&
-          _clonedModel.justOnce == _model.justOnce) {
+          _clonedModel.justOnce == _model.justOnce &&
+          _clonedModel.deleyTime == _model.deleyTime) {
         isDirty = false;
       } else
         isDirty = true;
@@ -58,11 +57,11 @@ class LocationDetailViewModel extends BaseViewModel {
     if (_model.id == null) {
       _navigationService.goBack();
     }
-    setRadius(_clonedModel.radius.toString());
+    setRadius(_clonedModel.radius);
     setJustOnce(_clonedModel.justOnce);
     setTitle(_clonedModel.title);
+    setDelayTime(_clonedModel.deleyTime);
     _locationController.text = _clonedModel.title;
-    _radiusController.text = _clonedModel.radius.toString();
   }
 
   LocationModel get model => _model;
@@ -72,7 +71,21 @@ class LocationDetailViewModel extends BaseViewModel {
     _checkIsDirty();
   }
 
-  void setRadius(String val) {
+  setDelayTime(int delayTime) {
+    this._model.deleyTime = delayTime;
+    _checkIsDirty();
+  }
+
+  void setRadius(int value) {
+    if (value != null && value > 100) {
+      if (value > 0 && value >= 200 && value <= 1500) {
+        this._model.radius = value;
+        _checkIsDirty();
+      }
+    }
+  }
+
+  void setRadiusOld(String val) {
     if (val != null && val.isNotEmpty) {
       int value = int.parse(val);
       if (value > 0 && value >= 200 && value <= 1500) {
@@ -111,7 +124,6 @@ class LocationDetailViewModel extends BaseViewModel {
 
   void clearControllers() {
     _locationController.dispose();
-    _radiusController.dispose();
   }
 
   void _refreshModel() {

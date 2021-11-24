@@ -29,12 +29,11 @@ public class GeofenceHelper {
     private NotificationHelper notificationHelper;
     private MethodChannel.Result result;
 
-    public GeofenceHelper(Context context, MethodChannel.Result result) {
+    public GeofenceHelper(Context context) {
         this.context = context;
         geofencingClient = LocationServices.getGeofencingClient(context);
         permissionHelper = new PermissionHelper(context);
         notificationHelper = new NotificationHelper(context);
-        this.result = result;
 
     }
 
@@ -45,10 +44,10 @@ public class GeofenceHelper {
     private Geofence getGeofence(GeoModel model) {
         return new Geofence.Builder()
                 .setRequestId(model.getUuid())
-                .setCircularRegion(model.getLatitude(), model.getLongitude(), GEOFENCE_RADIUS)
+                .setCircularRegion(model.getLatitude(), model.getLongitude(), model.getRadius())
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
-                .setLoiteringDelay(1000 * 60)
+                .setLoiteringDelay(model.getDelayTime())
                 .build();
 
     }
@@ -77,14 +76,12 @@ public class GeofenceHelper {
                         @Override
                         public void onSuccess(Void aVoid) {
                             notificationHelper.showNotification("AddGeofence Event", "Added Succeeded", null);
-                            result.success(true);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             notificationHelper.showNotification("AddGeofence Event", "Add Geofence Failed", null);
-                            result.error("-1", e.getMessage(), false);
                         }
                     });
         } else {

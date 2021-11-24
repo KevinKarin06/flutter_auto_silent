@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.autosilentflutter.Constants;
 import com.example.autosilentflutter.Utils;
+import com.example.autosilentflutter.helpers.DbHelper;
 import com.example.autosilentflutter.helpers.NotificationHelper;
 import com.example.autosilentflutter.helpers.PermissionHelper;
 import com.google.android.gms.location.Geofence;
@@ -26,6 +27,7 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
         Utils utils = new Utils(context);
         GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
         PermissionHelper permissionHelper = new PermissionHelper(context);
+        DbHelper database = new DbHelper(context);
         SharedPreferences sharedPreferences = context.getSharedPreferences("FlutterSharedPreferences", Context.MODE_PRIVATE);
         Intent notificationIntent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
         if (geofencingEvent.hasError()) {
@@ -46,8 +48,6 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                     utils.muteDevice();
                     if (sharedPreferences.getBoolean(Constants.NOTIFY_ON_ENTRY, true)) {
                         notificationHelper.showNotification("Geofence Event" + geofenceId, "TRANSITION_ENTER_TRUE", null);
-                    } else {
-                        notificationHelper.showNotification("Geofence Event" + geofenceId, "TRANSITION_ENTER_FALSE", null);
                     }
                 } else {
                     Log.d(TAG, "onReceive: NO PERM");
@@ -56,9 +56,14 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
             } else if (transition == Geofence.GEOFENCE_TRANSITION_EXIT) {
                 if (permissionHelper.checkMutePermission()) {
                     utils.unMuteDevice();
-                    notificationHelper.showNotification("Geofence Event" + geofenceId, "TRANSITION_EXIT", null);
+                    if (sharedPreferences.getBoolean(Constants.NOTIFY_ON_ENTRY, true)) {
+                        notificationHelper.showNotification("Geofence Event" + geofenceId, "TRANSITION_EXIT_TRUE", null);
+                    }
                 } else {
                     notificationHelper.showNotification("Action Required", "You need to grant permission", notificationIntent);
+                }
+                for (Geofence geofence : triggeringGeofences) {
+                    database.deleteTriggered(geofence.getRequestId());
                 }
             }
         }

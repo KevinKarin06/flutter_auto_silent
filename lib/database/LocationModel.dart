@@ -8,10 +8,12 @@ class LocationModel {
   int id;
   int radius;
   bool justOnce;
+  int deleyTime;
 
   LocationModel({
     this.justOnce = false,
     this.radius = Constants.GEOFENCE_RADIUS,
+    this.deleyTime = 1 * Constants.MILLI_SECONDS,
     this.id,
     this.latitude,
     this.longitude,
@@ -30,6 +32,7 @@ class LocationModel {
       'uuid': uuid,
       'radius': radius,
       'justOnce': justOnce == true ? 1 : 0,
+      'delayTime': deleyTime
     };
   }
 
@@ -51,27 +54,27 @@ class LocationModel {
   }
   factory LocationModel.fromMap(Map map) {
     return LocationModel(
-      id: map['id'],
-      latitude: map['latitude'],
-      longitude: map['longitude'],
-      subtitle: map['subtitle'],
-      title: map['title'],
-      uuid: map['uuid'],
-      radius: map['radius'] == null ? 500 : map['radius'],
-      justOnce: map['justOnce'] == 1 ? true : false,
-    );
+        id: map['id'],
+        latitude: map['latitude'],
+        longitude: map['longitude'],
+        subtitle: map['subtitle'],
+        title: map['title'],
+        uuid: map['uuid'],
+        radius: map['radius'] == null ? 500 : map['radius'],
+        justOnce: map['justOnce'] == 1 ? true : false,
+        deleyTime: map['delayTime']);
   }
   factory LocationModel.clone(LocationModel model) {
     return LocationModel(
-      id: model.id,
-      title: model.title,
-      subtitle: model.subtitle,
-      latitude: model.latitude,
-      longitude: model.longitude,
-      uuid: model.uuid,
-      justOnce: model.justOnce,
-      radius: model.radius,
-    );
+        id: model.id,
+        title: model.title,
+        subtitle: model.subtitle,
+        latitude: model.latitude,
+        longitude: model.longitude,
+        uuid: model.uuid,
+        justOnce: model.justOnce,
+        radius: model.radius,
+        deleyTime: model.deleyTime);
   }
   factory LocationModel.fromPhoton(PhotonFeature photon) {
     String street = photon.street;

@@ -52,5 +52,14 @@
   "no_internet": "Pas De Connexion Internet",
   "permission_required": "You Need To Grant Location Permission For The To Work Properly",
   "permission_required_always": "You Need To Grant Permission To Always For The App To Work",
-  "permission_denied": "Permission Denied"
+  "permission_denied": "Permission Denied",
+  "200meters": "200 Mètres",
+  "300meters": "300 Mètres",
+  "400meters": "400 Mètres",
+  "500meters": "500 Mètres",
+  "600meters": "600 Mètres",
+  "700meters": "700 Mètres",
+  "800meters": "800 Mètres",
+  "900meters": "900 Mètres",
+  "1000meters": "1000 Mètres"
 }

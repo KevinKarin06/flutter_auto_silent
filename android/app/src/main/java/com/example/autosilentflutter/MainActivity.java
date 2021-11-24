@@ -32,7 +32,7 @@ public class MainActivity extends FlutterActivity  {
         super.configureFlutterEngine(flutterEngine);
         new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL_NAME)
                 .setMethodCallHandler((call, result) -> {
-                    GeofenceHelper geofenceHelper = new GeofenceHelper(getApplicationContext(),result);
+                    GeofenceHelper geofenceHelper = new GeofenceHelper(getApplicationContext());
                     OnFailureListener onFailureListener = new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
@@ -51,7 +51,11 @@ public class MainActivity extends FlutterActivity  {
                         double latitude = call.argument("latitude");
                         double longitude = call.argument("longitude");
                         String uuid = call.argument("uuid");
-                        GeoModel model = new GeoModel(latitude, longitude, uuid);
+                        int delayTime = call.argument("delayTime");
+                        int radius = call.argument("radius");
+                        float geofenceRadius =  (float) radius;
+
+                        GeoModel model = new GeoModel(latitude, longitude, uuid,delayTime,geofenceRadius);
                         geofenceHelper.getGeofencingClient().addGeofences(geofenceHelper.getGeofencingRequest(model),
                                 geofenceHelper.getGeofencePendingIntent())
                                 .addOnSuccessListener(onSuccessListener)

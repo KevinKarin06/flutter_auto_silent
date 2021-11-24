@@ -56,5 +56,22 @@
   "reset_settings": "Reset",
   "permission_required": "You Need To Grant Location Permission For The To Work Properly",
   "permission_required_always": "You Need To Grant Permission To Always For The App To Work",
-  "permission_denied": "Permission Denied"
+  "permission_denied": "Permission Denied",
+  "200meters": "200 Meters",
+  "300meters": "300 Meters",
+  "400meters": "400 Meters",
+  "500meters": "500 Meters",
+  "600meters": "600 Meters",
+  "700meters": "700 Meters",
+  "800meters": "800 Meters",
+  "900meters": "900 Meters",
+  "1000meters": "1000 Meters",
+  "0minutes": "0 Miniute",
+  "10minutes": "10 Miniutes",
+  "20minutes": "20 Miniutes",
+  "30minutes": "30 Miniutes",
+  "40minutes": "40 Miniutes",
+  "50minutes": "50 Miniutes",
+  "60minutes": "60 Miniutes",
+  "loitering": "Loitering delay"
 }

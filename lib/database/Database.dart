@@ -23,7 +23,8 @@ class LocationDatabase {
             longitude INTEGER, 
             title TEXT, 
             subtitle TEXT NOT NULL,
-            radius INTEGER DEFAULT 500, 
+            radius INTEGER DEFAULT ${Constants.GEOFENCE_RADIUS}, 
+            delayTime INTEGER DEFAULT ${Constants.MILLI_SECONDS * 1}, 
             justOnce INTEGER DEFAULT 0,
             uuid TEXT)''');
       },

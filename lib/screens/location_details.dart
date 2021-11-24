@@ -1,10 +1,10 @@
+import 'package:autosilentflutter/constants/constants.dart';
 import 'package:autosilentflutter/utils/Utils.dart';
 import 'package:autosilentflutter/database/LocationModel.dart';
 import 'package:autosilentflutter/view_models/LocationDetailViewModel.dart';
 import 'package:autosilentflutter/widgets/CustomSwitch.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:logger/logger.dart';
 import 'package:stacked/stacked.dart';
 
 class LocationDetails extends StatelessWidget {
@@ -100,19 +100,72 @@ class LocationDetails extends StatelessWidget {
                       ),
                     ),
                     mySpacer(),
-                    TextFormField(
-                      controller: vModel.radiusController,
-                      onFieldSubmitted: (String val) {
-                        _formKey.currentState.validate();
-                        vModel.setRadius(val);
-                      },
-                      keyboardType: TextInputType.number,
-                      validator: (String val) {
-                        return vModel.validateRaduis(val);
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'radius'.tr(),
-                      ),
+                    // TextFormField(
+                    //   controller: vModel.radiusController,
+                    //   onFieldSubmitted: (String val) {
+                    //     _formKey.currentState.validate();
+                    //     vModel.setRadius(val);
+                    //   },
+                    //   keyboardType: TextInputType.number,
+                    //   validator: (String val) {
+                    //     return vModel.validateRaduis(val);
+                    //   },
+                    //   decoration: InputDecoration(
+                    //     labelText: 'radius'.tr(),
+                    //   ),
+                    // ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: DropdownButtonFormField(
+                            value: vModel.model.radius,
+                            onChanged: (int val) {
+                              _formKey.currentState.validate();
+                              vModel.setRadius(val);
+                            },
+                            onSaved: (int val) {
+                              _formKey.currentState.validate();
+                              vModel.setRadius(val);
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'radius'.tr(),
+                            ),
+                            items: Constants.GEO_RADIUS.entries
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    child: Text(e.key).tr(),
+                                    value: e.value,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                        SizedBox(width: 8.0),
+                        Flexible(
+                          child: DropdownButtonFormField(
+                            value: vModel.model.deleyTime,
+                            onChanged: (val) {
+                              _formKey.currentState.validate();
+                              vModel.setDelayTime(val);
+                            },
+                            onSaved: (val) {
+                              _formKey.currentState.validate();
+                              vModel.setDelayTime(val);
+                            },
+                            decoration: InputDecoration(
+                              labelText: 'loitering'.tr(),
+                            ),
+                            items: Constants.GEO_DELAY_TIME.entries
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    child: Text(e.key).tr(),
+                                    value: e.value,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      ],
                     ),
                     mySpacer(),
                     CustomSwitch(

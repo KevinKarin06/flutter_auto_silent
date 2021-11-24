@@ -21,6 +21,8 @@ class GeofenceService {
             'uuid': model.uuid,
             'latitude': model.latitude,
             'longitude': model.longitude,
+            'radius': model.radius,
+            'delayTime': model.deleyTime
           },
         );
         if (result == true) {
