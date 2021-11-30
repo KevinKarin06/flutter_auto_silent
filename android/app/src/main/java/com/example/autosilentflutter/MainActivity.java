@@ -21,69 +21,71 @@ import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.MethodChannel;
 
 public class MainActivity extends FlutterActivity  {
-    private static final String CHANNEL_NAME = "app.geofeonce.channel";
-    private static final String TAG = "MainActivity";
-    NotificationHelper notificationHelper = new NotificationHelper(this);
+	private static final String CHANNEL_NAME = "app.geofeonce.channel";
+	private static final String TAG = "MainActivity";
+	NotificationHelper notificationHelper = new NotificationHelper(this);
 
 
-    @SuppressLint("MissingPermission")
-    @Override
-    public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
-        super.configureFlutterEngine(flutterEngine);
-        new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL_NAME)
-                .setMethodCallHandler((call, result) -> {
-                    GeofenceHelper geofenceHelper = new GeofenceHelper(getApplicationContext());
-                    OnFailureListener onFailureListener = new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, "onFailure: Failure");
-                            result.error("-1","Failed",false);
-                        }
-                    };
-                    OnSuccessListener onSuccessListener = new OnSuccessListener() {
-                        @Override
-                        public void onSuccess(Object o) {
-                            Log.d(TAG, "onSuccess: Success");
-                            result.success(true);
-                        }
-                    };
-                    if (call.method.equals("addGeofence")) {
-                        double latitude = call.argument("latitude");
-                        double longitude = call.argument("longitude");
-                        String uuid = call.argument("uuid");
-                        int delayTime = call.argument("delayTime");
-                        int radius = call.argument("radius");
-                        float geofenceRadius =  (float) radius;
+	@SuppressLint("MissingPermission")
+	@Override
+	public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+		super.configureFlutterEngine(flutterEngine);
+		new MethodChannel(flutterEngine.getDartExecutor().getBinaryMessenger(), CHANNEL_NAME)
+				.setMethodCallHandler((call, result) -> {
+					GeofenceHelper geofenceHelper = new GeofenceHelper(getApplicationContext());
+					OnFailureListener onFailureListener = new OnFailureListener() {
+						@Override
+						public void onFailure(@NonNull Exception e) {
+							Log.d(TAG, "onFailure: Failure");
+							result.error("-1","Failed",false);
+						}
+					};
+					OnSuccessListener onSuccessListener = new OnSuccessListener() {
+						@Override
+						public void onSuccess(Object o) {
+							Log.d(TAG, "onSuccess: Success");
+							result.success(true);
+						}
+					};
+					if (call.method.equals("addGeofence")) {
+						double latitude = call.argument("latitude");
+						double longitude = call.argument("longitude");
+						String uuid = call.argument("uuid");
+						int delayTime = call.argument("delayTime");
+						int radius = call.argument("radius");
+						float geofenceRadius =  (float) radius;
+						Log.d(TAG, "geofenceRadius: " + geofenceRadius);
+						Log.d(TAG, "delayTime: " + delayTime);
 
-                        GeoModel model = new GeoModel(latitude, longitude, uuid,delayTime,geofenceRadius);
-                        geofenceHelper.getGeofencingClient().addGeofences(geofenceHelper.getGeofencingRequest(model),
-                                geofenceHelper.getGeofencePendingIntent())
-                                .addOnSuccessListener(onSuccessListener)
-                                .addOnFailureListener(onFailureListener);
+						GeoModel model = new GeoModel(latitude, longitude, uuid,delayTime,geofenceRadius);
+						geofenceHelper.getGeofencingClient().addGeofences(geofenceHelper.getGeofencingRequest(model),
+								geofenceHelper.getGeofencePendingIntent())
+								.addOnSuccessListener(onSuccessListener)
+								.addOnFailureListener(onFailureListener);
 
-                    } else if(call.method.equals("removeGeofence")) {
-                        String id = call.argument("uuid");
-                        List<String> list = new ArrayList<String>();
-                        list.add(id);
-                        Log.d(TAG, "configureFlutterEngine: "+list);
-                       geofenceHelper.getGeofencingClient().removeGeofences(list)
-                       .addOnSuccessListener(onSuccessListener)
-                       .addOnFailureListener(onFailureListener);
-                    } else if(call.method.equals("loaddb")){
-                        new DbHelper(MainActivity.this).syncGeofences();
-                    }else{
-                        result.notImplemented();
-                    }
-                });
-    }
+					} else if(call.method.equals("removeGeofence")) {
+						String id = call.argument("uuid");
+						List<String> list = new ArrayList<String>();
+						list.add(id);
+						Log.d(TAG, "configureFlutterEngine: "+list);
+						geofenceHelper.getGeofencingClient().removeGeofences(list)
+								.addOnSuccessListener(onSuccessListener)
+								.addOnFailureListener(onFailureListener);
+					} else if(call.method.equals("loaddb")){
+						new DbHelper(MainActivity.this).syncGeofences();
+					}else{
+						result.notImplemented();
+					}
+				});
+	}
 
-    public String hello() {
-        return "hello from native";
-    }
+	public String hello() {
+		return "hello from native";
+	}
 
-    public void init() {
+	public void init() {
 
-    }
+	}
 
 
 

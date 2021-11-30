@@ -65,6 +65,17 @@ public class GeofenceBroadcastReceiver extends BroadcastReceiver {
                 for (Geofence geofence : triggeringGeofences) {
                     database.deleteTriggered(geofence.getRequestId());
                 }
+            } else if (transition == Geofence.GEOFENCE_TRANSITION_DWELL) {
+                if (permissionHelper.checkMutePermission()) {
+                    Log.d(TAG, "onReceive: GEO_DWELL");
+                    utils.muteDevice();
+                    if (sharedPreferences.getBoolean(Constants.NOTIFY_ON_ENTRY, true)) {
+                        notificationHelper.showNotification("Geofence Event" + geofenceId, "TRANSITION_DWELL_TRUE", null);
+                    }
+                } else {
+                    Log.d(TAG, "onReceive: NO PERM");
+                    notificationHelper.showNotification("Action Required", "You need to grant permission", notificationIntent);
+                }
             }
         }
     }

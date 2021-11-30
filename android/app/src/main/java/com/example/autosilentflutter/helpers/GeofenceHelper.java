@@ -46,7 +46,9 @@ public class GeofenceHelper {
                 .setRequestId(model.getUuid())
                 .setCircularRegion(model.getLatitude(), model.getLongitude(), model.getRadius())
                 .setExpirationDuration(Geofence.NEVER_EXPIRE)
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_EXIT)
+                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+                        Geofence.GEOFENCE_TRANSITION_EXIT |
+                        Geofence.GEOFENCE_TRANSITION_DWELL)
                 .setLoiteringDelay(model.getDelayTime())
                 .build();
 
@@ -54,7 +56,7 @@ public class GeofenceHelper {
 
     public GeofencingRequest getGeofencingRequest(GeoModel model) {
         GeofencingRequest.Builder geofenceRequest = new GeofencingRequest.Builder();
-        geofenceRequest.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+        geofenceRequest.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_DWELL | GeofencingRequest.INITIAL_TRIGGER_DWELL);
         geofenceRequest.addGeofence(getGeofence(model));
         return geofenceRequest.build();
     }

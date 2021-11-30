@@ -12,17 +12,21 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="Auto Silent"
         tools:ignore="Instantiatable">
+        <receiver
+            android:name=".receivers.LocationProviderChangedReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
         <receiver
             android:name=".receivers.BootCompleteBroadcastReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -30,6 +34,7 @@
             android:name=".receivers.GeofenceBroadcastReceiver"
             android:enabled="true"
             android:exported="true" />
+
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
